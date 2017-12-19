@@ -1,8 +1,21 @@
 var path = require('path')
 var webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
+    plugins: [
+        // new CleanWebpackPlugin(['dist']),
+        new CopyWebpackPlugin([
+            {from:'src/assets/cartas', to:'cartas'}
+        ]),
+        // new ExtractTextPlugin({
+        //     filename: 'css/style.css',
+        //     allChunks: true,
+        //     // disable: false,
+        //     ignoreOrder: true
+        // }),
+    ],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -70,6 +83,10 @@ module.exports = {
       {
           test: /\.(eot|svg|ttf|woff|woff2)$/,
           loader: 'file-loader?name=assets/fonts/[name].[ext]'
+      },
+      {
+         test: /\.(xml|o8d)$/,
+         loader: 'xml-loader' // will load all .xml files with xml-loader by default
       }
     ]
   },

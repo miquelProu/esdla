@@ -2,27 +2,74 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
-    <b-dropdown>
-      <button class="button is-primary" slot="trigger">
-        <span>Click me!</span>
-        <b-icon icon="menu-down"></b-icon>
-      </button>
-
-      <b-dropdown-item>Action</b-dropdown-item>
-      <b-dropdown-item>Another action</b-dropdown-item>
-      <b-dropdown-item>Something else</b-dropdown-item>
-    </b-dropdown>
+    <display :deck="getMaPlayer"></display>
   </div>
 </template>
 
 <script>
+
+import Pila from './components/pila.vue'
+import Carta from './components/carta.vue'
+import Display from './components/display.vue'
+import * as types from './store/mutation-types'
+
+import { mapGetters, mapActions } from 'vuex'
+
+import QuestDeckFile from './assets/deck/Quest-006-A-Journey-to-Rhosgobel.o8d'
+import PlayerDeckFile from './assets/deck/carrock-solo-1.0.o8d'
+
 export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+    name: 'app',
+    components: {
+        'pila': Pila,
+        'carta':  Carta,
+        'display': Display
+    },
+    data () {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+      }
+    },
+    mounted: function(){
+        this.loadDeck(QuestDeckFile, types.QUEST);
+        this.loadDeck(PlayerDeckFile, types.PLAYER);
+
+
+    },
+    watch: {},
+    computed: {
+        ...mapGetters({
+            getDeckQuest: 'deckQuest',
+            getOutDeckQuest: 'deckOutQuest',
+            getDeckPlayer: 'deckPlayer',
+            getOutDeckPlayer: 'deckOutPlayer',
+            getMaPlayer: 'maPlayer'
+        })
+    },
+    methods:{
+        ...mapActions({
+            allToDeck: 'allToDeck'
+        }),
+        loadDeck: function(file, type) {
+            let sections = file.deck.section;
+            let deck = [];
+            _.forEach(sections, function (section) {
+                let tipus = section['$']['name'];
+                _.forEach(section.card, function (carta) {
+                    let card = {};
+                    let qty = carta['$']['qty'];
+                    card['id'] = carta['$']['id'];
+                    card['name'] = carta['_'];
+                    card['type'] = tipus;
+                    for (let x = 1; x <= qty; x++) {
+                        deck.push(card);
+                    }
+
+                });
+            });
+            this.allToDeck({deckType: type, cards: deck});
+        }
+    },
 }
 </script>
 
