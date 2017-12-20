@@ -1,6 +1,7 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{height: calculatedHeight}">
-        <img v-bind:src="srcImage()" />
+        <!--<img v-bind:src="srcImage()" />-->
+        <span>{{srcImage()}}</span>
         <b-dropdown v-bind:class="{norotate: rotate}">
             <button class="button is-primary" slot="trigger">
                 <b-icon icon="menu-down"></b-icon>
@@ -44,7 +45,8 @@ export default {
     },
     methods: {
         srcImage: function(){
-            return "/dist/cartas/" + this.carta.id + ".png";
+//            return "/dist/cartas/" + this.carta.id + ".png";
+            return this.carta.id;
         }
     }
 }
@@ -57,6 +59,8 @@ export default {
     flex-direction: column;
     height: 141%;
     position:relative;
+
+    border:1px solid red;
 
     &.rotate {
         transform: rotate(90deg);
