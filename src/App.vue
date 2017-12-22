@@ -1,43 +1,50 @@
 <template>
     <div id="app" class="body">
         <div class="tile is-ancestor">
-            <div class="tile is-8 is-parent">
+            <div class="tile is-8 is-parent taulellDret">
                 <div class="tile is-ancestor is-child">
                     <div class="tile is-vertical is-parent">
-                        <div class="tile is-child expositor">HOLA1</div>
-                        <div class="tile is-child expositor">HOLA2</div>
-                        <div class="tile is-child expositor">HOLA3</div>
-                        <div class="tile is-child expositor">HOLA4</div>
-                        <div class="tile is-child expositor">HOLA5</div>
-                        <div class="tile is-child expositor">HOLA6</div>
+                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio"></display></div>
+                        <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;">ENCUENTROS QUEST</div>
+                        <div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>
+                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHeroDeckPlayer"></display></div>
+                        <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;">BAIXADES</div>
+                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMaPlayer"></display></div>
                     </div>
                 </div>
             </div>
-            <div class="tile is-4"></div>
+            <div class="tile is-4 is-parent taulellEsq">
+                <div class="tile is-ancestor is-child">
+                    <div class="tile is-vertical is-parent">
+                        <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
+                            <div class="columns">
+                                <div class="column is-one-quarter"><pila :deck="getDeckQuest" :posicio="'dors'"></pila></div>
+                                <div class="column is-one-quarter">DESCARTES ENCUENTROS</div>
+                                <div class="column is-half">PUNTUACIONS GLOBALS</div>
+                            </div>
+                        </div>
+                        <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
+                            <div class="columns">
+                                <div class="column is-one-thirds">VIATGE</div>
+                                <div class="column is-multiline">
+                                    <div class="column">MISION DECK</div>
+                                    <div class="column">MISION DESCARTE</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tile is-child lupa" style="margin-bottom:2% !important;">LUPA</div>
+                        <div class="tile is-child stackHerois">
+                            <div class="columns">
+                                <div class="column is-one-quarter"><pila :deck="getDeckPlayer" :posicio="'dors'"></pila></div>
+                                <div class="column is-one-quarter">DESCARTES HERIOS</div>
+                                <div class="column is-half">PUNTUACIONS HEROIS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!--<div id="app" class="body">-->
-        <!--<div class="tile is-ancestor">-->
-            <!--<div class="tile ">-->
-                <!--<div class="tile is-child is-8">-->
-                    <!--<div class="tile is-ancestor">-->
-                        <!--<div class="tile is-parent is-vertical" style="height: 100%;min-height: 100%">-->
-                            <!--<div class="tile is-child" style="height: 16%;min-height: 16%;">HOLA1</div>-->
-                            <!--<div class="tile is-child" style="height: 16%">HOLA2</div>-->
-                            <!--<div class="tile is-child" style="height: 16%">HOLA3</div>-->
-                            <!--<div class="tile is-child" style="height: 16%">HOLA4</div>-->
-                            <!--<div class="tile is-child" style="height: 16%">HOLA5</div>-->
-                            <!--<div class="tile is-child" style="height: 20%">HOLA6</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="tile is-child is-4"></div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<img src="./assets/logo.png">-->
-    <!--<h1>{{ msg }}</h1>-->
-    <!--<display :deck="getMaPlayer"></display>-->
 </template>
 
 <script>
@@ -76,8 +83,10 @@ export default {
             getDeckQuest: 'deckQuest',
             getOutDeckQuest: 'deckOutQuest',
             getDeckPlayer: 'deckPlayer',
-            getOutDeckPlayer: 'deckOutPlayer',
-            getMaPlayer: 'maPlayer'
+            getHeroDeckPlayer: 'deckHeroPlayer',
+            getMaPlayer: 'maPlayer',
+            getPreparacio: 'deckPreparacio',
+            getMission: 'missionDeck'
         })
     },
     methods:{
@@ -137,18 +146,45 @@ html {
     overflow: hidden;
     position: absolute;
 }
-.tile.is-ancestor,
-.tile.is-parent {
-    height: 100%;
-    max-height: 100%;
-    z-index: 0;
-    overflow: hidden;
+.tile{
+    border:1px solid green;
+
+    &.is-ancestor,
+    &.is-parent {
+        height: 100%;
+        max-height: 100%;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .tile.expositor {
+        &.ma {
+            height: 10%;
+            min-height: 10%;
+        }
+        &.herois {
+            height: 20%;
+            min-height: 20%;
+        }
+        height: 15%;
+        min-height: 15%;
+    }
 }
-.tile.expositor {
-    height: 16%;
-    min-height: 16%;
-    margin-bottom: 0 !important;
+
+.taulellEsq {
+    .stackQuest,
+    .stackHerois {
+        height: 15%;
+        min-height: 15%;
+    }
+
+    .stackMision,
+    .lupa {
+        height: 30%;
+        min-height: 30%;
+    }
 }
+
 
 
 h1, h2 {
