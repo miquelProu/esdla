@@ -1,62 +1,55 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="image">
-            <img v-bind:src="srcImage()" />
+            <resource v-if="resource > 0" :type="'foo'" :value="resource"></resource>
+            <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
-        <b-dropdown v-bind:class="{norotate: rotate}">
-            <button class="button is-primary" slot="trigger">
-                <b-icon icon="menu-down"></b-icon>
-            </button>
-            <template v-if="cardType == 'Dolent'">
-                <b-dropdown-item v-on:click="toPreparacio(1)">A preparació</b-dropdown-item>
-                <b-dropdown-item v-on:click="remenar('Encounter')">Remenar Preparació</b-dropdown-item>
-                <b-dropdown-item>Something else</b-dropdown-item>
-            </template>
-            <templae v-if="cardType == 'Bo'">
-                <b-dropdown-item v-on:click="toPreparacio(1)">A la ma</b-dropdown-item>
-                <b-dropdown-item v-on:click="remenar('Aliats')">Remenar Aliats</b-dropdown-item>
-            </templae>
-        </b-dropdown>
+        <down :rol="rol" :card="carta"  @resource="newResource"></down>
     </div>
 </template>
 
 <script>
+    import Down from './down'
+    import Resource from './resources'
 
     import { mapActions } from 'vuex'
 
 export default {
     name: 'carta',
-    components: {},
-    props: ['rotate', 'card', 'posicio'],
+    components: {
+        down: Down,
+        resource: Resource
+    },
+    props: ['card', 'cara', 'rol'],
     data: function(){
         let self = this;
         return {
             cartaWidth: null,
             cartaHeight: null,
             carta: {id:'51223bd0-ffd1-11df-a976-0801200c9001'},
-            pos: 'cara',
-            cardType: null
+            cardType: null,
+            rotate: false,
+            resource: 0,
+            damage: 0,
+            viatge: 0
         }
     },
     mounted: function(){
         this.cartaWidth = this.$refs.carta.clientWidth;
         this.cartaHeight = this.$refs.carta.clientHeight;
         this.carta = this.card;
-        this.pos = (this.posicio) ? this.posicio : 'cara';
-        if (this.carta.type == 'Encounter') {
-            this.cardType = 'Dolent'
-        } else if (this.carta.type == 'Quest') {
+        if (this.card.type == 'Encounter') {
+            this.cardType = 'Encounter'
+        } else if (this.card.type == 'Quest') {
             this.cardType = 'Misio'
         } else {
             this.cardType = 'Bo'
         }
     },
     watch: {
-        'card': {
-            handler(newData, oldData) {
+        card: function (newData, oldData) {
                 this.carta = newData;
             }
-        },
     },
     computed: {
         calculatedHeight: function(){
@@ -66,16 +59,16 @@ export default {
         calculateWidth: function(){
             let calcul = (this.cartaHeight * 70.5) / 100;
             return Math.round(calcul) + 'px';
-        }
+        },
+
     },
     methods: {
         ...mapActions({
-            toPreparacio: 'toPreparacio',
-            remenar: 'remenar',
-            toMa: 'toMa'
+            setLupaCard: 'setLupaCard',
+            setLupaPosition: 'setLupaPosition'
         }),
         srcImage: function(){
-            if (this.pos == 'cara') {
+            if (this.cara) {
                 return "/dist/cartas/" + this.carta.id + ".png";
             } else {
                 if (this.carta.type == 'Encounter' || this.carta.type == 'Setup') {
@@ -84,6 +77,23 @@ export default {
                     return "/dist/cartas/card.jpg";
                 }
 
+            }
+        },
+        isLupa: function(event) {
+            if (((window.innerWidth / 3) * 2 ) > event.clientX) {
+                this.setLupaPosition('right');
+            } else {
+                this.setLupaPosition('left');
+            }
+            if(this.cara){
+                this.setLupaCard(this.card);
+            }
+        },
+        newResource: function(value){
+            if (value == 'add') {
+                this.resource ++;
+            } else {
+                this.resource --;
             }
         }
     }
@@ -121,13 +131,5 @@ export default {
 
         span {height:100%;}
     }
-
-    /*figure.image {*/
-        /*height:100%;*/
-        /*img {*/
-            /*height: 100%;*/
-            /*width: auto;*/
-        /*}*/
-    /*}*/
 }
 </style>

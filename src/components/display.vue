@@ -1,7 +1,7 @@
 <template>
     <div class="columns is-gapless">
-        <div class="column hola" v-for="carta in deck">
-            <carta :rotate="false" :card="carta"></carta>
+        <div class="column" v-for="carta in deck">
+            <carta :cara="cara" :card="carta" :rol="rol"></carta>
         </div>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     components: {
         'carta':  Carta,
     },
-    props: ['deck'],
+    props: ['deck', 'cara', 'rol'],
     data: function(){
         return {}
     },

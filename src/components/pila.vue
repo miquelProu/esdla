@@ -1,5 +1,9 @@
 <template>
-    <carta :rotate="false" :card="deck[0]" :posicio="posicio"></carta>
+    <div class="columns is-gapless">
+        <div class="column" v-for="carta in one">
+            <carta :card="carta" :cara="cara" :rol="'pila'"></carta>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -10,13 +14,19 @@ export default {
     components: {
         'carta': Carta
     },
-    props: ['deck', 'posicio'],
+    props: ['deck', 'cara'],
     data: function(){
-        return {}
+        return {
+            mazo:[]
+        }
     },
     mounted: function(){},
     watch: {},
-    computed: {},
+    computed: {
+        one: function(){
+            return this.deck.slice(0,1);
+        }
+    },
     methods:{},
 }
 </script>

@@ -4,12 +4,12 @@
             <div class="tile is-8 is-parent taulellDret">
                 <div class="tile is-ancestor is-child">
                     <div class="tile is-vertical is-parent">
-                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio"></display></div>
+                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true"></display></div>
                         <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;">ENCUENTROS QUEST</div>
                         <div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>
-                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHeroDeckPlayer"></display></div>
-                        <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;">BAIXADES</div>
-                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMaPlayer"></display></div>
+                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHeroDeckPlayer" :cara="true" :rol="'diplay_aliats'"></display></div>
+                        <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getTaula" :rol="'diplay_aliats'":cara="true"></display></div>
+                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMaPlayer" :cara="true" :rol="'diplay_aliats_ma'"></display></div>
                     </div>
                 </div>
             </div>
@@ -18,25 +18,24 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila :deck="getDeckQuest" :posicio="'dors'"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getDeckQuest" :deck="getDeckQuest" :cara="false"></pila></div>
                                 <div class="column is-one-quarter">DESCARTES ENCUENTROS</div>
                                 <div class="column is-half">PUNTUACIONS GLOBALS</div>
                             </div>
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-thirds">VIATGE</div>
+                                <div class="column is-one-thirds"><pila :deck="getMission" :cara="true"></pila></div>
                                 <div class="column is-multiline">
                                     <div class="column">MISION DECK</div>
                                     <div class="column">MISION DESCARTE</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tile is-child lupa" style="margin-bottom:2% !important;">LUPA</div>
                         <div class="tile is-child stackHerois">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila :deck="getDeckPlayer" :posicio="'dors'"></pila></div>
-                                <div class="column is-one-quarter">DESCARTES HERIOS</div>
+                                <div class="column is-one-quarter"><pila v-if="getDeckPlayer" :deck="getDeckPlayer" :cara="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getDeckOutPlayer" :deck="getDeckOutPlayer" :cara="true"></pila></div>
                                 <div class="column is-half">PUNTUACIONS HEROIS</div>
                             </div>
                         </div>
@@ -44,6 +43,7 @@
                 </div>
             </div>
         </div>
+        <lupa v-if="getLupaCard"></lupa>
     </div>
 </template>
 
@@ -52,6 +52,7 @@
 import Pila from './components/pila.vue'
 import Carta from './components/carta.vue'
 import Display from './components/display.vue'
+import Lupa from './components/lupa'
 import * as types from './store/mutation-types'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -64,7 +65,8 @@ export default {
     components: {
         'pila': Pila,
         'carta':  Carta,
-        'display': Display
+        'display': Display,
+        'lupa': Lupa
     },
     data () {
       return {
@@ -83,10 +85,13 @@ export default {
             getDeckQuest: 'deckQuest',
             getOutDeckQuest: 'deckOutQuest',
             getDeckPlayer: 'deckPlayer',
+            getDeckOutPlayer: 'deckOutPlayer',
             getHeroDeckPlayer: 'deckHeroPlayer',
             getMaPlayer: 'maPlayer',
             getPreparacio: 'deckPreparacio',
-            getMission: 'missionDeck'
+            getMission: 'missionDeck',
+            getTaula: 'taulaDeck',
+            getLupaCard: 'getLupaCard'
         })
     },
     methods:{
@@ -178,8 +183,7 @@ html {
         min-height: 15%;
     }
 
-    .stackMision,
-    .lupa {
+    .stackMision {
         height: 30%;
         min-height: 30%;
     }
