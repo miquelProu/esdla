@@ -18,6 +18,9 @@
             <b-dropdown-item v-on:click="addResource">Add Resource</b-dropdown-item>
             <b-dropdown-item v-on:click="SubsResource">Subs Resource</b-dropdown-item>
         </template>
+        <template v-if="card.type == 'Misio'">
+            <b-dropdown-item v-on:click="flip">Flip</b-dropdown-item>
+        </template>
         <hr class="dropdown-divider">
         <b-dropdown-item v-on:click="eliminar(eliminarDades)">Eliminar</b-dropdown-item>
     </b-dropdown>
@@ -26,10 +29,11 @@
 <script>
     import { mapActions } from 'vuex'
     import * as types from '../store/mutation-types'
+    import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
 
     export default {
         name: 'down',
-        components: {},
+        components: {BDropdownItem},
         props: ['card', 'rol'],
         data: function(){
             return {}
@@ -59,6 +63,9 @@
             },
             SubsResource: function(){
                 this.$emit('resource', 'subs');
+            },
+            flip: function(){
+                this.$emit('flip', true);
             }
         },
     }

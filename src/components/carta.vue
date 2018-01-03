@@ -4,7 +4,7 @@
             <resource v-if="resource > 0" :type="'foo'" :value="resource"></resource>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
-        <down :rol="rol" :card="carta"  @resource="newResource"></down>
+        <down :rol="rol" :card="carta"  @resource="newResource" @flip="flip"></down>
     </div>
 </template>
 
@@ -31,7 +31,8 @@ export default {
             rotate: false,
             resource: 0,
             damage: 0,
-            viatge: 0
+            viatge: 0,
+            girar: false
         }
     },
     mounted: function(){
@@ -69,7 +70,11 @@ export default {
         }),
         srcImage: function(){
             if (this.cara) {
-                return "/dist/cartas/" + this.carta.id + ".png";
+                if (this.girar){
+                    return "/dist/cartas/" + this.carta.id + ".B.png";
+                } else {
+                    return "/dist/cartas/" + this.carta.id + ".png";
+                }
             } else {
                 if (this.carta.type == 'Encounter' || this.carta.type == 'Setup') {
                     return "/dist/cartas/encounter.jpg";
@@ -94,6 +99,11 @@ export default {
                 this.resource ++;
             } else {
                 this.resource --;
+            }
+        },
+        flip: function(val){
+            if (val){
+                this.girar = !this.girar;
             }
         }
     }
