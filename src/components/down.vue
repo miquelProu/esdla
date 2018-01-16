@@ -16,9 +16,13 @@
         </template>
         <template v-if="rol == 'diplay_aliats'">
             <b-dropdown-item v-on:click="addResource">Add Resource</b-dropdown-item>
-            <b-dropdown-item v-on:click="SubsResource">Subs Resource</b-dropdown-item>
+            <b-dropdown-item v-on:click="subsResource">Subs Resource</b-dropdown-item>
+            <b-dropdown-item v-on:click="addDamage">Add Damage</b-dropdown-item>
+            <b-dropdown-item v-on:click="subsDamage">Subs Damage</b-dropdown-item>
+            <b-dropdown-item v-on:click="rotate">Esgotar</b-dropdown-item>
+            <b-dropdown-item v-on:click="noRotate">Recuperar</b-dropdown-item>
         </template>
-        <template v-if="card.type == 'Misio'">
+        <template v-if="card.type == 'Quest'">
             <b-dropdown-item v-on:click="flip">Flip</b-dropdown-item>
         </template>
         <hr class="dropdown-divider">
@@ -61,8 +65,20 @@
             addResource: function(){
                 this.$emit('resource','add');
             },
-            SubsResource: function(){
+            subsResource: function(){
                 this.$emit('resource', 'subs');
+            },
+            addDamage: function(){
+                this.$emit('damage','add');
+            },
+            subsDamage: function(){
+                this.$emit('damage', 'subs');
+            },
+            rotate: function(){
+                this.$emit('rotate', true);
+            },
+            noRotate: function(){
+                this.$emit('rotate', false);
             },
             flip: function(){
                 this.$emit('flip', true);

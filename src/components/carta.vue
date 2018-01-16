@@ -2,15 +2,17 @@
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="image">
             <resource v-if="resource > 0" :type="'foo'" :value="resource"></resource>
+            <damage v-if="damage > 0" :type="'foo'" :value="damage"></damage>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
-        <down :rol="rol" :card="carta"  @resource="newResource" @flip="flip"></down>
+        <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta"  @resource="newResource" @flip="flip" @damage="newDamage" @rotate="newRotate"></down>
     </div>
 </template>
 
 <script>
     import Down from './down'
     import Resource from './resources'
+    import Damage from './damage'
 
     import { mapActions } from 'vuex'
 
@@ -18,7 +20,8 @@ export default {
     name: 'carta',
     components: {
         down: Down,
-        resource: Resource
+        resource: Resource,
+        damage: Damage
     },
     props: ['card', 'cara', 'rol'],
     data: function(){
@@ -91,7 +94,11 @@ export default {
                 this.setLupaPosition('left');
             }
             if(this.cara){
-                this.setLupaCard(this.card);
+                let temp = _.clone(this.carta);
+                if (this.girar) {
+                    temp.id = temp.id + ".B";
+                }
+                this.setLupaCard(temp);
             }
         },
         newResource: function(value){
@@ -101,10 +108,20 @@ export default {
                 this.resource --;
             }
         },
+        newDamage: function(value){
+            if (value == 'add') {
+                this.damage ++;
+            } else {
+                this.damage --;
+            }
+        },
         flip: function(val){
             if (val){
                 this.girar = !this.girar;
             }
+        },
+        newRotate: function(val){
+            this.rotate = val;
         }
     }
 }
@@ -127,12 +144,18 @@ export default {
 
     .norotate {
         transform: rotate(-90deg);
+
     }
 
     .dropdown {
         position:absolute;
         top:0;
         right:0;
+
+        &.norotate {
+            left: 0;
+            right:auto;
+        }
     }
 
     button {
@@ -140,6 +163,12 @@ export default {
         height:100% !important;
 
         span {height:100%;}
+    }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 </style>

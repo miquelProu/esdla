@@ -1,6 +1,6 @@
 <template>
-    <div class="resource is-clearfix">
-        <img src="../assets/markers/62a2ba76-9872-481b-b8fc-ec35447ca640.png"/>
+    <div class="damage is-clearfix">
+        <img src="../assets/markers/38d55f36-04d7-4cf9-a496-06cb84de567d.png"/>
         <div>{{value}}</div>
     </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 
     export default {
-        name: 'resource',
+        name: 'damage',
         components: {},
         props: ['type', 'value'],
         data: function(){
@@ -22,11 +22,12 @@
 </script>
 
 <style lang="scss">
-    .resource {
-        position: absolute;
+    .damage {
+
         color:white;
-        top:30%;
+        top:70%;
         left:0;
+        position: absolute;
         margin-top: -22px;
 
         img {
