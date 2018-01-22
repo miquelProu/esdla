@@ -6,6 +6,9 @@ import * as types from './mutation-types'
 
 Vue.use(Vuex);
 
+const PLAYING_DECK_LIST = [types.AREA_PREPARACIO, types.AREA_HERO, types.AREA_ALIATS, types.AREA_MA];
+
+const PLAYING_ALIES_DECK_LIST = [types.AREA_HERO, types.AREA_ALIATS, types.AREA_MA];
 
 export default new Vuex.Store({
     state:{
@@ -171,9 +174,15 @@ export default new Vuex.Store({
             }
         },
         eliminar: function({commit, state}, deck){
-            let cart = deck.slice(0,1);
-            let carta =cart[0];
-            console.log(deck[1],carta);
+            // let cart = deck.slice(0,1);
+            let carta =deck.carta;
+            console.log(deck);
+            console.log(PLAYING_ALIES_DECK_LIST, deck.deck);
+            if (PLAYING_ALIES_DECK_LIST.indexOf(deck.deck) > -1) {
+                console.log('PILA ALIATS: '+deck.pos+'::'+deck.deck);
+            }
+
+
             if(deck[1] == types.ALL_TO_MA_PLAYER){
                 let esborrar =  _.findIndex(state.taulaDeck, function(c) {return c.id == carta.id});
                 let ma = state.maPlayer;

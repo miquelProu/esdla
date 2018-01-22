@@ -31,9 +31,10 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
     import * as types from '../store/mutation-types'
     import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
+    import _ from 'lodash'
 
     export default {
         name: 'down',
@@ -48,7 +49,8 @@
                 [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
                 [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
                 [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
-                [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK
+                [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
+
             }
         },
         mounted: function(){
@@ -56,7 +58,24 @@
         },
         watch: {},
         computed: {
+            ...mapGetters({
+                getDeckQuest: 'deckQuest',
+                getOutDeckQuest: 'deckOutQuest',
+                getDeckPlayer: 'deckPlayer',
+                getDeckOutPlayer: 'deckOutPlayer',
+                getHeroDeckPlayer: 'deckHeroPlayer',
+                getMaPlayer: 'maPlayer',
+                getPreparacio: 'deckPreparacio',
+                getMission: 'missionDeck',
+                getTaula: 'taulaDeck',
+                getLupaCard: 'getLupaCard'
+            }),
             eliminarDades: function(){
+
+                let resp = this.searchCard(this.card);
+
+
+                console.log(resp);
                 let a = [];
                 a.push(this.card);
                 if (this.rol == types.AREA_PLAYER_DECK) {
@@ -67,8 +86,9 @@
                     a.push(types.ALL_TO_OUT_DECK_PLAYER);
                 }
 
-                return a;
-            },
+                // return a;
+                return resp;
+            }
         },
         methods:{
             ...mapActions({
@@ -98,6 +118,34 @@
             },
             flip: function(){
                 this.$emit('flip', true);
+            },
+            searchCard: function(carta){
+                let obj = {carta: carta, deck: null, pos: null};
+                let preparacio =  _.findIndex(this.getPreparacio, function(c) {return c.ID == carta.ID});
+                if (preparacio > 0 ){
+                    obj.deck = types.AREA_PREPARACIO;
+                    obj.pos = preparacio;
+                } else {
+                    let hero =  _.findIndex(this.getHeroDeckPlayer, function(c) {return c.ID == carta.ID});
+                    if (hero > 0) {
+                        obj.deck = types.AREA_HERO;
+                        obj.pos = hero;
+                    } else {
+                        let aliats =  _.findIndex(this.getTaula, function(c) {return c.ID == carta.ID});
+                        if (aliats > 0) {
+                            obj.deck = types.AREA_ALIATS;
+                            obj.pos = aliats ;
+                        } else {
+                            let ma =  _.findIndex(this.getMaPlayer, function(c) {return c.ID == carta.ID});
+                            if (ma > 0){
+                                obj.deck = types.AREA_MA;
+                                obj.pos = ma;
+                            }
+                        }
+                    }
+                }
+                return obj;
+
             }
         },
     }
