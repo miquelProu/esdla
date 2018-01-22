@@ -9,48 +9,48 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state:{
-        allDeckQuest: [],
-        allDeckPlayer: [],
-        deckQuest: [],
-        outDeckQuest: [],
-        deckPlayer: [],
-        outDeckPlayer: [],
-        heroDeckPlayer: [],
-        maPlayer: [],
-        preparacioDeck: [],
-        missionDeck: [],
-        taulaDeck: [],
+        allDeckQuest: [],       // TOT el Deck DOLENTS
+        allDeckPlayer: [],      // TOT el Deck BONS
+        deckQuest: [],          // AREA_QUEST_DECK
+        outDeckQuest: [],       // AREA_QUEST_OUT_DECK
+        deckPlayer: [],         // AREA_PLAYER_DECK
+        outDeckPlayer: [],      // AREA_PLAYER_OUT_DECK
+        heroDeckPlayer: [],     // AREA HERO
+        maPlayer: [],           // AREA_MA
+        preparacioDeck: [],     // AREA_PREPARACIO
+        missionDeck: [],        // AREA_MISION_DECK
+        taulaDeck: [],          // AREA_ALIATS
         lupa: {
             carta: null,
             position: 'right'
         },
     },
     getters:{
-       deckQuest(state){
+       deckQuest(state){                    // Get AREA_QUEST_DECK
            return state.deckQuest;
        },
-       deckOutQuest(state){
+       deckOutQuest(state){                 // Get AREA_QUEST_OUT_DECK
            return state.outDeckQuest;
        },
-       deckPlayer(state){
+       deckPlayer(state){                   // Get AREA_PLAYER_DECK
            return state.deckPlayer;
        },
-        deckOutPlayer(state){
+        deckOutPlayer(state){               // Get AREA_PLAYER_OUT_DECK
            return state.outDeckPlayer
         },
-       deckHeroPlayer(state){
+       deckHeroPlayer(state){               // Get AREA_HERO
            return state.heroDeckPlayer;
        },
-        maPlayer(state){
+        maPlayer(state){                    // Get AREA_MA
            return state.maPlayer;
         },
-        deckPreparacio(state){
+        deckPreparacio(state){              // Get AREA_PREPARACIO
             return state.preparacioDeck;
         },
-        missionDeck(state){
+        missionDeck(state){                 // Get AREA_MISION_DECK
             return state.missionDeck;
         },
-        taulaDeck(state){
+        taulaDeck(state){                   // Get AREA_ALIATS
            return state.taulaDeck;
         },
         getLupaCard(state){
@@ -62,41 +62,41 @@ export default new Vuex.Store({
 
     },
     mutations:{
-        [types.ALL_TO_ALL_DECK_QUEST](state, payload){
+        [types.ALL_TO_ALL_DECK_QUEST](state, payload){      // Mutation TOT el Deck DOLENTS
             state.allDeckQuest = payload;
         },
-        [types.ALL_TO_DECK_QUEST](state, payload){
+        [types.ALL_TO_DECK_QUEST](state, payload){          // Mutation AREA_QUEST_DECK
             state.deckQuest = payload;
         },
-        [types.ALL_TO_OUT_DECK_QUEST](state, payload){
+        [types.ALL_TO_OUT_DECK_QUEST](state, payload){      // Mutation AREA_QUEST_OUT_DECK
             state.outDeckQuest = payload;
         },
-        [types.ALL_TO_QUEST_DECK](state, payload){
+        [types.ALL_TO_QUEST_DECK](state, payload){          // Mutation AREA_MISION_DECK
             state.missionDeck = payload;
         },
-        [types.ALL_TO_PREPARACIO_DECK](state, payload){
+        [types.ALL_TO_PREPARACIO_DECK](state, payload){     // Mutation AREA_PREPARACIO
             state.preparacioDeck = payload;
         },
 
-        [types.ALL_TO_ALL_DECK_PLAYER](state, payload){
+        [types.ALL_TO_ALL_DECK_PLAYER](state, payload){     // Mutation TOT el Deck BONS
             state.allDeckPlayer = payload;
         },
-        [types.ALL_TO_DECK_PLAYER](state, payload) {
+        [types.ALL_TO_DECK_PLAYER](state, payload) {        // Mutation AREA_PLAYER_DECK
             state.deckPlayer = payload;
         },
-        [types.ALL_TO_OUT_DECK_PLAYER](state, payload){
+        [types.ALL_TO_OUT_DECK_PLAYER](state, payload){     // Mutation AREA_PLAYER_OUT_DECK
             state.outDeckPlayer = payload;
         },
-        [types.ALL_TO_HERO_DECK_PLAYER](state, payload) {
+        [types.ALL_TO_HERO_DECK_PLAYER](state, payload) {   //Mutation AREA HERO
             state.heroDeckPlayer = payload;
         },
-        [types.ALL_TO_MA_PLAYER](state, payload){
+        [types.ALL_TO_MA_PLAYER](state, payload){           // Mutation AREA_MA
             state.maPlayer = payload;
         },
         [types.ONE_TO_PREPARACIO](state, payload){
             state.preparacioDeck = payload;
         },
-        [types.ALL_TO_TAULA](state, payload){
+        [types.ALL_TO_TAULA](state, payload){               // Mutation AREA_ALIATS
             state.taulaDeck = payload;
         },
         [types.SET_LUPA_CARD](state, carta){
@@ -147,17 +147,17 @@ export default new Vuex.Store({
             }
         },
         toTaula: function({commit, state}, carta){
-          let ma = state.maPlayer;
-          let taula = state.taulaDeck;
-          // let ma2 = _.filter(ma, function(c) {return c.id != carta.id});
-          let esborrar =  _.findIndex(ma, function(c) {return c.id == carta.id});
-          console.log(esborrar);
-          console.log(ma);
-          let ma2 = ma.splice(esborrar, 1)
-          console.log(ma2);
-          commit(types.ALL_TO_MA_PLAYER, ma);
-          taula.push(carta);
-          commit(types.ALL_TO_TAULA, taula);
+            let ma = state.maPlayer;
+            let taula = state.taulaDeck;
+             // let ma2 = _.filter(ma, function(c) {return c.id != carta.id});
+            let esborrar =  _.findIndex(ma, function(c) {return c.id == carta.id});
+            console.log(esborrar);
+            console.log(ma);
+            let ma2 = ma.splice(esborrar, 1)
+            console.log(ma2);
+            commit(types.ALL_TO_MA_PLAYER, ma);
+            taula.push(carta);
+            commit(types.ALL_TO_TAULA, taula);
         },
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
@@ -180,9 +180,16 @@ export default new Vuex.Store({
                 let ma2 = ma.splice(esborrar, 1)
                 let descartes = state.outDeckPlayer;
                 descartes.unshift(carta);
-                console.log(ma2);
-                commit(types.ALL_TO_MA_PLAYER, ma);
-                commit(types.ALL_TO_OUT_DECK_PLAYER, descartes);
+                commit(deck[1], ma);
+                commit(deck[2], descartes);
+            } else if (deck[1] == types.AREA_HERO) {
+                let esborrar =  _.findIndex(state.heroDeckPlayer, function(c) {return c.id == carta.id});
+                let ma = state.heroDeckPlayer;
+                let ma2 = ma.splice(esborrar, 1)
+                let descartes = state.outDeckPlayer;
+                descartes.unshift(carta);
+                commit(types.ALL_TO_HERO_DECK_PLAYER, ma);
+                commit(deck[2], descartes);
             }
 
         },

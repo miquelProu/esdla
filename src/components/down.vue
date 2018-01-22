@@ -3,18 +3,18 @@
         <button class="button is-primary" slot="trigger">
             <b-icon icon="menu-down"></b-icon>
         </button>
-        <template v-if="rol == 'pila' && card.type == 'Encounter'">
+        <template v-if="rol == AREA_QUEST_DECK && card.type == 'Encounter'">
             <b-dropdown-item v-on:click="toPreparacio(1)">A preparació</b-dropdown-item>
             <b-dropdown-item v-on:click="remenar('Encounter')">Remenar Preparació</b-dropdown-item>
         </template>
-        <template v-if="rol == 'pila' && (card.type == 'Ally' || card.type == 'Attachment' || card.type == 'Event')">
+        <template v-if="rol == AREA_PLAYER_DECK && (card.type == 'Ally' || card.type == 'Attachment' || card.type == 'Event')">
             <b-dropdown-item v-on:click="toMa(1)">A la ma</b-dropdown-item>
             <b-dropdown-item v-on:click="remenar('Aliats')">Remenar Aliats</b-dropdown-item>
         </template>
-        <template v-if="rol == 'diplay_aliats_ma' && (card.type == 'Ally' || card.type == 'Attachment' || card.type == 'Event')">
+        <template v-if="rol == AREA_MA && (card.type == 'Ally' || card.type == 'Attachment' || card.type == 'Event')">
             <b-dropdown-item v-on:click="toTaula(card)">Baixar a taula</b-dropdown-item>
         </template>
-        <template v-if="rol == 'diplay_aliats'">
+        <template v-if="rol == AREA_ALIATS">
             <b-dropdown-item v-on:click="addResource">Add Resource</b-dropdown-item>
             <b-dropdown-item v-on:click="subsResource">Subs Resource</b-dropdown-item>
             <b-dropdown-item v-on:click="addDamage">Add Damage</b-dropdown-item>
@@ -40,7 +40,16 @@
         components: {BDropdownItem},
         props: ['card', 'rol'],
         data: function(){
-            return {}
+            return {
+                [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
+                [types.AREA_HERO]: types.AREA_HERO,
+                [types.AREA_ALIATS]: types.AREA_ALIATS,
+                [types.AREA_MA]: types.AREA_MA,
+                [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
+                [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
+                [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
+                [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK
+            }
         },
         mounted: function(){
 
@@ -50,7 +59,14 @@
             eliminarDades: function(){
                 let a = [];
                 a.push(this.card);
-                a.push(types.ALL_TO_MA_PLAYER);
+                if (this.rol == types.AREA_PLAYER_DECK) {
+                    a.push(types.ALL_TO_MA_PLAYER);
+                    a.push(types.ALL_TO_OUT_DECK_PLAYER);
+                } else if (this.rol == types.AREA_HERO) {
+                    a.push(types.AREA_HERO);
+                    a.push(types.ALL_TO_OUT_DECK_PLAYER);
+                }
+
                 return a;
             },
         },

@@ -4,12 +4,12 @@
             <div class="tile is-8 is-parent taulellDret">
                 <div class="tile is-ancestor is-child">
                     <div class="tile is-vertical is-parent">
-                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true"></display></div>
+                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true" :rol="AREA_PREPARACIO"></display></div>
                         <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;">ENCUENTROS QUEST</div>
                         <div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>
-                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHeroDeckPlayer" :cara="true" :rol="'diplay_aliats'"></display></div>
-                        <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getTaula" :rol="'diplay_aliats'":cara="true"></display></div>
-                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMaPlayer" :cara="true" :rol="'diplay_aliats_ma'"></display></div>
+                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHeroDeckPlayer" :cara="true" :rol="AREA_HERO"></display></div>
+                        <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getTaula" :cara="true" :rol="AREA_ALIATS"></display></div>
+                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMaPlayer" :cara="true" :rol="AREA_MA"></display></div>
                     </div>
                 </div>
             </div>
@@ -18,14 +18,14 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getDeckQuest" :deck="getDeckQuest" :cara="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getDeckQuest" :cara="false" :deck="getDeckQuest" :rol="AREA_QUEST_DECK"></pila></div>
                                 <div class="column is-one-quarter">DESCARTES ENCUENTROS</div>
                                 <div class="column is-half">PUNTUACIONS GLOBALS</div>
                             </div>
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-thirds"><pila :deck="getMission" :cara="true"></pila></div>
+                                <div class="column is-one-thirds"><pila :deck="getMission" :cara="true" :rol="AREA_MISION_DECK"></pila></div>
                                 <div class="column is-multiline">
                                     <div class="column">MISION DECK</div>
                                     <div class="column">MISION DESCARTE</div>
@@ -34,8 +34,8 @@
                         </div>
                         <div class="tile is-child stackHerois">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getDeckPlayer" :deck="getDeckPlayer" :cara="false"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getDeckOutPlayer" :deck="getDeckOutPlayer" :cara="true"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getDeckPlayer" :deck="getDeckPlayer" :cara="false" :rol="AREA_PLAYER_DECK"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getDeckOutPlayer" :deck="getDeckOutPlayer" :cara="true" :rol="AREA_PLAYER_OUT_DECK"></pila></div>
                                 <div class="column is-half">PUNTUACIONS HEROIS</div>
                             </div>
                         </div>
@@ -70,13 +70,19 @@ export default {
     },
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App',
+          [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
+          [types.AREA_HERO]: types.AREA_HERO,
+          [types.AREA_ALIATS]: types.AREA_ALIATS,
+          [types.AREA_MA]: types.AREA_MA,
+          [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
+          [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
+          [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
+          [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK
       }
     },
     mounted: function(){
         this.loadDeck(QuestDeckFile, types.QUEST);
         this.loadDeck(PlayerDeckFile, types.PLAYER);
-
 
     },
     watch: {},

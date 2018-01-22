@@ -16,6 +16,20 @@ export const ALL_TO_TAULA = 'ALL_TO_TAULA'
 export const SET_LUPA_CARD = 'SET_LUPA_CARD'
 export const SET_LUPA_POSITION = 'SET_LUPA_POSITION'
 
-
 export const PLAYER = 'PLAYER'
 export const QUEST = 'QUEST'
+
+
+export const AREA_PREPARACIO = 'AREA_PREPARACIO'
+export const AREA_ATACK = 'AREA_ATACK'
+export const AREA_HERO = 'AREA_HERO'
+export const AREA_ALIATS = 'AREA_ALIATS'
+export const AREA_MA = 'AREA_MA'
+export const AREA_QUEST_DECK = 'AREA_QUEST_DECK'
+export const AREA_QUEST_OUT_DECK = 'AREA_QUEST_OUT_DECK'
+export const AREA_MISION_DECK = 'AREA_MISION_DECK'
+export const AREA_MISION_OUT_DECK = 'AREA_MISION_OUT_DECK'
+export const AREA_PLAYER_DECK = 'AREA_PLAYER_DECK'
+export const AREA_PLAYER_OUT_DECK = 'AREA_PLAYER_OUT_DECK'
+
+

@@ -1,7 +1,7 @@
 <template>
     <div class="columns is-gapless">
         <div class="column" v-for="carta in one">
-            <carta :card="carta" :cara="cara" :rol="'pila'"></carta>
+            <carta :card="carta" :cara="cara" :rol="rol"></carta>
         </div>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     components: {
         'carta': Carta
     },
-    props: ['deck', 'cara'],
+    props: ['deck', 'cara', 'rol'],
     data: function(){
         return {
             mazo:[]
