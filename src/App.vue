@@ -68,7 +68,7 @@ export default {
         'display': Display,
         'lupa': Lupa
     },
-    data () {
+    data: function() {
       return {
           [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
           [types.AREA_HERO]: types.AREA_HERO,
@@ -77,7 +77,8 @@ export default {
           [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
           [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
           [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
-          [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK
+          [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
+          setID: 0,
       }
     },
     mounted: function(){
@@ -105,6 +106,7 @@ export default {
             allToDeck: 'allToDeck'
         }),
         loadDeck: function(file, type) {
+            let self = this;
             let sections = file.deck.section;
             let deck = [];
             _.forEach(sections, function (section) {
@@ -115,9 +117,12 @@ export default {
                     card['id'] = carta['$']['id'];
                     card['name'] = carta['_'];
                     card['type'] = tipus;
+                    card['ID'] = self.setID;
                     for (let x = 1; x <= qty; x++) {
                         deck.push(card);
+                        self.setID++;
                     }
+
 
                 });
             });
