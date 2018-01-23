@@ -59,15 +59,15 @@
         watch: {},
         computed: {
             ...mapGetters({
-                getDeckQuest: 'deckQuest',
-                getOutDeckQuest: 'deckOutQuest',
-                getDeckPlayer: 'deckPlayer',
-                getDeckOutPlayer: 'deckOutPlayer',
-                getHeroDeckPlayer: 'deckHeroPlayer',
-                getMaPlayer: 'maPlayer',
-                getPreparacio: 'deckPreparacio',
-                getMission: 'missionDeck',
-                getTaula: 'taulaDeck',
+                getQuestDeck: 'questDeck',
+                getQuestOutDeck: 'questOutDeck',
+                getPlayerDeck: 'playerDeck',
+                getPlayerOutDeck: 'playerOutDeck',
+                getHero: 'hero',
+                getMa: 'ma',
+                getPreparacio: 'preparacio',
+                getMissionDeck: 'missionDeck',
+                getAliats: 'aliats',
                 getLupaCard: 'getLupaCard'
             }),
             eliminarDades: function(){
@@ -79,11 +79,11 @@
                 let a = [];
                 a.push(this.card);
                 if (this.rol == types.AREA_PLAYER_DECK) {
-                    a.push(types.ALL_TO_MA_PLAYER);
-                    a.push(types.ALL_TO_OUT_DECK_PLAYER);
+                    a.push(types.SET_TO_MA);
+                    a.push(types.SET_TO_PLAYER_OUT_DECK);
                 } else if (this.rol == types.AREA_HERO) {
                     a.push(types.AREA_HERO);
-                    a.push(types.ALL_TO_OUT_DECK_PLAYER);
+                    a.push(types.SET_TO_PLAYER_OUT_DECK);
                 }
 
                 // return a;
@@ -126,17 +126,17 @@
                     obj.deck = types.AREA_PREPARACIO;
                     obj.pos = preparacio;
                 } else {
-                    let hero =  _.findIndex(this.getHeroDeckPlayer, function(c) {return c.ID == carta.ID});
+                    let hero =  _.findIndex(this.getHero, function(c) {return c.ID == carta.ID});
                     if (hero > 0) {
                         obj.deck = types.AREA_HERO;
                         obj.pos = hero;
                     } else {
-                        let aliats =  _.findIndex(this.getTaula, function(c) {return c.ID == carta.ID});
+                        let aliats =  _.findIndex(this.getAliats, function(c) {return c.ID == carta.ID});
                         if (aliats > 0) {
                             obj.deck = types.AREA_ALIATS;
                             obj.pos = aliats ;
                         } else {
-                            let ma =  _.findIndex(this.getMaPlayer, function(c) {return c.ID == carta.ID});
+                            let ma =  _.findIndex(this.getMa, function(c) {return c.ID == carta.ID});
                             if (ma > 0){
                                 obj.deck = types.AREA_MA;
                                 obj.pos = ma;
