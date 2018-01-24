@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const PLAYING_DECK_LIST = [types.AREA_PREPARACIO, types.AREA_HERO, types.AREA_ALIATS, types.AREA_MA];
 
 const PLAYING_ALIES_DECK_LIST = [types.AREA_HERO, types.AREA_ALIATS, types.AREA_MA];
+const PLAYING_QUEST_DECK_LIST = [types.AREA_PREPARACIO];
 
 export default new Vuex.Store({
     state:{
@@ -187,13 +188,31 @@ export default new Vuex.Store({
                     pila = state.hero;
                     retall = pila.splice(deck.pos, 1);
                     commit(types.SET_TO_HERO, pila);
+                } else if (deck.deck == types.AREA_ALIATS){
+                    pila = state.aliats;
+                    retall = pila.splice(deck.pos, 1);
+                    commit(types.SET_TO_ALIATS, pila);
+                } else if (deck.deck == types.AREA_MA){
+                    pila = state.ma;
+                    retall = pila.splice(deck.pos, 1);
+                    commit (types.SET_TO_MA, pila);
                 }
                 let descartes = state.playerOutDeck;
                 descartes.unshift(deck.carta);
                 commit(types.SET_TO_PLAYER_OUT_DECK, descartes);
 
             } else {
-
+                console.log('PILA QUEST: '+deck.pos+'::'+deck.deck);
+                let pila;
+                let retall;
+                if (deck.deck == types.AREA_PREPARACIO){
+                    pila = state.preparacio;
+                    retall = pila.splice(deck.pos, 1);
+                    commit(types.SET_TO_PREPARACIO, pila);
+                }
+                let descartes = state.questOutDeck;
+                descartes.unshift(deck.carta);
+                commit(types.SET_TO_QUEST_OUT_DECK, descartes);
             }
 
 

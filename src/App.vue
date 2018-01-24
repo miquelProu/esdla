@@ -19,7 +19,7 @@
                         <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
                             <div class="columns">
                                 <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :deck="getQuestDeck" :rol="AREA_QUEST_DECK"></pila></div>
-                                <div class="column is-one-quarter">DESCARTES ENCUENTROS</div>
+                                <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK"></pila></div>
                                 <div class="column is-half">PUNTUACIONS GLOBALS</div>
                             </div>
                         </div>
@@ -75,6 +75,7 @@ export default {
           [types.AREA_ALIATS]: types.AREA_ALIATS,
           [types.AREA_MA]: types.AREA_MA,
           [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
+          [types.AREA_QUEST_OUT_DECK]: types.AREA_QUEST_OUT_DECK,
           [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
           [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
           [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,

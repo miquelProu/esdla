@@ -122,22 +122,22 @@
             searchCard: function(carta){
                 let obj = {carta: carta, deck: null, pos: null};
                 let preparacio =  _.findIndex(this.getPreparacio, function(c) {return c.ID == carta.ID});
-                if (preparacio > 0 ){
+                if (preparacio > -1 ){
                     obj.deck = types.AREA_PREPARACIO;
                     obj.pos = preparacio;
                 } else {
                     let hero =  _.findIndex(this.getHero, function(c) {return c.ID == carta.ID});
-                    if (hero > 0) {
+                    if (hero > -1) {
                         obj.deck = types.AREA_HERO;
                         obj.pos = hero;
                     } else {
                         let aliats =  _.findIndex(this.getAliats, function(c) {return c.ID == carta.ID});
-                        if (aliats > 0) {
+                        if (aliats > -1) {
                             obj.deck = types.AREA_ALIATS;
                             obj.pos = aliats ;
                         } else {
                             let ma =  _.findIndex(this.getMa, function(c) {return c.ID == carta.ID});
-                            if (ma > 0){
+                            if (ma > -1){
                                 obj.deck = types.AREA_MA;
                                 obj.pos = ma;
                             }
@@ -145,7 +145,6 @@
                     }
                 }
                 return obj;
-
             }
         },
     }
