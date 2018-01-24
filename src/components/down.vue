@@ -11,8 +11,11 @@
             <b-dropdown-item v-on:click="toMa(1)">A la ma</b-dropdown-item>
             <b-dropdown-item v-on:click="remenar('Aliats')">Remenar Aliats</b-dropdown-item>
         </template>
-        <template v-if="rol == AREA_MA && (card.type == 'Ally' || card.type == 'Attachment' || card.type == 'Event')">
+        <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="toTaula(card)">Baixar a taula</b-dropdown-item>
+        </template>
+        <template v-if="rol == AREA_PREPARACIO">
+            <b-dropdown-item v-on:click="toAttack(card)">Baixar a enfrontament</b-dropdown-item>
         </template>
         <template v-if="rol == AREA_ALIATS">
             <b-dropdown-item v-on:click="addResource">Add Resource</b-dropdown-item>
@@ -96,8 +99,13 @@
                 toMa: 'toMa',
                 remenar: 'remenar',
                 toPreparacio: 'toPreparacio',
-                eliminar: 'eliminar'
+                eliminar: 'eliminar',
+                move: 'move'
             }),
+            toAttack: function(){
+                let obj = {card: this.card, from: types.AREA_PREPARACIO, to: types.AREA_ATACK};
+                this.move(obj);
+            },
             addResource: function(){
                 this.$emit('resource','add');
             },

@@ -163,6 +163,10 @@ export default new Vuex.Store({
             taula.push(carta);
             commit(types.SET_TO_ALIATS, taula);
         },
+        move: function({commit, state}, obj) {
+            let pila = state[obj.from];
+
+        },
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
                 let d = this.getters.questDeck;
