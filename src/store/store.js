@@ -24,6 +24,7 @@ export default new Vuex.Store({
         preparacio: [],         // AREA_PREPARACIO
         missionDeck: [],        // AREA_MISION_DECK
         aliats: [],             // AREA_ALIATS
+        atack: [],              // AREA_ATACK
         lupa: {
             carta: null,
             position: 'right'
@@ -97,6 +98,9 @@ export default new Vuex.Store({
         [types.SET_TO_MA](state, payload){           // Mutation AREA_MA
             state.ma = payload;
         },
+        [types.SET_TO_ATACK](state, payload){           // Mutation AREA_MA
+            state.atack = payload;
+        },
         [types.ONE_TO_PREPARACIO](state, payload){
             state.preparacio = payload;
         },
@@ -164,7 +168,25 @@ export default new Vuex.Store({
             commit(types.SET_TO_ALIATS, taula);
         },
         move: function({commit, state}, obj) {
-            let pila = state[obj.from];
+            let ret = {from: null, to: null};
+
+            for (let f = 0; f <= 1; f++){
+                let ind = (f == 0) ? 'to' : 'from';
+                if (obj[ind] == types.AREA_PREPARACIO) {
+                    ret[ind] = state.preparacio;
+                }
+                if (obj[ind] == types.AREA_ATACK) {
+                    ret[ind] = state.atack;
+                }
+            }
+
+            let esborrar = _.findIndex(ret.from, function(c) {return c.ID == obj.card.ID});
+            ret.from.splice(esborrar, 1);
+            ret.to.shift(obj.card);
+
+            commit(types.SET_TO_PREPARACIO, ret.from);
+            commit(types.SET_TO_ATACK, ret.to);
+
 
         },
         remenar: function({commit, state}, deck){

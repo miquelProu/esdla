@@ -11,6 +11,7 @@ export const SET_TO_MA = 'SET_TO_MA'
 export const SET_TO_PREPARACIO = 'SET_TO_PREPARACIO'
 export const SET_TO_ALIATS = 'SET_TO_ALIATS'
 export const SET_TO_MISSION_DECK = 'SET_TO_MISSION_DECK'
+export const SET_TO_ATACK = 'SET_TO_ATACK'
 
 export const ONE_TO_PREPARACIO = 'ONE_TO_PREPARACIO'
 
