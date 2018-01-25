@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 
 import * as types from './mutation-types'
+import {translateAreaSetTo} from './mutation-types'
 
 Vue.use(Vuex);
 
@@ -19,11 +20,11 @@ export default new Vuex.Store({
         questOutDeck: [],       // AREA_QUEST_OUT_DECK
         playerDeck: [],         // AREA_PLAYER_DECK
         playerOutDeck: [],      // AREA_PLAYER_OUT_DECK
-        hero: [],               // AREA_HERO
-        ma: [],                 // AREA_MA
+        AREA_HERO: [],          // AREA_HERO
+        AREA_MA: [],            // AREA_MA
         preparacio: [],         // AREA_PREPARACIO
         missionDeck: [],        // AREA_MISION_DECK
-        aliats: [],             // AREA_ALIATS
+        AREA_ALIATS: [],        // AREA_ALIATS
         atack: [],              // AREA_ATACK
         lupa: {
             carta: null,
@@ -44,10 +45,10 @@ export default new Vuex.Store({
           return state.playerOutDeck
         },
         hero(state){                        // Get AREA_HERO
-           return state.hero;
+           return state.AREA_HERO;
         },
         ma(state){                          // Get AREA_MA
-           return state.ma;
+           return state.AREA_MA;
         },
         preparacio(state){                  // Get AREA_PREPARACIO
             return state.preparacio;
@@ -56,7 +57,7 @@ export default new Vuex.Store({
             return state.missionDeck;
         },
         aliats(state){                      // Get AREA_ALIATS
-           return state.aliats;
+           return state.AREA_ALIATS;
         },
         getLupaCard(state){
            return state.lupa.carta;
@@ -93,10 +94,10 @@ export default new Vuex.Store({
             state.playerOutDeck = payload;
         },
         [types.SET_TO_HERO](state, payload) {   //Mutation AREA HERO
-            state.hero = payload;
+            state.AREA_HERO = payload;
         },
         [types.SET_TO_MA](state, payload){           // Mutation AREA_MA
-            state.ma = payload;
+            state.AREA_MA = payload;
         },
         [types.SET_TO_ATACK](state, payload){           // Mutation AREA_MA
             state.atack = payload;
@@ -105,7 +106,7 @@ export default new Vuex.Store({
             state.preparacio = payload;
         },
         [types.SET_TO_ALIATS](state, payload){               // Mutation AREA_ALIATS
-            state.aliats = payload;
+            state.AREA_ALIATS = payload;
         },
         [types.SET_LUPA_CARD](state, carta){
             state.lupa.carta = carta;
@@ -167,27 +168,29 @@ export default new Vuex.Store({
             taula.push(carta);
             commit(types.SET_TO_ALIATS, taula);
         },
+        //******************************/
+        // obj.card -> La carta a moure
+        // obj.pos -> La posició que ocupa la carta en l'area actual
+        // obj.from -> L'area on és actualment la carta
+        // obj.to -> L'area on ha d'anar
+        //***************************************/
         move: function({commit, state}, obj) {
-            let ret = {from: null, to: null};
+            //Recullo les barralles From i To
+            let from = state[obj.from];
+            let to = state[obj.to];
 
-            for (let f = 0; f <= 1; f++){
-                let ind = (f == 0) ? 'to' : 'from';
-                if (obj[ind] == types.AREA_PREPARACIO) {
-                    ret[ind] = state.preparacio;
-                }
-                if (obj[ind] == types.AREA_ATACK) {
-                    ret[ind] = state.atack;
-                }
-            }
+            // Trec la carta de l'area actual
+            // Afegeixo la carta a l'area destí
+            from.splice(obj.pos, 1);
+            to.push(obj.card);
 
-            let esborrar = _.findIndex(ret.from, function(c) {return c.ID == obj.card.ID});
-            ret.from.splice(esborrar, 1);
-            ret.to.shift(obj.card);
+            // Resolc l'area en acció
+            let setFrom = translateAreaSetTo(obj.from);
+            let setTo = translateAreaSetTo(obj.to);
 
-            commit(types.SET_TO_PREPARACIO, ret.from);
-            commit(types.SET_TO_ATACK, ret.to);
-
-
+            // Envio a l'state les dues baralles modificades
+            commit(setFrom, from);
+            commit(setTo, to);
         },
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
@@ -211,7 +214,7 @@ export default new Vuex.Store({
                 let retall;
                 // [types.AREA_HERO, types.AREA_ALIATS, types.AREA_MA];
                 if (deck.deck == types.AREA_HERO){
-                    pila = state.hero;
+                    pila = state.AREA_HERO;
                     retall = pila.splice(deck.pos, 1);
                     commit(types.SET_TO_HERO, pila);
                 } else if (deck.deck == types.AREA_ALIATS){

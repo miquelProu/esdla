@@ -12,7 +12,7 @@
             <b-dropdown-item v-on:click="remenar('Aliats')">Remenar Aliats</b-dropdown-item>
         </template>
         <template v-if="rol == AREA_MA">
-            <b-dropdown-item v-on:click="toTaula(card)">Baixar a taula</b-dropdown-item>
+            <b-dropdown-item v-on:click="toTaulaa(card)">Baixar a taula</b-dropdown-item>
         </template>
         <template v-if="rol == AREA_PREPARACIO">
             <b-dropdown-item v-on:click="toAttack(card)">Baixar a enfrontament</b-dropdown-item>
@@ -102,8 +102,27 @@
                 eliminar: 'eliminar',
                 move: 'move'
             }),
+            toTaulaa: function(){
+                let self = this;
+                let deck = this.translateAreaGetter(types.AREA_MA);
+                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
+                let obj = {
+                    card: this.card,
+                    pos: pos,
+                    from: types.AREA_MA,
+                    to: types.AREA_ALIATS
+                };
+                this.move(obj);
+            },
             toAttack: function(){
-                let obj = {card: this.card, from: types.AREA_PREPARACIO, to: types.AREA_ATACK};
+                let deck = this.translateAreaGetter(types.AREA_MA);
+                let pos = _.findIndex(deck, function(c) {return c.ID == this.card.ID});
+                let obj = {
+                    card: this.card,
+                    pos: pos,
+                    from: types.AREA_MA,
+                    to: types.AREA_ALIATS
+                };
                 this.move(obj);
             },
             addResource: function(){
@@ -126,6 +145,14 @@
             },
             flip: function(){
                 this.$emit('flip', true);
+            },
+            translateAreaGetter: function(area){
+                if (area = types.AREA_MA){
+                    return this.getMa;
+                }
+                if (area = types.AREA_ALIATS){
+                    return this.getAliats;
+                }
             },
             searchCard: function(carta){
                 let obj = {carta: carta, deck: null, pos: null};

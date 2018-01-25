@@ -33,3 +33,8 @@ export const AREA_MISION_DECK = 'AREA_MISION_DECK'
 export const AREA_MISION_OUT_DECK = 'AREA_MISION_OUT_DECK'
 export const AREA_PLAYER_DECK = 'AREA_PLAYER_DECK'
 export const AREA_PLAYER_OUT_DECK = 'AREA_PLAYER_OUT_DECK'
+
+export function translateAreaSetTo(area){
+    let nom = area.substring(5, area.length);
+    return 'SET_TO_' + nom;
+};
