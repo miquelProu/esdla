@@ -1,11 +1,12 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="image">
-            <resource v-if="resource > 0" :type="'foo'" :value="resource"></resource>
-            <damage v-if="damage > 0" :type="'foo'" :value="damage"></damage>
+            <resource v-if="resource > 0" :value="resource"></resource>
+            <damage v-if="damage > 0" :value="damage"></damage>
+            <viatge v-if="viatge > 0" :value="viatge"></viatge>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
-        <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta"  @resource="newResource" @flip="flip" @damage="newDamage" @rotate="newRotate"></down>
+        <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta"  @resource="newResource" @flip="flip" @damage="newDamage" @rotate="newRotate" @viatge="newViatge"></down>
     </div>
 </template>
 
@@ -13,6 +14,7 @@
     import Down from './down'
     import Resource from './resources'
     import Damage from './damage'
+    import Viatge from './viatge'
 
     import { mapActions } from 'vuex'
 
@@ -21,7 +23,8 @@ export default {
     components: {
         down: Down,
         resource: Resource,
-        damage: Damage
+        damage: Damage,
+        viatge: Viatge
     },
     props: ['card', 'cara', 'rol'],
     data: function(){
@@ -113,6 +116,13 @@ export default {
                 this.damage ++;
             } else {
                 this.damage --;
+            }
+        },
+        newViatge: function(value){
+            if (value == 'add') {
+                this.viatge ++;
+            } else {
+                this.viatge --;
             }
         },
         flip: function(val){

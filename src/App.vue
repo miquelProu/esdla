@@ -5,7 +5,7 @@
                 <div class="tile is-ancestor is-child">
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true" :rol="AREA_PREPARACIO"></display></div>
-                        <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;">ENCUENTROS QUEST</div>
+                        <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;"><display :deck="getAtack" :cara="true" :rol="AREA_ATACK"></display></div>
                         <div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>
                         <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHero" :cara="true" :rol="AREA_HERO"></display></div>
                         <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getAliats" :cara="true" :rol="AREA_ALIATS"></display></div>
@@ -25,11 +25,8 @@
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-thirds"><pila :deck="getMissionDeck" :cara="true" :rol="AREA_MISION_DECK"></pila></div>
-                                <div class="column is-multiline">
-                                    <div class="column">MISION DECK</div>
-                                    <div class="column">MISION DESCARTE</div>
-                                </div>
+                                <div class="column is-one-half"><pila :deck="getMissionDeck" :cara="true" :rol="AREA_MISION_DECK"></pila></div>
+                                <div class="column is-one-half"><pila :deck="getMissionOutDeck" :cara="true" :rol="AREA_MISION_OUT_DECK"></pila></div>
                             </div>
                         </div>
                         <div class="tile is-child stackHerois">
@@ -77,8 +74,10 @@ export default {
           [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
           [types.AREA_QUEST_OUT_DECK]: types.AREA_QUEST_OUT_DECK,
           [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
+          [types.AREA_MISION_OUT_DECK]: types.AREA_MISION_OUT_DECK,
           [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
           [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
+          [types.AREA_ATACK]: types.AREA_ATACK,
           setID: 0,
       }
     },
@@ -98,7 +97,9 @@ export default {
             getMa: 'ma',
             getPreparacio: 'preparacio',
             getMissionDeck: 'missionDeck',
+            getMissionOutDeck: 'missionOutDeck',
             getAliats: 'aliats',
+            getAtack: 'atack',
             getLupaCard: 'getLupaCard'
         })
     },

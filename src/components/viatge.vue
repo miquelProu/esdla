@@ -1,6 +1,6 @@
 <template>
-    <div class="damage is-clearfix">
-        <img src="../assets/markers/38d55f36-04d7-4cf9-a496-06cb84de567d.png"/>
+    <div class="viatge is-clearfix">
+        <img src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>
         <div>{{value}}</div>
     </div>
 </template>
@@ -8,9 +8,9 @@
 <script>
 
     export default {
-        name: 'damage',
+        name: 'viatge',
         components: {},
-        props: ['type', 'value'],
+        props: ['value'],
         data: function(){
             return {}
         },
@@ -22,10 +22,10 @@
 </script>
 
 <style lang="scss">
-    .damage {
+    .viatge {
 
         color:white;
-        top:50%;
+        top:70%;
         left:0;
         position: absolute;
         margin-top: -22px;
