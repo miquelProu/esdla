@@ -29,6 +29,13 @@ export default new Vuex.Store({
             carta: null,
             position: 'right'
         },
+
+        CONTADOR_PLAYER:{
+            amenasa: 0
+        },
+        CONTADOR_QUEST: {
+            torn: 0
+        }
     },
     getters:{
         questDeck(state){                    // Get AREA_QUEST_DECK
@@ -72,6 +79,12 @@ export default new Vuex.Store({
         },
         getLupaPosition(state){
            return state.lupa.position;
+        },
+        amenasa(state){
+            return state.CONTADOR_PLAYER.amenasa;
+        },
+        torn(state){
+            return state.CONTADOR_QUEST.torn;
         }
 
     },
@@ -127,6 +140,15 @@ export default new Vuex.Store({
         },
         [types.SET_LUPA_POSITION](state, position){
             state.lupa.position = position;
+        },
+        [types.ADD_AMENASA](state){
+            state.CONTADOR_PLAYER.amenasa ++;
+        },
+        [types.SUB_AMENASA](state){
+            state.CONTADOR_PLAYER.amenasa --;
+        },
+        [types.ADD_TORN](state){
+            state.CONTADOR_QUEST.torn ++;
         }
     },
     actions:{

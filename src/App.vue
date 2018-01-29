@@ -20,7 +20,10 @@
                             <div class="columns">
                                 <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-half">PUNTUACIONS GLOBALS</div>
+                                <div class="column is-half">
+                                    <div class="has-text-centered">TORNS</div>
+                                    <div class="has-text-centered">{{getTorn}}</div>
+                                </div>
                             </div>
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
@@ -38,7 +41,21 @@
                             <div class="columns">
                                 <div class="column is-one-quarter"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-half">PUNTUACIONS HEROIS</div>
+                                <div class="column is-half">
+                                    <div class="desplegable" style="float:right;">
+                                        <b-dropdown position="is-right">
+                                            <button class="button is-primary" slot="trigger">
+                                                <b-icon icon="menu-down"></b-icon>
+                                            </button>
+                                            <b-dropdown-item v-on:click="">Afegir 1 amenaça</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="">Treure 1 amenaça</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="">Finalitzar torn</b-dropdown-item>
+                                        </b-dropdown>
+                                    </div>
+                                    <div class="has-text-centered">AMENAÇA</div>
+                                    <div class="has-text-centered">{{getAmenasa}}</div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,6 +73,7 @@ import Carta from './components/carta.vue'
 import Display from './components/display.vue'
 import Lupa from './components/lupa'
 import * as types from './store/mutation-types'
+import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -65,10 +83,12 @@ import PlayerDeckFile from './assets/deck/carrock-solo-1.0.o8d'
 export default {
     name: 'app',
     components: {
+        BDropdownItem,
         'pila': Pila,
         'carta':  Carta,
         'display': Display,
-        'lupa': Lupa
+        'lupa': Lupa,
+        'b-dropdown-item': BDropdownItem
     },
     data: function() {
       return {
@@ -107,7 +127,9 @@ export default {
             getAliats: 'aliats',
             getAtack: 'atack',
             getViatge: 'viatge',
-            getLupaCard: 'getLupaCard'
+            getLupaCard: 'getLupaCard',
+            getAmenasa: 'amenasa',
+            getTorn: 'torn'
         })
     },
     methods:{

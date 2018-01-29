@@ -23,6 +23,10 @@ export const SET_LUPA_POSITION = 'SET_LUPA_POSITION'
 export const PLAYER = 'PLAYER'
 export const QUEST = 'QUEST'
 
+export const ADD_AMENASA = 'ADD_AMENASA'
+export const SUB_AMENASA = 'SUB_AMENASA'
+export const ADD_TORN = 'ADD_TORN'
+
 // AREAS
 export const AREA_PREPARACIO = 'AREA_PREPARACIO'
 export const AREA_ATACK = 'AREA_ATACK'
