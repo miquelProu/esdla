@@ -6,13 +6,14 @@ export const SET_TO_QUEST_DECK = 'SET_TO_QUEST_DECK'
 export const SET_TO_QUEST_OUT_DECK = 'SET_TO_QUEST_OUT_DECK'
 export const SET_TO_PLAYER_DECK = 'SET_TO_PLAYER_DECK'
 export const SET_TO_PLAYER_OUT_DECK = 'SET_TO_PLAYER_OUT_DECK'
+export const SET_TO_MISION_DECK = 'SET_TO_MISION_DECK'
+export const SET_TO_MISION_OUT_DECK = 'SET_TO_MISION_OUT_DECK'
 export const SET_TO_HERO = 'SET_TO_HERO'
 export const SET_TO_MA = 'SET_TO_MA'
 export const SET_TO_PREPARACIO = 'SET_TO_PREPARACIO'
 export const SET_TO_ALIATS = 'SET_TO_ALIATS'
-export const SET_TO_MISSION_DECK = 'SET_TO_MISSION_DECK'
-export const SET_TO_MISSION_OUT_DECK = 'SET_TO_MISSION_OUT_DECK'
 export const SET_TO_ATACK = 'SET_TO_ATACK'
+export const SET_TO_VIATGE = 'SET_TO_VIATGE'
 
 export const ONE_TO_PREPARACIO = 'ONE_TO_PREPARACIO'
 
@@ -34,6 +35,7 @@ export const AREA_MISION_DECK = 'AREA_MISION_DECK'
 export const AREA_MISION_OUT_DECK = 'AREA_MISION_OUT_DECK'
 export const AREA_PLAYER_DECK = 'AREA_PLAYER_DECK'
 export const AREA_PLAYER_OUT_DECK = 'AREA_PLAYER_OUT_DECK'
+export const AREA_VIATGE = 'AREA_VIATGE'
 
 export function translateAreaSetTo(area){
     let nom = area.substring(5, area.length);

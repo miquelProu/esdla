@@ -24,5 +24,6 @@ export const PLAYING_ALIES_DECK_LIST = [
 export const PLAYING_QUEST_DECK_LIST = [
     types.AREA_PREPARACIO,
     types.AREA_ATACK,
-    types.AREA_QUEST_DECK
+    types.AREA_QUEST_DECK,
+    types.AREA_VIATGE
 ];

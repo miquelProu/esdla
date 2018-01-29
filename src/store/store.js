@@ -24,6 +24,7 @@ export default new Vuex.Store({
         AREA_MISION_OUT_DECK: [],
         AREA_ALIATS: [],
         AREA_ATACK: [],
+        AREA_VIATGE: [],
         lupa: {
             carta: null,
             position: 'right'
@@ -61,7 +62,10 @@ export default new Vuex.Store({
            return state.AREA_ALIATS;
         },
         atack(state){
-          return state.AREA_ATACK           // Get AREA_ATACK
+          return state.AREA_ATACK;           // Get AREA_ATACK
+        },
+        viatge(state){
+          return state.AREA_VIATGE;         // Get AREA_VIATGE
         },
         getLupaCard(state){
            return state.lupa.carta;
@@ -81,10 +85,10 @@ export default new Vuex.Store({
         [types.SET_TO_QUEST_OUT_DECK](state, payload){      // Mutation AREA_QUEST_OUT_DECK
             state.AREA_QUEST_OUT_DECK = payload;
         },
-        [types.SET_TO_MISSION_DECK](state, payload){          // Mutation AREA_MISION_DECK
+        [types.SET_TO_MISION_DECK](state, payload){          // Mutation AREA_MISION_DECK
             state.AREA_MISION_DECK = payload;
         },
-        [types.SET_TO_MISSION_OUT_DECK](state, payload){
+        [types.SET_TO_MISION_OUT_DECK](state, payload){
             state.AREA_MISION_OUT_DECK = payload;
         },
         [types.SET_TO_PREPARACIO](state, payload){     // Mutation AREA_PREPARACIO
@@ -115,6 +119,9 @@ export default new Vuex.Store({
         [types.SET_TO_ALIATS](state, payload){               // Mutation AREA_ALIATS
             state.AREA_ALIATS = payload;
         },
+        [types.SET_TO_VIATGE](state, payload){
+            state.AREA_VIATGE = payload;
+        },
         [types.SET_LUPA_CARD](state, carta){
             state.lupa.carta = carta;
         },
@@ -130,7 +137,7 @@ export default new Vuex.Store({
                 commit(types.SET_TO_QUEST_DECK, deckQuestFiltered);
                 let preparacio = _.filter(payload.cards, function(c) {return c.type == 'Setup'});
                 let quest = _.filter(payload.cards, function(c){return c.type == 'Quest'});
-                commit(types.SET_TO_MISSION_DECK, quest);
+                commit(types.SET_TO_MISION_DECK, quest);
                 commit(types.SET_TO_PREPARACIO, preparacio);
             } else if (payload.deckType == types.PLAYER) {
                 commit(types.SET_TO_ALL_DECK_PLAYER, payload.cards);

@@ -1,7 +1,7 @@
 <template>
     <div class="columns is-gapless">
         <div class="column" v-for="carta in deck">
-            <carta :cara="cara" :card="carta" :rol="rol"></carta>
+            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false"></carta>
         </div>
     </div>
 </template>

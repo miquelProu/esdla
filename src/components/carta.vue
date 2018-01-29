@@ -26,7 +26,7 @@ export default {
         damage: Damage,
         viatge: Viatge
     },
-    props: ['card', 'cara', 'rol'],
+    props: ['card', 'cara', 'rol', 'isVertical'],
     data: function(){
         let self = this;
         return {
@@ -64,8 +64,13 @@ export default {
             return Math.round(calcul) + 'px';
         },
         calculateWidth: function(){
-            let calcul = (this.cartaHeight * 70.5) / 100;
-            return Math.round(calcul) + 'px';
+            if (!this.isVertical) {
+                let calcul = (this.cartaHeight * 70.5) / 100;
+                return Math.round(calcul) + 'px';
+
+            } else {
+                return 'none';
+            }
         },
 
     },

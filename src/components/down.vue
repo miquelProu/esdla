@@ -16,6 +16,7 @@
         </template>
         <template v-if="rol == AREA_PREPARACIO">
             <b-dropdown-item v-on:click="moure(AREA_ATACK)">Baixar a enfrontament</b-dropdown-item>
+            <b-dropdown-item v-on:click="moure(AREA_VIATGE)">Viatjar</b-dropdown-item>
             <b-dropdown-item v-on:click="addDamage">Add Damage</b-dropdown-item>
             <b-dropdown-item v-on:click="subsDamage">Subs Damage</b-dropdown-item>
             <b-dropdown-item v-on:click="addViatge">Add Viatge</b-dropdown-item>
@@ -33,6 +34,10 @@
         </template>
         <template v-if="card.type == 'Quest'">
             <b-dropdown-item v-on:click="flip">Flip</b-dropdown-item>
+        </template>
+        <template v-if="rol == AREA_VIATGE">
+            <b-dropdown-item v-on:click="addViatge">Add Viatge</b-dropdown-item>
+            <b-dropdown-item v-on:click="subsViatge">Subs Viatge</b-dropdown-item>
         </template>
         <hr class="dropdown-divider">
         <b-dropdown-item v-on:click="esborrar()">Eliminar</b-dropdown-item>
@@ -62,7 +67,8 @@
                 [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
                 [types.AREA_MISION_OUT_DECK]: types.AREA_MISION_OUT_DECK,
                 [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
-                [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK
+                [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
+                [types.AREA_VIATGE]: types.AREA_VIATGE
             }
         },
         mounted: function(){
@@ -81,6 +87,7 @@
                 getMissionDeck: 'missionDeck',
                 getAliats: 'aliats',
                 getAtack: 'atack',
+                getViatge: 'viatge',
                 getLupaCard: 'getLupaCard'
             })
         },

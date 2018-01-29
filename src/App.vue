@@ -18,21 +18,26 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :deck="getQuestDeck" :rol="AREA_QUEST_DECK"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-half">PUNTUACIONS GLOBALS</div>
                             </div>
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-half"><pila :deck="getMissionDeck" :cara="true" :rol="AREA_MISION_DECK"></pila></div>
-                                <div class="column is-one-half"><pila :deck="getMissionOutDeck" :cara="true" :rol="AREA_MISION_OUT_DECK"></pila></div>
+                                <div class="column is-one-half"><pila :deck="getViatge" :cara="true" :rol="AREA_VIATGE" :isVertical="false"></pila></div>
+                                <div class="column is-one-half">
+                                    <div class="tile is-vertical is-parent">
+                                        <div class="tile is-child"><pila :deck="getMissionDeck" :cara="true" :rol="AREA_MISION_DECK" :isVertical="true"></pila></div>
+                                        <div class="tile is-child"><pila :deck="getMissionOutDeck" :cara="true" :rol="AREA_MISION_OUT_DECK" :isVertical="true"></pila></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="tile is-child stackHerois">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :rol="AREA_PLAYER_DECK"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :rol="AREA_PLAYER_OUT_DECK"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-half">PUNTUACIONS HEROIS</div>
                             </div>
                         </div>
@@ -78,6 +83,7 @@ export default {
           [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
           [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
           [types.AREA_ATACK]: types.AREA_ATACK,
+          [types.AREA_VIATGE]: types.AREA_VIATGE,
           setID: 0,
       }
     },
@@ -100,6 +106,7 @@ export default {
             getMissionOutDeck: 'missionOutDeck',
             getAliats: 'aliats',
             getAtack: 'atack',
+            getViatge: 'viatge',
             getLupaCard: 'getLupaCard'
         })
     },
