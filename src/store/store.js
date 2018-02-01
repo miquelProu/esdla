@@ -136,9 +136,6 @@ export default new Vuex.Store({
         [types.SET_TO_ALIATS](state, payload){               // Mutation AREA_ALIATS
             state.AREA_ALIATS = payload;
         },
-        [types.SET_TO_VIATGE](state, payload){
-            state.AREA_VIATGE = payload;
-        },
         [types.SET_LUPA_CARD](state, carta){
             state.lupa.carta = carta;
         },
@@ -211,7 +208,7 @@ export default new Vuex.Store({
         },
         modExtras: function({commit, state}, obj){
             //Recullo la baralla i l'accio
-            let deck = state[obj.deck];
+            let from = state[obj.from];
 
 
         },

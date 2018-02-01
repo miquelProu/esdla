@@ -1,12 +1,12 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="image">
-            <resource v-if="resource > 0" :value="resource"></resource>
-            <damage v-if="damage > 0" :value="damage"></damage>
-            <viatge v-if="viatge > 0" :value="viatge"></viatge>
+            <resource v-if="card.resource > 0" :value="card.resource"></resource>
+            <damage v-if="card.damage > 0" :value="card.damage"></damage>
+            <viatge v-if="card.viatge > 0" :value="card.viatge"></viatge>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
-        <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta"  @resource="newResource" @flip="flip" @damage="newDamage" @rotate="newRotate" @viatge="newViatge"></down>
+        <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta" @flip="flip" @rotate="newRotate"></down>
     </div>
 </template>
 
@@ -35,9 +35,9 @@ export default {
             carta: {id:'51223bd0-ffd1-11df-a976-0801200c9001'},
             cardType: null,
             rotate: false,
-            resource: 0,
-            damage: 0,
-            viatge: 0,
+            // resource: 0,
+            // damage: 0,
+            // viatge: 0,
             girar: false
         }
     },
@@ -108,27 +108,6 @@ export default {
                     temp.id = temp.id + ".B";
                 }
                 this.setLupaCard(temp);
-            }
-        },
-        newResource: function(value){
-            if (value == 'add') {
-                this.resource ++;
-            } else {
-                this.resource --;
-            }
-        },
-        newDamage: function(value){
-            if (value == 'add') {
-                this.damage ++;
-            } else {
-                this.damage --;
-            }
-        },
-        newViatge: function(value){
-            if (value == 'add') {
-                this.viatge ++;
-            } else {
-                this.viatge --;
             }
         },
         flip: function(val){

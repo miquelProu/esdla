@@ -140,22 +140,59 @@
                 this.move(obj);
             },
             addResource: function(){
-                this.$emit('resource','add');
+                let deck = this.getDeckByArea(this.rol);
+                let self = this;
+                _.each(deck, function(carta){
+                    if (carta.ID == self.card.ID) {
+                        carta.resource++;
+                    }
+                });
             },
             subsResource: function(){
-                this.$emit('resource', 'subs');
+                let deck = this.getDeckByArea(this.rol);
+                let self = this;
+                _.each(deck, function(carta){
+                    if (carta.ID == self.card.ID) {
+                        carta.resource--;
+                    }
+                });
             },
             addDamage: function(){
-                this.$emit('damage','add');
+                let deck = this.getDeckByArea(this.rol);
+                let self = this;
+                _.each(deck, function(carta){
+                    if (carta.ID == self.card.ID) {
+                        carta.damage++;
+                    }
+                });
             },
             subsDamage: function(){
-                this.$emit('damage', 'subs');
+                let deck = this.getDeckByArea(this.rol);
+                let self = this;
+                _.each(deck, function(carta){
+                    if (carta.ID == self.card.ID) {
+                        carta.damage--;
+                    }
+                });
             },
             addViatge: function(){
-                this.$emit('viatge', 'add');
+                let deck = this.getDeckByArea(this.rol);
+                console.log(deck, this.rol);
+                let self = this;
+                _.each(deck, function(carta){
+                    if (carta.ID == self.card.ID) {
+                        carta.viatge++;
+                    }
+                });
             },
             subsViatge: function(){
-                this.$emit('viatge', 'subs');
+                let deck = this.getDeckByArea(this.rol);
+                let self = this;
+                _.each(deck, function(carta){
+                    if (carta.ID == self.card.ID) {
+                        carta.viatge--;
+                    }
+                });
             },
             rotate: function(){
                 this.$emit('rotate', true);
@@ -201,7 +238,9 @@
                     case types.AREA_PLAYER_OUT_DECK:
                         return this.getPlayerOutDeck;
                         break;
-
+                    case types.AREA_VIATGE:
+                        return this.getViatge;
+                        break;
                 }
             }
         }
