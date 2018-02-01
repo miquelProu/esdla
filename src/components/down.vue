@@ -42,7 +42,7 @@
         <template v-if="(rol == AREA_PLAYER_DECK) || (rol == AREA_QUEST_DECK)">
             <hr class="dropdown-divider">
             <template v-if="rol == AREA_PLAYER_DECK">
-                <b-dropdown-item v-on:click="">Ensenyar X cartes PLAYER</b-dropdown-item>
+                <b-dropdown-item v-on:click="showNCartes">Ensenyar X cartes PLAYER</b-dropdown-item>
             </template>
             <template v-if="rol == AREA_QUEST_DECK">
                 <b-dropdown-item v-on:click="">Ensenyar X cartes QUEST</b-dropdown-item>
@@ -103,7 +103,8 @@
         methods:{
             ...mapActions({
                 remenar: 'remenar',
-                move: 'move'
+                move: 'move',
+                toogleNCartes: 'toogleNCartes'
             }),
             esborrar: function(){
                 let self = this;
@@ -164,6 +165,9 @@
             },
             flip: function(){
                 this.$emit('flip', true);
+            },
+            showNCartes: function(){
+                this.toogleNCartes();
             },
             getDeckByArea: function(area){
                 switch (area){

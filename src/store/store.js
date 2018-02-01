@@ -35,7 +35,8 @@ export default new Vuex.Store({
         },
         CONTADOR_QUEST: {
             torn: 0
-        }
+        },
+        isModalNCartes: false
     },
     getters:{
         questDeck(state){                    // Get AREA_QUEST_DECK
@@ -85,6 +86,9 @@ export default new Vuex.Store({
         },
         torn(state){
             return state.CONTADOR_QUEST.torn;
+        },
+        modalNcartes(state){
+            return state.isModalNCartes;
         }
 
     },
@@ -149,6 +153,9 @@ export default new Vuex.Store({
         },
         [types.ADD_TORN](state){
             state.CONTADOR_QUEST.torn ++;
+        },
+        [types.TOGGLE_N_CARTES](state){
+            state.isModalNCartes = !state.isModalNCartes;
         }
     },
     actions:{
@@ -202,6 +209,12 @@ export default new Vuex.Store({
             commit(setFrom, from);
             commit(setTo, to);
         },
+        modExtras: function({commit, state}, obj){
+            //Recullo la baralla i l'accio
+            let deck = state[obj.deck];
+
+
+        },
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
                 let d = this.getters.questDeck;
@@ -218,6 +231,10 @@ export default new Vuex.Store({
         },
         setLupaPosition: function({commit, state}, position){
             commit(types.SET_LUPA_POSITION, position);
+        },
+        toogleNCartes: function({commit, state}){
+            commit(types.TOGGLE_N_CARTES);
         }
+
     }
 })

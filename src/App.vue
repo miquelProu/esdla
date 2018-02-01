@@ -63,32 +63,40 @@
             </div>
         </div>
         <lupa v-if="getLupaCard"></lupa>
+        <b-modal :active.sync="getModalNcartes" has-modal-card>
+            <modal-n-cartes></modal-n-cartes>
+        </b-modal>
     </div>
 </template>
 
 <script>
 
+import Vue from 'vue'
+import Buefy from 'buefy'
 import Pila from './components/pila.vue'
 import Carta from './components/carta.vue'
 import Display from './components/display.vue'
 import Lupa from './components/lupa'
 import * as types from './store/mutation-types'
 import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
+import ModalNCartes from './components/modalNCartes'
 
 import { mapGetters, mapActions } from 'vuex'
 
 import QuestDeckFile from './assets/deck/Quest-006-A-Journey-to-Rhosgobel.o8d'
 import PlayerDeckFile from './assets/deck/carrock-solo-1.0.o8d'
 
+Vue.use(Buefy);
+
 export default {
     name: 'app',
     components: {
-        BDropdownItem,
         'pila': Pila,
         'carta':  Carta,
         'display': Display,
         'lupa': Lupa,
-        'b-dropdown-item': BDropdownItem
+        'b-dropdown-item': BDropdownItem,
+        'modal-n-cartes' : ModalNCartes
     },
     data: function() {
       return {
@@ -129,8 +137,10 @@ export default {
             getViatge: 'viatge',
             getLupaCard: 'getLupaCard',
             getAmenasa: 'amenasa',
-            getTorn: 'torn'
-        })
+            getTorn: 'torn',
+            getModalNcartes: 'modalNcartes'
+        }),
+
     },
     methods:{
         ...mapActions({
@@ -149,6 +159,9 @@ export default {
                     card['name'] = carta['_'];
                     card['type'] = tipus;
                     card['ID'] = self.setID;
+                    card['viatge'] = 0;
+                    card['damage'] = 0;
+                    card['resource'] = 0;
                     for (let x = 1; x <= qty; x++) {
                         deck.push(card);
                         self.setID++;
@@ -158,8 +171,15 @@ export default {
                 });
             });
             this.allToDeck({deckType: type, cards: deck});
+        },
+        nCartesModal: function(){
+            this.$modal.open({
+                parent: this,
+                component: ModalNCartes,
+                hasModalCard: true
+            });
         }
-    },
+    }
 }
 </script>
 

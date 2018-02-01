@@ -1,7 +1,7 @@
 <template>
-    <div class="columns is-gapless">
-        <div class="column" v-for="carta in deck">
-            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false"></carta>
+    <div ref="display" class="columns is-gapless">
+        <div class="column" v-bind:class="{'is-narrow': hasMax}" v-for="carta in deck">
+            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth"></carta>
         </div>
     </div>
 </template>
@@ -16,13 +16,22 @@ export default {
     },
     props: ['deck', 'cara', 'rol'],
     data: function(){
-        return {}
+        return {
+            hasMax: true
+        }
     },
     mounted: function(){},
     watch: {},
     computed: {},
     methods:{
-
+        newWidth: function(ample){
+            if (this.$refs.display.clientWidth !== 'undefined') {
+                let displayWidth = this.$refs.display.clientWidth;
+                let nCartes = displayWidth / Math.round(ample);
+                this.hasMax = !(this.deck.length > nCartes);
+                console.log(this.deck.length, nCartes);
+            }
+        }
     }
 }
 </script>

@@ -66,6 +66,7 @@ export default {
         calculateWidth: function(){
             if (!this.isVertical) {
                 let calcul = (this.cartaHeight * 70.5) / 100;
+                this.$emit('width', calcul);
                 return Math.round(calcul) + 'px';
 
             } else {

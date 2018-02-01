@@ -15,6 +15,13 @@ export const SET_TO_ALIATS = 'SET_TO_ALIATS'
 export const SET_TO_ATACK = 'SET_TO_ATACK'
 export const SET_TO_VIATGE = 'SET_TO_VIATGE'
 
+// export const ADD_VIATGE = 'ADD_VIATGE'
+// export const SUB_VIATGE = 'SUB_VIATGE'
+// export const ADD_DAMAGE = 'ADD_DAMAGE'
+// export const SUB_DAMAGE = 'SUB_DAMAGE'
+// export const ADD_RESOURCE = 'ADD_RESOURCE'
+// export const SUB_RESOURCE = 'SUB_RESOURCE'
+
 export const ONE_TO_PREPARACIO = 'ONE_TO_PREPARACIO'
 
 export const SET_LUPA_CARD = 'SET_LUPA_CARD'
@@ -26,6 +33,8 @@ export const QUEST = 'QUEST'
 export const ADD_AMENASA = 'ADD_AMENASA'
 export const SUB_AMENASA = 'SUB_AMENASA'
 export const ADD_TORN = 'ADD_TORN'
+
+export const TOGGLE_N_CARTES = 'TOGGLE_N_CARTES'
 
 // AREAS
 export const AREA_PREPARACIO = 'AREA_PREPARACIO'
