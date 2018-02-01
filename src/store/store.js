@@ -230,6 +230,7 @@ export default new Vuex.Store({
             commit(types.SET_LUPA_POSITION, position);
         },
         toogleNCartes: function({commit, state}){
+            console.log(state.isModalNCartes);
             commit(types.TOGGLE_N_CARTES);
         }
 

@@ -1,6 +1,6 @@
 <template>
-    <form action="">
-        <div class="modal-card">
+    <!--<form action="">-->
+        <div class="modal-card" style="width:100%;">
             <header class="modal-card-head">
                 <p class="modal-card-title">Quantes cartes vols veure?</p>
             </header>
@@ -13,14 +13,13 @@
                             required>
                     </b-input>
                 </b-field>
-
             </section>
-            <footer class="modal-card-foot">
-                <button class="button" type="button" @click="$parent.close()">Close</button>
-                <button class="button is-primary">Login</button>
+            <footer class="modal-card-foot" style="justify-content: flex-end;">
+                <button class="button" type="button" @click="sendClose();">Tancar</button>
+                <button class="button is-primary" @click="sendNumber()">Enviar</button>
             </footer>
         </div>
-    </form>
+    <!--</form>-->
 </template>
 
 <script>
@@ -28,13 +27,23 @@ export default {
     name: 'modalNCartes',
     // components:{},
     // props: [],
-    // data: function(){
-    //     return{}
-    // },
+    data: function(){
+        return{
+            nCartes: null
+        }
+    },
     // mounted: function(){},
     // watch: {},
     // computed: {},
-    // methods: {},
+    methods: {
+        sendNumber: function(){
+            console.log(this.nCartes);
+        },
+        sendClose: function(){
+            this.$emit('close', true);
+            this.$parent.close();
+        }
+    },
     // filters: {}
 }
 </script>

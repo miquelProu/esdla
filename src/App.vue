@@ -63,7 +63,7 @@
             </div>
         </div>
         <lupa v-if="getLupaCard"></lupa>
-        <b-modal :active.sync="getModalNcartes" has-modal-card>
+        <b-modal :active="hasModalNCartes" has-modal-card :width="350" @close="isClose">
             <modal-n-cartes></modal-n-cartes>
         </b-modal>
     </div>
@@ -113,12 +113,12 @@ export default {
           [types.AREA_ATACK]: types.AREA_ATACK,
           [types.AREA_VIATGE]: types.AREA_VIATGE,
           setID: 0,
+          hasModalNCartes : false
       }
     },
     mounted: function(){
         this.loadDeck(QuestDeckFile, types.QUEST);
         this.loadDeck(PlayerDeckFile, types.PLAYER);
-
     },
     watch: {},
     computed: {
@@ -144,7 +144,8 @@ export default {
     },
     methods:{
         ...mapActions({
-            allToDeck: 'allToDeck'
+            allToDeck: 'allToDeck',
+            toogleNCartes: 'toogleNCartes'
         }),
         loadDeck: function(file, type) {
             let self = this;
@@ -178,7 +179,18 @@ export default {
                 component: ModalNCartes,
                 hasModalCard: true
             });
+        },
+        isClose: function(val){
+            console.log("IS CLOSE");
+            this.toogleNCartes();
         }
+    },
+    watch: {
+        'getModalNcartes': {
+            handler(newData, oldData) {
+                this.hasModalNCartes = newData;
+            }
+        },
     }
 }
 </script>
