@@ -1,5 +1,5 @@
 <template>
-    <show :deck="getPreparacio"></show>
+    <show :deck="getPlayerDeck"></show>
 </template>
 
 <script>
@@ -16,6 +16,7 @@ export default {
     data: function(){
         return {
             [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
+
         }
     },
     // mounted: function(){},
@@ -23,7 +24,8 @@ export default {
     computed: {
         ...mapGetters({
             getNumCartes: 'numCartes',
-            getPreparacio: 'preparacio'
+            getPreparacio: 'preparacio',
+            getPlayerDeck: 'playerDeck',
         }),
 
     },

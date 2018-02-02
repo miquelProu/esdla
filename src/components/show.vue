@@ -1,7 +1,7 @@
 <template>
-    <div ref="show" class="columns is-gapless">
+    <div ref="show" class="columns is-multiline">
         <div class="column is-one-quarter" v-for="carta in deck">
-            <carta :cara="true" :card="carta" :rol="AREA_PREPARACIO" :isVertical="false" @width="newWidth"></carta>
+            <carta :cara="true" :card="carta" :rol="AREA_PREPARACIO" :isVertical="true" @width="newWidth"></carta>
         </div>
     </div>
 </template>
@@ -28,12 +28,14 @@ export default {
     computed: {},
     methods:{
         newWidth: function(ample){
-            if (this.$refs.show.clientWidth !== 'undefined') {
-                let displayWidth = this.$refs.show.clientWidth;
-                let nCartes = displayWidth / Math.round(ample);
-                this.hasMax = !(this.deck.length > nCartes);
-                console.log(this.deck.length, nCartes);
-            }
+            console.log("AMPLE "+ample);
+            console.log(this.$refs.show.clientWidth);
+            // if (this.$refs.show.clientWidth !== 'undefined') {
+            //     let displayWidth = this.$refs.show.clientWidth;
+            //     let nCartes = displayWidth / Math.round(ample);
+            //     this.hasMax = !(this.deck.length > nCartes);
+            //     console.log(this.deck.length, nCartes);
+            // }
         }
     }
 }
