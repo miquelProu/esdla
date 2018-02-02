@@ -15,7 +15,7 @@
                 </b-field>
             </section>
             <footer class="modal-card-foot" style="justify-content: flex-end;">
-                <button class="button" type="button" @click="sendClose();">Tancar</button>
+                <button class="button" type="button" @click="sendClose()">Tancar</button>
                 <button class="button is-primary" @click="sendNumber()">Enviar</button>
             </footer>
         </div>
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+
+import { mapActions } from 'vuex'
+
 export default {
     name: 'modalNCartes',
     // components:{},
@@ -36,11 +39,18 @@ export default {
     // watch: {},
     // computed: {},
     methods: {
+        ...mapActions({
+            toogleNCartes: 'toogleNCartes',
+            setModalNum: 'setModalNum'
+        }),
         sendNumber: function(){
             console.log(this.nCartes);
+            this.$emit('hasNumber', true);
+            this.setModalNum(this.nCartes * 1);
+            this.sendClose();
         },
         sendClose: function(){
-            this.$emit('close', true);
+            this.toogleNCartes();
             this.$parent.close();
         }
     },

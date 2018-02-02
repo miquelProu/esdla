@@ -63,8 +63,11 @@
             </div>
         </div>
         <lupa v-if="getLupaCard"></lupa>
-        <b-modal :active="hasModalNCartes" has-modal-card :width="350" @close="isClose">
-            <modal-n-cartes></modal-n-cartes>
+        <b-modal :active.sync="hasModalNCartes" has-modal-card :width="350">
+            <modal-n-cartes @hasNumber="newNumber"></modal-n-cartes>
+        </b-modal>
+        <b-modal :active="getModalShowCartes">
+            <modal-show-cartes></modal-show-cartes>
         </b-modal>
     </div>
 </template>
@@ -80,6 +83,7 @@ import Lupa from './components/lupa'
 import * as types from './store/mutation-types'
 import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
 import ModalNCartes from './components/modalNCartes'
+import ModalShowCartes from './components/modalShowCartes'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -91,12 +95,14 @@ Vue.use(Buefy);
 export default {
     name: 'app',
     components: {
+        ModalShowCartes,
         'pila': Pila,
         'carta':  Carta,
         'display': Display,
         'lupa': Lupa,
         'b-dropdown-item': BDropdownItem,
-        'modal-n-cartes' : ModalNCartes
+        'modal-n-cartes' : ModalNCartes,
+        'modal-show-cartes' : ModalShowCartes
     },
     data: function() {
       return {
@@ -138,14 +144,15 @@ export default {
             getLupaCard: 'getLupaCard',
             getAmenasa: 'amenasa',
             getTorn: 'torn',
-            getModalNcartes: 'modalNcartes'
+            getModalNcartes: 'modalNcartes',
+            getModalShowCartes: 'modalShowCartes',
         }),
 
     },
     methods:{
         ...mapActions({
             allToDeck: 'allToDeck',
-            toogleNCartes: 'toogleNCartes'
+            toogleShowCartes: 'toogleShowCartes'
         }),
         loadDeck: function(file, type) {
             let self = this;
@@ -173,16 +180,10 @@ export default {
             });
             this.allToDeck({deckType: type, cards: deck});
         },
-        nCartesModal: function(){
-            this.$modal.open({
-                parent: this,
-                component: ModalNCartes,
-                hasModalCard: true
-            });
-        },
-        isClose: function(val){
-            console.log("IS CLOSE");
-            this.toogleNCartes();
+
+        newNumber: function(val){
+            console.log("NEW NUMBER");
+            this.toogleShowCartes();
         }
     },
     watch: {

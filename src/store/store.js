@@ -36,7 +36,13 @@ export default new Vuex.Store({
         CONTADOR_QUEST: {
             torn: 0
         },
-        isModalNCartes: false
+
+        showDeck: {
+            isModalNum: false,
+            isModalShow: false,
+            num: 0,
+            rol: null
+        }
     },
     getters:{
         questDeck(state){                    // Get AREA_QUEST_DECK
@@ -88,7 +94,13 @@ export default new Vuex.Store({
             return state.CONTADOR_QUEST.torn;
         },
         modalNcartes(state){
-            return state.isModalNCartes;
+            return state.showDeck.isModalNum;
+        },
+        modalShowCartes(state){
+            return state.showDeck.isModalShow;
+        },
+        numCartes(state){
+            return state.showDeck.num;
         }
 
     },
@@ -152,7 +164,16 @@ export default new Vuex.Store({
             state.CONTADOR_QUEST.torn ++;
         },
         [types.TOGGLE_N_CARTES](state){
-            state.isModalNCartes = !state.isModalNCartes;
+            state.showDeck.isModalNum = !state.showDeck.isModalNum;
+        },
+        [types.TOGGLE_SHOW_CARTES](state){
+            state.showDeck.isModalShow = !state.showDeck.isModalShow;
+        },
+        [types.NUM_CARTES](state, num){
+            state.showDeck.num = num;
+        },
+        [types.ROL_N_CARTES](state, rol){
+            state.showDeck.rol = rol;
         }
     },
     actions:{
@@ -206,12 +227,7 @@ export default new Vuex.Store({
             commit(setFrom, from);
             commit(setTo, to);
         },
-        modExtras: function({commit, state}, obj){
-            //Recullo la baralla i l'accio
-            let from = state[obj.from];
 
-
-        },
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
                 let d = this.getters.questDeck;
@@ -230,9 +246,17 @@ export default new Vuex.Store({
             commit(types.SET_LUPA_POSITION, position);
         },
         toogleNCartes: function({commit, state}){
-            console.log(state.isModalNCartes);
             commit(types.TOGGLE_N_CARTES);
+        },
+        toogleShowCartes: function({commit, state}){
+            console.log("STORE TOOGLE");
+            commit(types.TOGGLE_SHOW_CARTES);
+        },
+        setModalNum: function({commit, state}, num){
+            commit(types.NUM_CARTES, num);
+        },
+        setRolModalNum: function({commit, state}, rol){
+            commit(types.ROL_N_CARTES, rol);
         }
-
     }
 })

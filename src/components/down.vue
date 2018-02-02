@@ -104,7 +104,8 @@
             ...mapActions({
                 remenar: 'remenar',
                 move: 'move',
-                toogleNCartes: 'toogleNCartes'
+                toogleNCartes: 'toogleNCartes',
+                setRolModalNum: 'setRolModalNum'
             }),
             esborrar: function(){
                 let self = this;
@@ -205,6 +206,7 @@
             },
             showNCartes: function(){
                 this.toogleNCartes();
+                this.setRolModalNum(this.rol);
             },
             getDeckByArea: function(area){
                 switch (area){

@@ -35,6 +35,9 @@ export const SUB_AMENASA = 'SUB_AMENASA'
 export const ADD_TORN = 'ADD_TORN'
 
 export const TOGGLE_N_CARTES = 'TOGGLE_N_CARTES'
+export const TOGGLE_SHOW_CARTES = 'TOGGLE_SHOW_CARTES'
+export const NUM_CARTES = 'NUM_CARTES'
+export const ROL_N_CARTES = 'ROL_N_CARTES'
 
 // AREAS
 export const AREA_PREPARACIO = 'AREA_PREPARACIO'
