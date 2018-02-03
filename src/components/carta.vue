@@ -26,7 +26,7 @@ export default {
         damage: Damage,
         viatge: Viatge
     },
-    props: ['card', 'cara', 'rol', 'isVertical'],
+    props: ['card', 'cara', 'rol', 'isVertical', 'hasLupa'],
     data: function(){
         let self = this;
         return {
@@ -98,17 +98,19 @@ export default {
             }
         },
         isLupa: function(event) {
-            if (((window.innerWidth / 3) * 2 ) > event.clientX) {
-                this.setLupaPosition('right');
-            } else {
-                this.setLupaPosition('left');
-            }
-            if(this.cara){
-                let temp = _.clone(this.carta);
-                if (this.girar) {
-                    temp.id = temp.id + ".B";
+            if (this.hasLupa) {
+                if (((window.innerWidth / 3) * 2) > event.clientX) {
+                    this.setLupaPosition('right');
+                } else {
+                    this.setLupaPosition('left');
                 }
-                this.setLupaCard(temp);
+                if (this.cara) {
+                    let temp = _.clone(this.carta);
+                    if (this.girar) {
+                        temp.id = temp.id + ".B";
+                    }
+                    this.setLupaCard(temp);
+                }
             }
         },
         flip: function(val){

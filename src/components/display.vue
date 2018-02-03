@@ -1,7 +1,7 @@
 <template>
     <div ref="display" class="columns is-gapless">
         <div class="column" v-bind:class="{'is-narrow': hasMax}" v-for="carta in deck">
-            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth"></carta>
+            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true"></carta>
         </div>
     </div>
 </template>

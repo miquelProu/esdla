@@ -15,21 +15,46 @@ export default {
     // props: [],
     data: function(){
         return {
-            [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
-
+            [types.AREA_QUEST_DECK]: types.AREA_QUEST_DECK,
+            [types.AREA_QUEST_OUT_DECK]: types.AREA_QUEST_OUT_DECK,
+            [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
+            [types.AREA_MISION_OUT_DECK]: types.AREA_MISION_OUT_DECK,
+            [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
+            [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
+            selectedDeck: [],
         }
     },
     // mounted: function(){},
     // watch: {},
     computed: {
         ...mapGetters({
-            getNumCartes: 'numCartes',
-            getPreparacio: 'preparacio',
+            getNumCartes: 'numShowCartes',
+            getRolCartes: 'rolShowCartes',
+            getQuestDeck: 'questDeck',
+            getQuestOutDeck: 'questOutDeck',
             getPlayerDeck: 'playerDeck',
+            getPlayerOutDeck: 'playerOutDeck',
+
         }),
 
     },
-    // methods: {},
+    methods: {
+        selectDeck: function(){
+            let deck = [];
+            if (this.getRolCartes == types.AREA_PLAYER_DECK) {
+                deck = this.getPlayerDeck;
+            } else if (this.getRolCartes == AREA_QUEST_DECK){
+                deck = this.getQuestDeck;
+            } else if (this.getRolCartes == AREA_PLAYER_OUT_DECK){
+                deck = this.getPlayerOutDeck;
+            } else if (this.getRolCartes == AREA_QUEST_OUT_DECK) {
+                deck = this.getQuestOutDeck;
+            }
+            deck.splice(0, this.getNumCartes);
+            let setTo = translateAreaSetTo(this.getRolCartes);
+
+        }
+    },
     // filters: {}
 }
 </script>

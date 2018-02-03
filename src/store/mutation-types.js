@@ -14,6 +14,7 @@ export const SET_TO_PREPARACIO = 'SET_TO_PREPARACIO'
 export const SET_TO_ALIATS = 'SET_TO_ALIATS'
 export const SET_TO_ATACK = 'SET_TO_ATACK'
 export const SET_TO_VIATGE = 'SET_TO_VIATGE'
+export const SET_TO_SHOW = 'SET_TO_SHOW'
 
 // export const ADD_VIATGE = 'ADD_VIATGE'
 // export const SUB_VIATGE = 'SUB_VIATGE'
@@ -36,6 +37,7 @@ export const ADD_TORN = 'ADD_TORN'
 
 export const TOGGLE_N_CARTES = 'TOGGLE_N_CARTES'
 export const TOGGLE_SHOW_CARTES = 'TOGGLE_SHOW_CARTES'
+export const SET_SHOW_CARTES = 'SET_SHOW_CARTES'
 export const NUM_CARTES = 'NUM_CARTES'
 export const ROL_N_CARTES = 'ROL_N_CARTES'
 
@@ -52,6 +54,7 @@ export const AREA_MISION_OUT_DECK = 'AREA_MISION_OUT_DECK'
 export const AREA_PLAYER_DECK = 'AREA_PLAYER_DECK'
 export const AREA_PLAYER_OUT_DECK = 'AREA_PLAYER_OUT_DECK'
 export const AREA_VIATGE = 'AREA_VIATGE'
+export const AREA_SHOW = 'AREA_SHOW'
 
 export function translateAreaSetTo(area){
     let nom = area.substring(5, area.length);

@@ -25,6 +25,7 @@ export default new Vuex.Store({
         AREA_ALIATS: [],
         AREA_ATACK: [],
         AREA_VIATGE: [],
+        AREA_SHOW: [],
         lupa: {
             carta: null,
             position: 'right'
@@ -81,6 +82,9 @@ export default new Vuex.Store({
         viatge(state){
           return state.AREA_VIATGE;         // Get AREA_VIATGE
         },
+        show(state){
+            return state.AREA_SHOW;
+        },
         getLupaCard(state){
            return state.lupa.carta;
         },
@@ -99,8 +103,11 @@ export default new Vuex.Store({
         modalShowCartes(state){
             return state.showDeck.isModalShow;
         },
-        numCartes(state){
+        numShowCartes(state){
             return state.showDeck.num;
+        },
+        rolShowCartes(state){
+            return state.showDeck.rol;
         }
 
     },
@@ -148,6 +155,9 @@ export default new Vuex.Store({
         [types.SET_TO_ALIATS](state, payload){               // Mutation AREA_ALIATS
             state.AREA_ALIATS = payload;
         },
+        [types.SET_TO_SHOW](state, payload){
+            state.AREA_SHOW = payload;
+        },
         [types.SET_LUPA_CARD](state, carta){
             state.lupa.carta = carta;
         },
@@ -168,6 +178,9 @@ export default new Vuex.Store({
         },
         [types.TOGGLE_SHOW_CARTES](state){
             state.showDeck.isModalShow = !state.showDeck.isModalShow;
+        },
+        [types.SET_SHOW_CARTES](state, val){
+            state.showDeck.isModalShow = val;
         },
         [types.NUM_CARTES](state, num){
             state.showDeck.num = num;
@@ -227,6 +240,9 @@ export default new Vuex.Store({
             commit(setFrom, from);
             commit(setTo, to);
         },
+        moveToShow: function({commit, state}, obj){
+
+        },
 
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
@@ -251,6 +267,9 @@ export default new Vuex.Store({
         toogleShowCartes: function({commit, state}){
             console.log("STORE TOOGLE");
             commit(types.TOGGLE_SHOW_CARTES);
+        },
+        setShowCartes: function({commit, state}, val){
+            commit(types.SET_SHOW_CARTES, val);
         },
         setModalNum: function({commit, state}, num){
             commit(types.NUM_CARTES, num);

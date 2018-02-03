@@ -66,7 +66,7 @@
         <b-modal :active.sync="hasModalNCartes" has-modal-card :width="350">
             <modal-n-cartes @hasNumber="newNumber"></modal-n-cartes>
         </b-modal>
-        <b-modal :active="getModalShowCartes">
+        <b-modal :active.sync="hasModalShowCartes">
             <modal-show-cartes></modal-show-cartes>
         </b-modal>
     </div>
@@ -119,7 +119,8 @@ export default {
           [types.AREA_ATACK]: types.AREA_ATACK,
           [types.AREA_VIATGE]: types.AREA_VIATGE,
           setID: 0,
-          hasModalNCartes : false
+          hasModalNCartes : false,
+          hasModalShowCartes: false
       }
     },
     mounted: function(){
@@ -147,12 +148,12 @@ export default {
             getModalNcartes: 'modalNcartes',
             getModalShowCartes: 'modalShowCartes',
         }),
-
     },
     methods:{
         ...mapActions({
             allToDeck: 'allToDeck',
-            toogleShowCartes: 'toogleShowCartes'
+            toogleShowCartes: 'toogleShowCartes',
+            setShowCartes: 'setShowCartes'
         }),
         loadDeck: function(file, type) {
             let self = this;
@@ -192,6 +193,15 @@ export default {
                 this.hasModalNCartes = newData;
             }
         },
+        'getModalShowCartes': {
+            handler(newData, oldData){
+                this.hasModalShowCartes = newData;
+            }
+        },
+        hasModalShowCartes:function (val) {
+            console.log("HAS MODAL"+val);
+            this.setShowCartes(val);
+        }
     }
 }
 </script>
