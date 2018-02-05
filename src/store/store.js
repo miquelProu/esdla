@@ -241,7 +241,13 @@ export default new Vuex.Store({
             commit(setTo, to);
         },
         moveToShow: function({commit, state}, obj){
-
+            let deck = obj.deck;
+            let ensenyar = [];
+            ensenyar = deck.splice(0, obj.num);
+            console.log(ensenyar);
+            console.log(deck);
+            commit(types.SET_TO_SHOW, ensenyar);
+            commit(translateAreaSetTo(obj.rol), deck);
         },
 
         remenar: function({commit, state}, deck){

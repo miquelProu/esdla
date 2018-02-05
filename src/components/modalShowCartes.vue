@@ -1,9 +1,9 @@
 <template>
-    <show :deck="getPlayerDeck"></show>
+    <show :deck="deckSelected"></show>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Show from './show.vue'
 import * as types from './../store/mutation-types'
 
@@ -21,10 +21,13 @@ export default {
             [types.AREA_MISION_OUT_DECK]: types.AREA_MISION_OUT_DECK,
             [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
             [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
-            selectedDeck: [],
+            deckSelected: []
         }
     },
-    // mounted: function(){},
+    mounted: function(){
+        this.selectDeck();
+        this.deckSelected = this.getShow;
+    },
     // watch: {},
     computed: {
         ...mapGetters({
@@ -34,25 +37,32 @@ export default {
             getQuestOutDeck: 'questOutDeck',
             getPlayerDeck: 'playerDeck',
             getPlayerOutDeck: 'playerOutDeck',
+            getShow: 'show'
 
         }),
 
     },
     methods: {
+        ...mapActions({
+            moveToShow: 'moveToShow'
+        }),
         selectDeck: function(){
             let deck = [];
             if (this.getRolCartes == types.AREA_PLAYER_DECK) {
                 deck = this.getPlayerDeck;
-            } else if (this.getRolCartes == AREA_QUEST_DECK){
+            } else if (this.getRolCartes == types.AREA_QUEST_DECK){
                 deck = this.getQuestDeck;
-            } else if (this.getRolCartes == AREA_PLAYER_OUT_DECK){
+            } else if (this.getRolCartes == types.AREA_PLAYER_OUT_DECK){
                 deck = this.getPlayerOutDeck;
-            } else if (this.getRolCartes == AREA_QUEST_OUT_DECK) {
+            } else if (this.getRolCartes == types.AREA_QUEST_OUT_DECK) {
                 deck = this.getQuestOutDeck;
             }
-            deck.splice(0, this.getNumCartes);
-            let setTo = translateAreaSetTo(this.getRolCartes);
-
+            let obj = {
+                num: this.getNumCartes,
+                rol: this.getRolCartes,
+                deck: deck
+            };
+            this.moveToShow(obj);
         }
     },
     // filters: {}

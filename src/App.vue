@@ -43,7 +43,7 @@
                                 <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-half">
                                     <div class="desplegable" style="float:right;">
-                                        <b-dropdown position="is-right">
+                                        <b-dropdown xposition="is-right">
                                             <button class="button is-primary" slot="trigger">
                                                 <b-icon icon="menu-down"></b-icon>
                                             </button>
@@ -292,5 +292,17 @@ li {
 
 a {
   color: #42b983;
+}
+
+.modal.is-active{
+    .modal-content{
+        max-height: 430px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .columns {
+            background-color: rgba(255,255,255,0.5);
+        }
+    }
 }
 </style>

@@ -39,7 +39,7 @@
             <b-dropdown-item v-on:click="addViatge">Add Viatge</b-dropdown-item>
             <b-dropdown-item v-on:click="subsViatge">Subs Viatge</b-dropdown-item>
         </template>
-        <template v-if="(rol == AREA_PLAYER_DECK) || (rol == AREA_QUEST_DECK) (rol == AREA_PLAYER_OUT_DECK) || (rol == AREA_QUEST_OUT_DECK)">
+        <template v-if="(rol == AREA_PLAYER_DECK) || (rol == AREA_QUEST_DECK) || (rol == AREA_PLAYER_OUT_DECK) || (rol == AREA_QUEST_OUT_DECK)">
             <hr class="dropdown-divider">
                 <b-dropdown-item v-on:click="showNCartes">Ensenyar X cartes PLAYER</b-dropdown-item>
         </template>

@@ -23,7 +23,9 @@ export default {
             [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
         }
     },
-    mounted: function(){},
+    mounted: function(){
+        console.log(this.deck);
+    },
     watch: {},
     computed: {},
     methods:{
