@@ -1,7 +1,7 @@
 <template>
     <div ref="show" class="columns is-multiline">
         <div class="column is-one-quarter" v-for="carta in deck">
-            <carta :cara="true" :card="carta" :rol="AREA_PREPARACIO" :isVertical="true" @width="newWidth" :hasLupa="false"></carta>
+            <carta :cara="true" :card="carta" :rol="AREA_SHOW" :isVertical="true" @width="newWidth" :hasLupa="false"></carta>
         </div>
     </div>
 </template>
@@ -21,6 +21,7 @@ export default {
         return {
             hasMax: true,
             [types.AREA_PREPARACIO]: types.AREA_PREPARACIO,
+            [types.AREA_SHOW]: types.AREA_SHOW,
         }
     },
     mounted: function(){

@@ -242,14 +242,28 @@ export default new Vuex.Store({
         },
         moveToShow: function({commit, state}, obj){
             let deck = obj.deck;
-            let ensenyar = [];
-            ensenyar = deck.splice(0, obj.num);
+            let ensenyar = deck.splice(0, obj.num);
             console.log(ensenyar);
             console.log(deck);
             commit(types.SET_TO_SHOW, ensenyar);
             commit(translateAreaSetTo(obj.rol), deck);
         },
+        closeShow: function({commit, state}, isRemenar){
+            let to = [];
+            if (this.getters.rolShowCartes == types.AREA_PLAYER_DECK) {
+                to = this.getters.playerDeck;
+            } else if (this.getters.rolShowCartes == types.AREA_PLAYER_OUT_DECK) {
+                to = this.getters.playerOutDeck;
+            }
+            //
+            //
+            //
+            let from = this.getters.show;
+            let concat = from.concat(to);
+            let setTo = translateAreaSetTo(this.getters.rolShowCartes);
+            commit(setTo, (isRemenar) ? _.shuffle(concat) : concat);
 
+        },
         remenar: function({commit, state}, deck){
             if (deck == 'Encounter') {
                 let d = this.getters.questDeck;

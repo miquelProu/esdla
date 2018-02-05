@@ -66,7 +66,7 @@
         <b-modal :active.sync="hasModalNCartes" has-modal-card :width="350">
             <modal-n-cartes @hasNumber="newNumber"></modal-n-cartes>
         </b-modal>
-        <b-modal :active.sync="hasModalShowCartes">
+        <b-modal :active.sync="hasModalShowCartes" has-modal-card>
             <modal-show-cartes></modal-show-cartes>
         </b-modal>
     </div>

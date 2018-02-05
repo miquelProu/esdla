@@ -43,6 +43,10 @@
             <hr class="dropdown-divider">
                 <b-dropdown-item v-on:click="showNCartes">Ensenyar X cartes PLAYER</b-dropdown-item>
         </template>
+        <template v-if="rol == AREA_SHOW">
+            <b-dropdown-item v-on:click="moure(AREA_PREPARACIO)">A preparació</b-dropdown-item>
+            <b-dropdown-item v-on:click="moure(AREA_MA)">A la ma</b-dropdown-item>
+        </template>
         <hr class="dropdown-divider">
         <b-dropdown-item v-on:click="esborrar()">Eliminar</b-dropdown-item>
     </b-dropdown>
@@ -72,7 +76,8 @@
                 [types.AREA_MISION_OUT_DECK]: types.AREA_MISION_OUT_DECK,
                 [types.AREA_PLAYER_DECK]: types.AREA_PLAYER_DECK,
                 [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
-                [types.AREA_VIATGE]: types.AREA_VIATGE
+                [types.AREA_VIATGE]: types.AREA_VIATGE,
+                [types.AREA_SHOW]: types.AREA_SHOW,
             }
         },
         mounted: function(){
@@ -92,7 +97,8 @@
                 getAliats: 'aliats',
                 getAtack: 'atack',
                 getViatge: 'viatge',
-                getLupaCard: 'getLupaCard'
+                getLupaCard: 'getLupaCard',
+                getShow: 'show'
             })
         },
         methods:{
@@ -237,6 +243,9 @@
                         break;
                     case types.AREA_VIATGE:
                         return this.getViatge;
+                        break;
+                    case types.AREA_SHOW:
+                        return this.getShow;
                         break;
                 }
             }

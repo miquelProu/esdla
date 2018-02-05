@@ -1,5 +1,16 @@
 <template>
-    <show :deck="deckSelected"></show>
+    <div class="modal-card" style="width:100%;">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Quantes cartes vols veure?</p>
+        </header>
+        <section class="modal-card-body">
+            <show :deck="deckSelected"></show>
+        </section>
+        <footer class="modal-card-foot" style="justify-content: flex-end;">
+            <button class="button" type="button" @click="sendClose()">Tancar</button>
+            <button class="button is-primary" @click="sendRemenar()">Tancar i remenar</button>
+        </footer>
+    </div>
 </template>
 
 <script>
@@ -44,7 +55,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            moveToShow: 'moveToShow'
+            moveToShow: 'moveToShow',
+            toogleShowCartes: 'toogleShowCartes',
+            closeShow: 'closeShow'
         }),
         selectDeck: function(){
             let deck = [];
@@ -63,7 +76,16 @@ export default {
                 deck: deck
             };
             this.moveToShow(obj);
-        }
+        },
+        sendClose: function(){
+            //this.toogleShowCartes();
+            this.closeShow(false);
+            this.$parent.close();
+        },
+        sendRemenar: function(){
+            this.closeShow(true);
+            this.$parent.close();
+        },
     },
     // filters: {}
 }
