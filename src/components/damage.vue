@@ -1,8 +1,18 @@
 <template>
-    <div class="damage is-clearfix">
-        <img src="../assets/markers/38d55f36-04d7-4cf9-a496-06cb84de567d.png"/>
-        <div>{{value}}</div>
-    </div>
+    <nav class="level" style="position:absolute;margin-bottom: 0;padding: 5px 5px 5px 0;background-color: rgba(0,0,0,0.5);" v-bind:class="[{isTop: isTop}, {isDos: isDos}]">
+        <!-- Left side -->
+        <div class="level-left">
+            <div class="level-item" style="margin-right: 0.5rem;">
+                <!--<div class="resource is-clearfix">-->
+                <figure class="image is-32x32">
+                    <img src="../assets/markers/38d55f36-04d7-4cf9-a496-06cb84de567d.png"/>
+                </figure>
+            </div>
+            <div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">
+                <div>{{damage}}</div>
+            </div>
+        </div>
+    </nav>
 </template>
 
 <script>
@@ -10,38 +20,43 @@
     export default {
         name: 'damage',
         components: {},
-        props: ['type', 'value'],
+        props: ['damage', 'resource', 'viatge'],
         data: function(){
-            return {}
+            return {
+                isTop: false,
+                isDos: false,
+            }
         },
         mounted: function(){},
-        watch: {},
+        watch: {
+            damage: function(){this.evaluate()},
+            viatge: function(){this.evaluate()},
+            resource: function(){this.evaluate()},
+        },
         computed: {},
-        methods:{}
+        methods:{
+            evaluate: function(){
+                console.log("EVALUATE DAMAGE");
+                if (this.resource > 0 && this.viatge > 0 ){
+                    this.isTop = true;
+                    this.isDos = false;
+                } else if (this.resource > 0 || this.viatge > 0 ){
+                    this.isDos = true;
+                    this.isTop = false;
+                } else {
+                    this.isTop = false;
+                    this.isDos = false;
+                }
+            }
+        }
     }
 </script>
 
 <style lang="scss">
-    .damage {
-
-        color:white;
-        top:50%;
-        left:0;
-        position: absolute;
-        margin-top: -22px;
-
-        img {
-            min-width: 10px;
-            min-height: 10px;
-            width: 30%;
-            height: 30%;
-            display:contents;
-            float: left;
-        }
-
-        div {
-            float: left;
-            margin-left: 5px;
-        }
+    .isTop {
+        align-self: flex-start;
+    }
+    .isDos {
+        margin-top: 12px;
     }
 </style>

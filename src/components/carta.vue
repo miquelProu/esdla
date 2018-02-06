@@ -1,9 +1,9 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
-        <figure class="image">
-            <resource v-if="card.resource > 0" :value="card.resource"></resource>
-            <damage v-if="card.damage > 0" :value="card.damage"></damage>
-            <viatge v-if="card.viatge > 0" :value="card.viatge"></viatge>
+        <figure class="image" style="justify-content: start;">
+            <resource v-if="card.resource > 0" :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
+            <damage v-if="card.damage > 0" :damage="card.damage" :resource="card.resource" :viatge="card.viatge"></damage>
+            <viatge v-if="card.viatge > 0" :value="card.viatge" :resource="card.resource" :damage="card.damage"></viatge>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
         <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta" @flip="flip" @rotate="newRotate"></down>
