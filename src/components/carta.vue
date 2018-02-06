@@ -1,6 +1,6 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
-        <figure class="image" style="justify-content: start;">
+        <figure class="image" style="justify-content: start;padding-bottom: 10px;">
             <resource v-if="card.resource > 0" :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
             <damage v-if="card.damage > 0" :damage="card.damage" :resource="card.resource" :viatge="card.viatge"></damage>
             <viatge v-if="card.viatge > 0" :value="card.viatge" :resource="card.resource" :damage="card.damage"></viatge>

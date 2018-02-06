@@ -1,18 +1,45 @@
 <template>
-    <nav class="level" style="position:absolute;margin-bottom: 0;padding: 5px 5px 5px 0;background-color: rgba(0,0,0,0.5);" v-bind:class="[{isTop: isTop}, {isDos: isDos}]">
-        <!-- Left side -->
-        <div class="level-left">
-            <div class="level-item" style="margin-right: 0.5rem;">
-                <!--<div class="resource is-clearfix">-->
-                <figure class="image is-32x32">
-                    <img class="" src="../assets/markers/62a2ba76-9872-481b-b8fc-ec35447ca640.png"/>
-                </figure>
+    <div class="columns is-multiline" style="position:absolute;margin-left: -0.5rem;margin-top:0.2rem;">
+        <div class="column is-12 level">
+            <div class="level-left">
+                <div class="level-item" style="margin-right: 0.5rem;">
+                    <!--<div class="resource is-clearfix">-->
+                    <figure class="image is-32x32">
+                        <img class="" src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>
+                    </figure>
+                </div>
+                <div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">
+                    <div>{{viatge}}</div>
+                </div>
             </div>
-           <div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">
-               <div>{{resource}}</div>
-           </div>
         </div>
-    </nav>
+        <!--<div class="column is-12 level">-->
+            <!--<div class="level-left">-->
+                <!--<div class="level-item" style="margin-right: 0.5rem;">-->
+                    <!--&lt;!&ndash;<div class="resource is-clearfix">&ndash;&gt;-->
+                    <!--<figure class="image is-32x32">-->
+                        <!--<img class="" src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>-->
+                    <!--</figure>-->
+                <!--</div>-->
+                <!--<div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">-->
+                    <!--<div>{{viatge}}</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="column is-12 level">-->
+            <!--<div class="level-left">-->
+                <!--<div class="level-item" style="margin-right: 0.5rem;">-->
+                    <!--&lt;!&ndash;<div class="resource is-clearfix">&ndash;&gt;-->
+                    <!--<figure class="image is-32x32">-->
+                        <!--<img class="" src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>-->
+                    <!--</figure>-->
+                <!--</div>-->
+                <!--<div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">-->
+                    <!--<div>{{viatge}}</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
 </template>
 
 <script>
@@ -55,11 +82,10 @@
 </script>
 
 <style lang="scss">
-
-    .isTop {
-        align-self: flex-start;
-    }
-    .isDos {
-        margin-top: 12px;
+    .column {
+        padding: 0.45rem;
+        &.level {
+            margin-bottom: 0;
+        }
     }
 </style>
