@@ -1,9 +1,7 @@
 <template>
     <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
-        <figure class="image" style="justify-content: start;padding-bottom: 10px;">
-            <resource v-if="card.resource > 0" :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
-            <damage v-if="card.damage > 0" :damage="card.damage" :resource="card.resource" :viatge="card.viatge"></damage>
-            <viatge v-if="card.viatge > 0" :value="card.viatge" :resource="card.resource" :damage="card.damage"></viatge>
+        <figure class="imgCarta">
+            <resource :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
         <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta" @flip="flip" @rotate="newRotate"></down>
@@ -13,8 +11,6 @@
 <script>
     import Down from './down'
     import Resource from './resources'
-    import Damage from './damage'
-    import Viatge from './viatge'
 
     import { mapActions } from 'vuex'
 
@@ -23,8 +19,6 @@ export default {
     components: {
         down: Down,
         resource: Resource,
-        damage: Damage,
-        viatge: Viatge
     },
     props: ['card', 'cara', 'rol', 'isVertical', 'hasLupa'],
     data: function(){
@@ -35,9 +29,6 @@ export default {
             carta: {id:'51223bd0-ffd1-11df-a976-0801200c9001'},
             cardType: null,
             rotate: false,
-            // resource: 0,
-            // damage: 0,
-            // viatge: 0,
             girar: false
         }
     },
@@ -163,10 +154,11 @@ export default {
         span {height:100%;}
     }
 
-    .image {
+    .imgCarta {
         display: flex;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
+        padding-bottom: 10px;
     }
 }
 </style>

@@ -167,17 +167,23 @@ export default {
                     card['id'] = carta['$']['id'];
                     card['name'] = carta['_'];
                     card['type'] = tipus;
-                    card['ID'] = self.setID;
+                    card['ID'] = 0;
                     card['viatge'] = 0;
                     card['damage'] = 0;
                     card['resource'] = 0;
                     for (let x = 1; x <= qty; x++) {
-                        deck.push(card);
-                        self.setID++;
+                        // Afegeixo un clone, així totes les cartes son diferents objs
+                        // sino les cartes repetides eran la mateixa instancia
+                        let clone = _.clone(card);
+                        deck.push(clone);
                     }
-
-
                 });
+            });
+
+            // Afegeixo un index unic a cada carta
+            deck.forEach(function(carta, index, mazo){
+                mazo[index]['ID'] = self.setID;
+                self.setID++;
             });
             this.allToDeck({deckType: type, cards: deck});
         },

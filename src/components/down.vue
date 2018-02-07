@@ -13,6 +13,9 @@
         </template>
         <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="moure(AREA_ALIATS)">Baixar a taula</b-dropdown-item>
+            <template v-if="card.type == 'Attachment'">
+                <b-dropdown-item v-on:click="">Vincular</b-dropdown-item>
+            </template>
         </template>
         <template v-if="rol == AREA_PREPARACIO">
             <b-dropdown-item v-on:click="moure(AREA_ATACK)">Baixar a enfrontament</b-dropdown-item>

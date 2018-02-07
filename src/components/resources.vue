@@ -1,44 +1,41 @@
 <template>
-    <div class="columns is-multiline" style="position:absolute;margin-left: -0.5rem;margin-top:0.2rem;">
-        <div class="column is-12 level">
+    <div class="resources">
+        <div v-if="resource > 0" class="level">
             <div class="level-left">
-                <div class="level-item" style="margin-right: 0.5rem;">
-                    <!--<div class="resource is-clearfix">-->
+                <div class="level-item">
+                    <figure class="image is-32x32">
+                        <img class="" src="../assets/markers/62a2ba76-9872-481b-b8fc-ec35447ca640.png"/>
+                    </figure>
+                </div>
+                <div class="level-item text">
+                    <div>{{resource}}</div>
+                </div>
+            </div>
+        </div>
+        <div v-if="damage > 0" class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <figure class="image is-32x32">
+                        <img class="" src="../assets/markers/38d55f36-04d7-4cf9-a496-06cb84de567d.png"/>
+                    </figure>
+                </div>
+                <div class="level-item text">
+                    <div>{{damage}}</div>
+                </div>
+            </div>
+        </div>
+        <div v-if="viatge > 0" class="level">
+            <div class="level-left">
+                <div class="level-item">
                     <figure class="image is-32x32">
                         <img class="" src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>
                     </figure>
                 </div>
-                <div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">
+                <div class="level-item text">
                     <div>{{viatge}}</div>
                 </div>
             </div>
         </div>
-        <!--<div class="column is-12 level">-->
-            <!--<div class="level-left">-->
-                <!--<div class="level-item" style="margin-right: 0.5rem;">-->
-                    <!--&lt;!&ndash;<div class="resource is-clearfix">&ndash;&gt;-->
-                    <!--<figure class="image is-32x32">-->
-                        <!--<img class="" src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>-->
-                    <!--</figure>-->
-                <!--</div>-->
-                <!--<div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">-->
-                    <!--<div>{{viatge}}</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="column is-12 level">-->
-            <!--<div class="level-left">-->
-                <!--<div class="level-item" style="margin-right: 0.5rem;">-->
-                    <!--&lt;!&ndash;<div class="resource is-clearfix">&ndash;&gt;-->
-                    <!--<figure class="image is-32x32">-->
-                        <!--<img class="" src="../assets/markers/e9a419ff-5154-41cf-b84f-95149cc19a2a.png"/>-->
-                    <!--</figure>-->
-                <!--</div>-->
-                <!--<div class="level-item" style="color:white;font-weight: bold;font-size: 1.2em;">-->
-                    <!--<div>{{viatge}}</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </template>
 
@@ -82,10 +79,19 @@
 </script>
 
 <style lang="scss">
-    .column {
-        padding: 0.45rem;
-        &.level {
+    .resources{
+        position: absolute;
+
+        .level {
+            padding:5px 5px 5px 0;
+            background-color: rgba(0,0,0,0.5);
             margin-bottom: 0;
+
+            .level-item.text {
+                color:white;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
         }
     }
 </style>
