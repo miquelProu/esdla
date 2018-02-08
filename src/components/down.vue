@@ -52,6 +52,8 @@
         </template>
         <hr class="dropdown-divider">
         <b-dropdown-item v-on:click="esborrar()">Eliminar</b-dropdown-item>
+        <b-dropdown-item v-on:click="moureOne(true)">Moure Esq</b-dropdown-item>
+        <b-dropdown-item v-on:click="moureOne(false)">Moure Drt</b-dropdown-item>
     </b-dropdown>
 </template>
 
@@ -109,7 +111,8 @@
                 remenar: 'remenar',
                 move: 'move',
                 toogleNCartes: 'toogleNCartes',
-                setRolModalNum: 'setRolModalNum'
+                setRolModalNum: 'setRolModalNum',
+                moveOne: 'moveOne'
             }),
             esborrar: function(){
                 let self = this;
@@ -143,6 +146,18 @@
                     to: dest
                 };
                 this.move(obj);
+            },
+            moureOne: function(isLeft){
+                let self = this;
+                let deck = this.getDeckByArea(this.rol);
+                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
+                let obj = {
+                    isLeft: isLeft,
+                    pos: pos,
+                    rol: this.rol,
+                    deck: deck
+                };
+                this.moveOne(obj);
             },
             addResource: function(){
                 let deck = this.getDeckByArea(this.rol);

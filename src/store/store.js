@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
+import _move from 'lodash-move'
 
 import * as types from './mutation-types'
 import * as groups from './mutation-groups'
 import {translateAreaSetTo} from './mutation-types'
+import {array_move} from "./mutation-types";
 
 Vue.use(Vuex);
 
@@ -240,13 +242,29 @@ export default new Vuex.Store({
             commit(setFrom, from);
             commit(setTo, to);
         },
+        //************************/
+        // obj.num: El numero de cartes a ensenyar
+        // obj.rol: L'area on és la carta
+        // obj.deck: El deck complet de l'area
+        //************************/
         moveToShow: function({commit, state}, obj){
             let deck = obj.deck;
             let ensenyar = deck.splice(0, obj.num);
-            console.log(ensenyar);
-            console.log(deck);
             commit(types.SET_TO_SHOW, ensenyar);
             commit(translateAreaSetTo(obj.rol), deck);
+        },
+        //************************/
+        // obj.isLeft: Boolea, True-> moure a l'esquerra, False-> dreta
+        // obj.pos -> La posició que ocupa la carta en l'area actual
+        // obj.rol: L'area on és la carta
+        // obj.deck: El deck complet de l'area
+        //************************/
+        moveOne: function({commit, state}, obj){
+            let newPos = (obj.isLeft) ? obj.pos -1 : obj.pos + 1;
+            newPos = (newPos < 0) ? 0 : newPos;
+            newPos = (newPos - 1 > obj.deck.length) ? obj.deck.length - 1 : newPos;
+            let newDeck = _move(obj.deck, obj.pos, newPos);
+            commit(translateAreaSetTo(obj.rol), newDeck);
         },
         closeShow: function({commit, state}, isRemenar){
             let to = [];
