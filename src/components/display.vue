@@ -1,7 +1,7 @@
 <template>
     <div ref="display" class="columns is-gapless">
-        <div class="column" v-bind:class="{'is-narrow': hasMax}" v-for="carta in deck">
-            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true"></carta>
+        <div class="column" v-bind:class="[{'is-narrow': hasMax}, { 'vinculada': carta.type == 'Attachment' }]" v-for="carta in deck">
+            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true" :class=""></carta>
         </div>
     </div>
 </template>
@@ -29,7 +29,6 @@ export default {
                 let displayWidth = this.$refs.display.clientWidth;
                 let nCartes = displayWidth / Math.round(ample);
                 this.hasMax = !(this.deck.length > nCartes);
-                console.log(this.deck.length, nCartes);
             }
         }
     }
@@ -40,5 +39,10 @@ export default {
     .columns {
         height:100%;
         margin-bottom: 0;
+
+
+    }
+    .columns.is-gapless > .column.vinculada {
+        margin-left: -12%;
     }
 </style>

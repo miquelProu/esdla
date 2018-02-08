@@ -255,9 +255,7 @@ export default new Vuex.Store({
             } else if (this.getters.rolShowCartes == types.AREA_PLAYER_OUT_DECK) {
                 to = this.getters.playerOutDeck;
             }
-            //
-            //
-            //
+
             let from = this.getters.show;
             let concat = from.concat(to);
             let setTo = translateAreaSetTo(this.getters.rolShowCartes);
