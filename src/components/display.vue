@@ -1,6 +1,6 @@
 <template>
     <div ref="display" class="columns is-gapless">
-        <div class="column" v-bind:class="[{'is-narrow': hasMax}, { 'vinculada': carta.type == 'Attachment' && rol == AREA_HERO }]" v-for="carta in deck">
+        <div class="column" v-bind:class="[{'is-narrow': hasMax}, { 'vinculada': carta.type == 'Attachment' && rol == AREA_HERO }, {'heroi': rol == AREA_HERO}]" v-for="carta in deck">
             <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true" :class=""></carta>
         </div>
     </div>
@@ -41,14 +41,20 @@ export default {
     .columns {
         height:100%;
         margin-bottom: 0;
-        .column {
-            z-index:1;
-        }
 
-    }
-    .columns.is-gapless > .column.vinculada {
-        margin-left: -12%;
-        //transform: translate(-50%, 0);
-        z-index:0;
+        &.is-gapless > {
+            .column {
+                &.heroi {
+                    z-index: 1;
+                    margin-right:10px;
+
+                    &.vinculada {
+                        margin-left: -12%;
+                        //transform: translate(-50%, 0);
+                        z-index: 0;
+                    }
+                }
+            }
+        }
     }
 </style>
