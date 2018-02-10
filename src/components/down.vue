@@ -35,7 +35,10 @@
             <b-dropdown-item v-on:click="rotate">Esgotar</b-dropdown-item>
             <b-dropdown-item v-on:click="noRotate">Recuperar</b-dropdown-item>
         </template>
-        <template v-if="card.type == 'Quest'">
+        <template v-if="rol == AREA_ATACK">
+            <b-dropdown-item v-on:click="sombra">Sombra</b-dropdown-item>
+        </template>
+        <template v-if="card.type == 'Quest' || rol == AREA_ATACK">
             <b-dropdown-item v-on:click="flip">Flip</b-dropdown-item>
         </template>
         <template v-if="rol == AREA_VIATGE">
@@ -112,7 +115,8 @@
                 move: 'move',
                 toogleNCartes: 'toogleNCartes',
                 setRolModalNum: 'setRolModalNum',
-                moveOne: 'moveOne'
+                moveOne: 'moveOne',
+                sombraIn: 'sombra'
             }),
             esborrar: function(){
                 let self = this;
@@ -158,6 +162,12 @@
                     deck: deck
                 };
                 this.moveOne(obj);
+            },
+            sombra: function(){
+                let self = this;
+                let deck = this.getAtack;
+                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
+                this.sombraIn(pos);
             },
             addResource: function(){
                 let deck = this.getDeckByArea(this.rol);

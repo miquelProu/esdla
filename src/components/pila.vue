@@ -1,13 +1,14 @@
 <template>
     <div class="columns is-gapless">
         <div class="column" v-for="carta in one">
-            <carta :card="carta" :cara="cara" :rol="rol" :isVertical="isVertical"></carta>
+            <carta :card="carta" :cara="cara" :rol="rol" :isVertical="isVertical" :hasLupa="(rol == AREA_MISION_DECK || rol == AREA_PLAYER_OUT_DECK || rol == AREA_QUEST_OUT_DECK)"></carta>
         </div>
     </div>
 </template>
 
 <script>
     import Carta from './carta.vue'
+    import * as types from '../store/mutation-types'
 
 export default {
     name: 'pila',
@@ -17,7 +18,9 @@ export default {
     props: ['deck', 'cara', 'rol', 'isVertical'],
     data: function(){
         return {
-            mazo:[]
+            [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
+            [types.AREA_PLAYER_OUT_DECK] : types.AREA_PLAYER_OUT_DECK,
+            [types.AREA_QUEST_OUT_DECK]: types.AREA_QUEST_OUT_DECK
         }
     },
     mounted: function(){},

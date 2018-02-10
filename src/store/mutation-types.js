@@ -15,6 +15,7 @@ export const SET_TO_ALIATS = 'SET_TO_ALIATS'
 export const SET_TO_ATACK = 'SET_TO_ATACK'
 export const SET_TO_VIATGE = 'SET_TO_VIATGE'
 export const SET_TO_SHOW = 'SET_TO_SHOW'
+export const SET_N_VINCULADA = 'SET_N_VINCULADA'
 
 // export const ADD_VIATGE = 'ADD_VIATGE'
 // export const SUB_VIATGE = 'SUB_VIATGE'

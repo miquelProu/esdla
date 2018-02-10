@@ -45,7 +45,8 @@ export default new Vuex.Store({
             isModalShow: false,
             num: 0,
             rol: null
-        }
+        },
+        nVinculada: 0,
     },
     getters:{
         questDeck(state){                    // Get AREA_QUEST_DECK
@@ -110,7 +111,10 @@ export default new Vuex.Store({
         },
         rolShowCartes(state){
             return state.showDeck.rol;
-        }
+        },
+        nVinculada(state){
+            return state.nVinculada;
+        },
 
     },
     mutations:{
@@ -189,7 +193,10 @@ export default new Vuex.Store({
         },
         [types.ROL_N_CARTES](state, rol){
             state.showDeck.rol = rol;
-        }
+        },
+        [types.SET_N_VINCULADA](state, nVinculada){
+            state.nVinculada =  nVinculada;
+        },
     },
     actions:{
         allToDeck: function({commit}, payload){
@@ -272,6 +279,10 @@ export default new Vuex.Store({
                 to = this.getters.playerDeck;
             } else if (this.getters.rolShowCartes == types.AREA_PLAYER_OUT_DECK) {
                 to = this.getters.playerOutDeck;
+            } else if (this.getters.rolShowCartes == types.AREA_QUEST_DECK) {
+                to = this.getters.questDeck;
+            } else if (this.getters.rolShowCartes == types.AREA_QUEST_OUT_DECK) {
+                to = this.getters.questOutDeck();
             }
 
             let from = this.getters.show;
@@ -290,6 +301,16 @@ export default new Vuex.Store({
                 let d2 = _.shuffle(d);
                 commit(types.SET_TO_PLAYER_DECK, d2);
             }
+        },
+        sombra: function({commit,state}, index){
+            let atack = this.getters.atack;
+            let quest = this.getters.questDeck;
+
+            let sombra = quest.splice(0, 1);
+            sombra[0]['cara'] = false;
+            atack.splice(index + 1, 0, sombra[0]);
+            commit(types.SET_TO_ATACK, atack);
+            commit(types.SET_TO_QUEST_DECK, quest);
         },
         setLupaCard: function({commit, state}, carta){
             commit(types.SET_LUPA_CARD, carta);
@@ -312,6 +333,10 @@ export default new Vuex.Store({
         },
         setRolModalNum: function({commit, state}, rol){
             commit(types.ROL_N_CARTES, rol);
+        },
+        setNVinculada: function({commit, state}, nVinculada){
+            console.log("VINCULADA: "+nVinculada);
+            commit(types.SET_N_VINCULADA, nVinculada);
         }
     }
 })

@@ -11,6 +11,7 @@
 <script>
     import Down from './down'
     import Resource from './resources'
+    import * as types from '../store/mutation-types'
 
     import { mapActions } from 'vuex'
 
@@ -29,7 +30,9 @@ export default {
             carta: {id:'51223bd0-ffd1-11df-a976-0801200c9001'},
             cardType: null,
             rotate: false,
-            girar: false
+            //girar: false,
+            side: null,
+            [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
         }
     },
     mounted: function(){
@@ -43,11 +46,15 @@ export default {
         } else {
             this.cardType = 'Bo'
         }
+        this.side = (this.card.cara !== null) ? this.card.cara : this.cara;
     },
     watch: {
         card: function (newData, oldData) {
                 this.carta = newData;
-            }
+            },
+        cara: function(newData, oldData){
+                this.side = newData;
+        }
     },
     computed: {
         calculatedHeight: function(){
@@ -73,17 +80,17 @@ export default {
             setLupaPosition: 'setLupaPosition'
         }),
         srcImage: function(){
-            if (this.cara) {
-                if (this.girar){
+            if (this.side) {
+                return "/dist/cartas/" + this.carta.id + ".png";
+            } else {
+                if (this.rol == types.AREA_MISION_DECK){
                     return "/dist/cartas/" + this.carta.id + ".B.png";
                 } else {
-                    return "/dist/cartas/" + this.carta.id + ".png";
-                }
-            } else {
-                if (this.carta.type == 'Encounter' || this.carta.type == 'Setup') {
-                    return "/dist/cartas/encounter.jpg";
-                } else {
-                    return "/dist/cartas/card.jpg";
+                    if (this.carta.type == 'Encounter' || this.carta.type == 'Setup') {
+                        return "/dist/cartas/encounter.jpg";
+                    } else {
+                        return "/dist/cartas/card.jpg";
+                    }
                 }
 
             }
@@ -95,18 +102,18 @@ export default {
                 } else {
                     this.setLupaPosition('left');
                 }
-                if (this.cara) {
+                if (this.rol == types.AREA_MISION_DECK || this.side) {
                     let temp = _.clone(this.carta);
-                    if (this.girar) {
-                        temp.id = temp.id + ".B";
-                    }
+                     if (!this.side) {
+                         temp.id = temp.id + ".B";
+                     }
                     this.setLupaCard(temp);
                 }
             }
         },
         flip: function(val){
             if (val){
-                this.girar = !this.girar;
+                this.side = !this.side;
             }
         },
         newRotate: function(val){

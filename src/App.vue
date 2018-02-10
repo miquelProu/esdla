@@ -171,6 +171,7 @@ export default {
                     card['viatge'] = 0;
                     card['damage'] = 0;
                     card['resource'] = 0;
+                    card['cara'] = null;
                     for (let x = 1; x <= qty; x++) {
                         // Afegeixo un clone, així totes les cartes son diferents objs
                         // sino les cartes repetides eran la mateixa instancia
