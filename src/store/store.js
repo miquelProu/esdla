@@ -353,6 +353,19 @@ export default new Vuex.Store({
                 to: 'AREA_MA'
             };
             this.dispatch('move',obj);
+            this.dispatch('recuperar');
+            //pujar amenasa
+            //pujar torn
+        },
+        recuperar: function({commit, state}){
+            let heros = this.getters.hero;
+            let aliats = this.getters.aliats;
+            _.forEach(heros, function(hero){
+                hero.esgotat = false;
+            });
+            _.forEach(aliats, function(a){
+                a.esgotat = false;
+            });
         }
     }
 })

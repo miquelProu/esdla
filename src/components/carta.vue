@@ -1,10 +1,10 @@
 <template>
-    <div class="carta" ref="carta" v-bind:class="{rotate: rotate}" v-bind:style="{maxWidth: calculateWidth}">
+    <div class="carta" ref="carta" v-bind:class="{'esgotat': card.esgotat}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="imgCarta">
             <resource :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
-        <down v-bind:class="{norotate: rotate}" :rol="rol" :card="carta" @flip="flip" @rotate="newRotate"></down>
+        <down :rol="rol" :card="carta" @flip="flip" @esgotat="newEsgotat"></down>
     </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
             cartaHeight: null,
             carta: {id:'51223bd0-ffd1-11df-a976-0801200c9001'},
             cardType: null,
-            rotate: false,
+            esgotat: false,
             //girar: false,
             side: null,
             isCaraForce: null,
@@ -122,8 +122,8 @@ export default {
                 this.side = !this.side;
             }
         },
-        newRotate: function(val){
-            this.rotate = val;
+        newEsgotat: function(val){
+            this.card.esgotat = val;
         }
     }
 }
@@ -140,13 +140,14 @@ export default {
 
     border:1px solid red;
 
-    &.rotate {
-        transform: rotate(90deg);
-    }
+    &.esgotat {
+        .imgCarta {
+            background-color: red;
 
-    .norotate {
-        transform: rotate(-90deg);
-
+            img {
+                opacity: 0.7;
+            }
+        }
     }
 
     .dropdown {
@@ -171,7 +172,6 @@ export default {
         display: flex;
         justify-content: start;
         align-items: center;
-        padding-bottom: 10px;
     }
 }
 </style>

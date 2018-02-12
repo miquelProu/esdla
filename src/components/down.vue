@@ -32,8 +32,8 @@
             <b-dropdown-item v-on:click="subsDamage">Subs Damage</b-dropdown-item>
             <b-dropdown-item v-on:click="addViatge">Add Viatge</b-dropdown-item>
             <b-dropdown-item v-on:click="subsViatge">Subs Viatge</b-dropdown-item>
-            <b-dropdown-item v-on:click="rotate">Esgotar</b-dropdown-item>
-            <b-dropdown-item v-on:click="noRotate">Recuperar</b-dropdown-item>
+            <b-dropdown-item v-on:click="esgotat(true)">Esgotar</b-dropdown-item>
+            <b-dropdown-item v-on:click="esgotat(false)">Recuperar</b-dropdown-item>
         </template>
         <template v-if="rol == AREA_ATACK">
             <b-dropdown-item v-on:click="sombra">Sombra</b-dropdown-item>
@@ -224,11 +224,8 @@
                     }
                 });
             },
-            rotate: function(){
-                this.$emit('rotate', true);
-            },
-            noRotate: function(){
-                this.$emit('rotate', false);
+            esgotat: function(val){
+                this.$emit('esgotat', val);
             },
             flip: function(){
                 this.$emit('flip', true);

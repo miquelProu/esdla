@@ -156,6 +156,9 @@ export default {
             setShowCartes: 'setShowCartes',
             finalitzar: 'finalitzar'
         }),
+        doFinalitzar: function(){
+           this.dooFinalitzar(true);
+        },
         loadDeck: function(file, type) {
             let self = this;
             let sections = file.deck.section;
@@ -173,6 +176,7 @@ export default {
                     card['damage'] = 0;
                     card['resource'] = 0;
                     card['cara'] = null;
+                    card['esgotat'] = false;
                     for (let x = 1; x <= qty; x++) {
                         // Afegeixo un clone, així totes les cartes son diferents objs
                         // sino les cartes repetides eran la mateixa instancia
