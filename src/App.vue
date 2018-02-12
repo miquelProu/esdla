@@ -4,12 +4,12 @@
             <div class="tile is-8 is-parent taulellDret">
                 <div class="tile is-ancestor is-child">
                     <div class="tile is-vertical is-parent">
-                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true" :rol="AREA_PREPARACIO"></display></div>
-                        <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;"><display :deck="getAtack" :cara="true" :rol="AREA_ATACK"></display></div>
+                        <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true" :caraForce="false" :rol="AREA_PREPARACIO"></display></div>
+                        <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;"><display :deck="getAtack" :cara="true" :caraForce="false" :rol="AREA_ATACK"></display></div>
                         <div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>
-                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHero" :cara="true" :rol="AREA_HERO"></display></div>
+                        <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHero" :cara="true" :caraForce="false" :rol="AREA_HERO"></display></div>
                         <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getAliats" :cara="true" :rol="AREA_ALIATS"></display></div>
-                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMa" :cara="true" :rol="AREA_MA"></display></div>
+                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMa" :cara="true" :caraForce="false" :rol="AREA_MA"></display></div>
                     </div>
                 </div>
             </div>
@@ -18,8 +18,8 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :caraForce="true" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :caraForce="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-half">
                                     <div class="has-text-centered">TORNS</div>
                                     <div class="has-text-centered">{{getTorn}}</div>
@@ -28,28 +28,28 @@
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-half"><pila :deck="getViatge" :cara="true" :rol="AREA_VIATGE" :isVertical="false"></pila></div>
+                                <div class="column is-one-half"><pila :deck="getViatge" :cara="true" :caraForce="true" :rol="AREA_VIATGE" :isVertical="false"></pila></div>
                                 <div class="column is-one-half">
                                     <div class="tile is-vertical is-parent">
-                                        <div class="tile is-child"><pila :deck="getMissionDeck" :cara="true" :rol="AREA_MISION_DECK" :isVertical="true"></pila></div>
-                                        <div class="tile is-child"><pila :deck="getMissionOutDeck" :cara="true" :rol="AREA_MISION_OUT_DECK" :isVertical="true"></pila></div>
+                                        <div class="tile is-child"><pila :deck="getMissionDeck" :cara="true" :caraForce="false" :rol="AREA_MISION_DECK" :isVertical="true"></pila></div>
+                                        <div class="tile is-child"><pila :deck="getMissionOutDeck" :cara="true" :caraForce="false" :rol="AREA_MISION_OUT_DECK" :isVertical="true"></pila></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tile is-child stackHerois">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :caraForce="true" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :caraForce="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-half">
                                     <div class="desplegable" style="float:right;">
-                                        <b-dropdown xposition="is-right">
+                                        <b-dropdown> <!--position="is-bottom-left"-->
                                             <button class="button is-primary" slot="trigger">
                                                 <b-icon icon="menu-down"></b-icon>
                                             </button>
                                             <b-dropdown-item v-on:click="">Afegir 1 amenaça</b-dropdown-item>
                                             <b-dropdown-item v-on:click="">Treure 1 amenaça</b-dropdown-item>
-                                            <b-dropdown-item v-on:click="">Finalitzar torn</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                         </b-dropdown>
                                     </div>
                                     <div class="has-text-centered">AMENAÇA</div>
@@ -153,7 +153,8 @@ export default {
         ...mapActions({
             allToDeck: 'allToDeck',
             toogleShowCartes: 'toogleShowCartes',
-            setShowCartes: 'setShowCartes'
+            setShowCartes: 'setShowCartes',
+            finalitzar: 'finalitzar'
         }),
         loadDeck: function(file, type) {
             let self = this;
@@ -188,7 +189,6 @@ export default {
             });
             this.allToDeck({deckType: type, cards: deck});
         },
-
         newNumber: function(val){
             console.log("NEW NUMBER");
             this.toogleShowCartes();

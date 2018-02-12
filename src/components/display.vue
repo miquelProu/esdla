@@ -1,7 +1,7 @@
 <template>
     <div ref="display" class="columns is-gapless">
         <div class="column" v-bind:class="[{'is-narrow': hasMax}, { 'vinculada': carta.type == 'Attachment' && rol == AREA_HERO }, {'heroi': rol == AREA_HERO}]" v-for="carta in deck">
-            <carta :cara="cara" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true" :class=""></carta>
+            <carta :cara="cara" :caraForce="caraForce" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true" :class=""></carta>
         </div>
     </div>
 </template>
@@ -16,7 +16,7 @@ export default {
     components: {
         'carta':  Carta,
     },
-    props: ['deck', 'cara', 'rol'],
+    props: ['deck', 'cara', 'rol', 'caraForce'],
     data: function(){
         return {
             hasMax: true,

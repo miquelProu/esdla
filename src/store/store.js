@@ -282,7 +282,7 @@ export default new Vuex.Store({
             } else if (this.getters.rolShowCartes == types.AREA_QUEST_DECK) {
                 to = this.getters.questDeck;
             } else if (this.getters.rolShowCartes == types.AREA_QUEST_OUT_DECK) {
-                to = this.getters.questOutDeck();
+                to = this.getters.questOutDeck;
             }
 
             let from = this.getters.show;
@@ -337,6 +337,22 @@ export default new Vuex.Store({
         setNVinculada: function({commit, state}, nVinculada){
             console.log("VINCULADA: "+nVinculada);
             commit(types.SET_N_VINCULADA, nVinculada);
+        },
+        finalitzar: function({commit, state}){
+            let heros = this.getters.hero;
+            _.forEach(heros, function(hero){
+                hero.resource++;
+                // console.log(hero);
+            });
+            let deck = this.getters.playerDeck;
+            let card = deck[0];
+            let obj = {
+                card: card,
+                pos: 0,
+                from: 'AREA_PLAYER_DECK',
+                to: 'AREA_MA'
+            };
+            this.dispatch('move',obj);
         }
     }
 })

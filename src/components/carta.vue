@@ -21,7 +21,7 @@ export default {
         down: Down,
         resource: Resource,
     },
-    props: ['card', 'cara', 'rol', 'isVertical', 'hasLupa'],
+    props: ['card', 'cara', 'caraForce', 'rol', 'isVertical', 'hasLupa', ''],
     data: function(){
         let self = this;
         return {
@@ -32,6 +32,7 @@ export default {
             rotate: false,
             //girar: false,
             side: null,
+            isCaraForce: null,
             [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
         }
     },
@@ -46,7 +47,12 @@ export default {
         } else {
             this.cardType = 'Bo'
         }
-        this.side = (this.card.cara !== null) ? this.card.cara : this.cara;
+        if (!this.caraForce) {
+            this.side = (this.card.cara !== null) ? this.card.cara : this.cara;
+        } else {
+            this.side = this.cara;
+        }
+
     },
     watch: {
         card: function (newData, oldData) {

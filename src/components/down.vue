@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown>
+    <b-dropdown> <!--:position="(rol == AREA_MA) ? 'is-top-left' : ''"-->
         <button class="button is-primary" slot="trigger">
             <b-icon icon="menu-down"></b-icon>
         </button>
