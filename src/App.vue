@@ -6,7 +6,7 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true" :caraForce="false" :rol="AREA_PREPARACIO"></display></div>
                         <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;"><display :deck="getAtack" :cara="true" :caraForce="false" :rol="AREA_ATACK"></display></div>
-                        <div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>
+                        <!--<div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>-->
                         <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHero" :cara="true" :caraForce="false" :rol="AREA_HERO"></display></div>
                         <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getAliats" :cara="true" :rol="AREA_ALIATS"></display></div>
                         <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMa" :cara="true" :caraForce="false" :rol="AREA_MA"></display></div>
@@ -18,9 +18,9 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getQuestDeck" :cara="false" :caraForce="true" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getQuestOutDeck" :cara="true" :caraForce="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-half">
+                                <div class="column is-one-third"><pila v-if="getQuestDeck" :cara="false" :caraForce="true" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-third"><pila v-if="getQuestOutDeck" :cara="true" :caraForce="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-third">
                                     <div class="has-text-centered">TORNS</div>
                                     <div class="has-text-centered">{{getTorn}}</div>
                                 </div>
@@ -39,9 +39,11 @@
                         </div>
                         <div class="tile is-child stackHerois">
                             <div class="columns">
-                                <div class="column is-one-quarter"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :caraForce="true" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-one-quarter"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :caraForce="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
-                                <div class="column is-half">
+                                <div class="column is-one-third"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :caraForce="true" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-third"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :caraForce="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
+                                <div class="column is-one-third">
+                                    <div class="has-text-centered">AMENAÇA</div>
+                                    <div class="has-text-centered">{{getAmenasa}}</div>
                                     <div class="desplegable" style="float:right;">
                                         <b-dropdown> <!--position="is-bottom-left"-->
                                             <button class="button is-primary" slot="trigger">
@@ -51,11 +53,10 @@
                                             <b-dropdown-item v-on:click="subAmenasa">Treure 1 amenaça</b-dropdown-item>
                                             <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="encapsulate">Save File</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="encapsulate">Load File</b-dropdown-item>
                                         </b-dropdown>
                                     </div>
-                                    <div class="has-text-centered">AMENAÇA</div>
-                                    <div class="has-text-centered">{{getAmenasa}}</div>
-
                                 </div>
                             </div>
                         </div>
@@ -82,6 +83,7 @@ import Carta from './components/carta.vue'
 import Display from './components/display.vue'
 import Lupa from './components/lupa'
 import * as types from './store/mutation-types'
+import * as groups from './store/mutation-groups'
 import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
 import ModalNCartes from './components/modalNCartes'
 import ModalShowCartes from './components/modalShowCartes'
@@ -197,6 +199,87 @@ export default {
         newNumber: function(val){
             console.log("NEW NUMBER");
             this.toogleShowCartes();
+        },
+        encapsulate: function() {
+            let lotr = new Array();
+            let prep = {
+                name: types.AREA_PREPARACIO,
+                deck: this.getPreparacio
+            };
+            lotr.push(prep);
+            let at = {
+                name: types.AREA_ATACK,
+                deck: this.getAtack
+            };
+            lotr.push(at);
+            let hero = {
+                name: types.AREA_HERO,
+                deck: this.getHero
+            };
+            lotr.push(hero);
+            let al = {
+                name: types.AREA_ALIATS,
+                deck: this.getAliats
+            };
+            lotr.push(al);
+            let ma = {
+                name: types.AREA_MA,
+                deck: this.getMa
+            };
+            lotr.push(ma);
+            let qd = {
+                name: types.AREA_QUEST_DECK,
+                deck: this.getQuestDeck
+            };
+            lotr.push(qd);
+            let qod = {
+                name: types.AREA_QUEST_OUT_DECK,
+                deck: this.getQuestOutDeck
+            };
+            lotr.push(qod);
+            let mis = {
+                name: types.AREA_MISION_DECK,
+                deck: this.getMissionDeck
+            };
+            lotr.push(mis);
+            let misout = {
+                name: types.AREA_MISION_OUT_DECK,
+                deck: this.getMissionOutDeck
+            };
+            lotr.push(misout);
+            let pd = {
+                name: types.AREA_PLAYER_DECK,
+                deck: this.getPlayerDeck
+            };
+            lotr.push(pd);
+            let pod = {
+                name: types.AREA_PLAYER_OUT_DECK,
+                deck: this.getPlayerOutDeck
+            };
+            lotr.push(pod);
+            let vi = {
+                name: types.AREA_VIATGE,
+                deck: this.getViatge
+            };
+            lotr.push(vi);
+
+            this.saveFile(lotr);
+        },
+        saveFileLocal: function(lotr){
+            const data = JSON.stringify(lotr);
+            window.localStorage.setItem('lotr', data);
+            console.log(JSON.parse(window.localStorage.getItem('lotr')))
+        },
+        saveFile: function(arr) {
+            const data = JSON.stringify(arr);
+            const blob = new Blob([data], {type: 'text/plain'});
+            const e = document.createEvent('MouseEvents'),
+                a = document.createElement('a');
+            a.download = "test.json";
+            a.href = window.URL.createObjectURL(blob);
+            a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+            e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(e);
         }
     },
     watch: {
@@ -260,16 +343,16 @@ html {
     }
 
     .tile.expositor {
-        &.ma {
-            height: 10%;
-            min-height: 10%;
-        }
         &.herois {
-            height: 20%;
-            min-height: 20%;
+            height: 22%;
+            min-height: 22%;
         }
-        height: 15%;
-        min-height: 15%;
+        &.ma {
+            height: 19%;
+            min-height: 19%;
+        }
+        height: 17%;
+        min-height: 17%;
     }
 }
 
@@ -281,8 +364,8 @@ html {
     }
 
     .stackMision {
-        height: 30%;
-        min-height: 30%;
+        height: 40%;
+        min-height: 40%;
     }
 }
 
@@ -316,5 +399,8 @@ a {
             background-color: rgba(255,255,255,0.5);
         }
     }
+}
+.dropdown.is-mobile-modal .dropdown-menu .dropdown-item, .dropdown.is-mobile-modal .dropdown-menu .has-link a{
+    padding: 0.3rem 1.5rem;
 }
 </style>

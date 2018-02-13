@@ -164,6 +164,9 @@ export default new Vuex.Store({
         [types.SET_TO_SHOW](state, payload){
             state.AREA_SHOW = payload;
         },
+        [types.SET_TO_VIATGE](state, payload){
+            state.AREA_VIATGE = payload;
+        },
         [types.SET_LUPA_CARD](state, carta){
             state.lupa.carta = carta;
         },

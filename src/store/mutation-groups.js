@@ -12,7 +12,8 @@ export const PLAYING_DECK_LIST = [
     types.AREA_MISION_DECK,
     types.AREA_MISION_OUT_DECK,
     types.AREA_PLAYER_DECK,
-    types.AREA_PLAYER_OUT_DECK
+    types.AREA_PLAYER_OUT_DECK,
+    types.AREA_VIATGE,
 ];
 
 export const PLAYING_ALIES_DECK_LIST = [
