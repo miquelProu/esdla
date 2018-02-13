@@ -47,8 +47,9 @@
                                             <button class="button is-primary" slot="trigger">
                                                 <b-icon icon="menu-down"></b-icon>
                                             </button>
-                                            <b-dropdown-item v-on:click="">Afegir 1 amenaça</b-dropdown-item>
-                                            <b-dropdown-item v-on:click="">Treure 1 amenaça</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="addAmenasa">Afegir 1 amenaça</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="subAmenasa">Treure 1 amenaça</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                         </b-dropdown>
                                     </div>
@@ -154,11 +155,11 @@ export default {
             allToDeck: 'allToDeck',
             toogleShowCartes: 'toogleShowCartes',
             setShowCartes: 'setShowCartes',
-            finalitzar: 'finalitzar'
+            finalitzar: 'finalitzar',
+            addTorn: 'addTorn',
+            addAmenasa: 'addAmenasa',
+            subAmenasa: 'subAmenasa'
         }),
-        doFinalitzar: function(){
-           this.dooFinalitzar(true);
-        },
         loadDeck: function(file, type) {
             let self = this;
             let sections = file.deck.section;

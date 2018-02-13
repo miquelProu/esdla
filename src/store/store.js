@@ -338,6 +338,15 @@ export default new Vuex.Store({
             console.log("VINCULADA: "+nVinculada);
             commit(types.SET_N_VINCULADA, nVinculada);
         },
+        addTorn: function({commit, state}){
+            commit(types.ADD_TORN);
+        },
+        addAmenasa: function({commit, state}){
+            commit(types.ADD_AMENASA);
+        },
+        subAmenasa: function({commit, state}){
+            commit(types.SUB_AMENASA);
+        },
         finalitzar: function({commit, state}){
             let heros = this.getters.hero;
             _.forEach(heros, function(hero){
@@ -354,8 +363,8 @@ export default new Vuex.Store({
             };
             this.dispatch('move',obj);
             this.dispatch('recuperar');
-            //pujar amenasa
-            //pujar torn
+            this.dispatch('addTorn');
+            this.dispatch('addAmenasa');
         },
         recuperar: function({commit, state}){
             let heros = this.getters.hero;
