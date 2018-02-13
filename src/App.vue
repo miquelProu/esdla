@@ -95,7 +95,7 @@ Vue.use(Buefy);
 export default {
     name: 'app',
     components: {
-        ModalShowCartes,
+        // ModalShowCartes,
         'pila': Pila,
         'carta':  Carta,
         'display': Display,
