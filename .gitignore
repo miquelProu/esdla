@@ -12,3 +12,5 @@ yarn-error.log
 *.sln
 .babelrc
 src/assets/cartas/*
+!src/assets/cartas/card.jpg
+!src/assets/cartas/encounter.jpg
