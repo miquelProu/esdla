@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <div id="app" class="body">
         <div class="tile is-ancestor">
             <div class="tile is-8 is-parent taulellDret">
@@ -43,6 +43,7 @@
                                 <div class="column is-one-third">
                                     <div class="has-text-centered">AMENAÇA</div>
                                     <div class="has-text-centered">{{getAmenasa}}</div>
+                                    <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload"/>
                                     <div class="desplegable" style="float:right;">
                                         <b-dropdown> <!--position="is-bottom-left"-->
                                             <button class="button is-primary" slot="trigger">
@@ -54,6 +55,7 @@
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="encapsulate">Save File</b-dropdown-item>
                                             <b-dropdown-item v-on:click="encapsulate">Load File</b-dropdown-item>
+
                                         </b-dropdown>
                                     </div>
                                 </div>
@@ -201,6 +203,29 @@ export default {
         newNumber: function(val){
             console.log("NEW NUMBER");
             this.toogleShowCartes();
+        },
+        upload: function(e) {
+            let self = this;
+            e.preventDefault();
+            var files = this.$refs.avatar.files;
+                //Retrieve the first (and only!) File from the FileList object
+                var f = files[0];
+                console.log(f);
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    let JsonObj = JSON.parse(e.target.result);
+                    console.log(JsonObj);
+                    // let test = e.target.result;
+                    // console.log(test);
+                    // self.loadDeck(test, types.QUEST);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsText(f);
         },
         encapsulate: function() {
             let lotr = new Array();

@@ -1,5 +1,5 @@
 <template>
-    <div ref="display" v-droppable.carta="send" class="columns is-gapless">
+    <div ref="display" v-droppable.carta="send" v-dragenter.carta="enter" class="columns is-gapless">
         <div class="column" v-bind:class="[{'is-narrow': hasMax}, { 'vinculada': carta.type == 'Attachment' && rol == AREA_HERO }, {'heroi': rol == AREA_HERO}]" v-for="carta in deck">
             <carta :cara="cara" :caraForce="caraForce" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true" :class=""></carta>
         </div>
@@ -78,6 +78,10 @@ export default {
             this.move(obj);
             console.log("DROP");
             console.log(obj);
+            console.log(ev);
+        },
+        enter:function(ev){
+            console.log("NETER");
             console.log(ev);
         },
         getDeckByArea: function(area){
