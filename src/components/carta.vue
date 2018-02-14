@@ -1,5 +1,5 @@
 <template>
-    <div class="carta" ref="carta" v-bind:class="{'esgotat': card.esgotat}" v-bind:style="{maxWidth: calculateWidth}">
+    <div class="carta" v-draggable.carta="dragableObj" ref="carta" v-bind:class="{'esgotat': card.esgotat}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="imgCarta">
             <resource :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
@@ -34,6 +34,10 @@ export default {
             side: null,
             isCaraForce: null,
             [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
+            dragableObj: {
+                card: this.card,
+                rol: this.rol
+            }
         }
     },
     mounted: function(){
@@ -57,6 +61,7 @@ export default {
     watch: {
         card: function (newData, oldData) {
                 this.carta = newData;
+                this.dragableObj.card = newData;
             },
         cara: function(newData, oldData){
                 this.side = newData;

@@ -36,6 +36,8 @@
             <b-dropdown-item v-on:click="esgotat(false)">Recuperar</b-dropdown-item>
         </template>
         <template v-if="rol == AREA_ATACK">
+            <b-dropdown-item v-on:click="addDamage">Add Damage</b-dropdown-item>
+            <b-dropdown-item v-on:click="subsDamage">Subs Damage</b-dropdown-item>
             <b-dropdown-item v-on:click="sombra">Sombra</b-dropdown-item>
         </template>
         <template v-if="card.type == 'Quest' || rol == AREA_ATACK">

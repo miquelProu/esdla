@@ -6,10 +6,9 @@
                     <div class="tile is-vertical is-parent">
                         <div class="tile is-child expositor preparacio" style="margin-bottom:2% !important;"><display :deck="getPreparacio" :cara="true" :caraForce="false" :rol="AREA_PREPARACIO"></display></div>
                         <div class="tile is-child expositor encuentros" style="margin-bottom:2% !important;"><display :deck="getAtack" :cara="true" :caraForce="false" :rol="AREA_ATACK"></display></div>
-                        <!--<div class="tile is-child expositor defensa" style="margin-bottom:2% !important;">ENFRENTAMENT</div>-->
                         <div class="tile is-child expositor herois" style="margin-bottom:2% !important;"><display :deck="getHero" :cara="true" :caraForce="false" :rol="AREA_HERO"></display></div>
                         <div class="tile is-child expositor baixades " style="margin-bottom:2% !important;"><display :deck="getAliats" :cara="true" :rol="AREA_ALIATS"></display></div>
-                        <div class="tile is-child expositor ma" xstyle="margin-bottom:2% !important;"><display :deck="getMa" :cara="true" :caraForce="false" :rol="AREA_MA"></display></div>
+                        <div class="tile is-child expositor ma"><display :deck="getMa" :cara="true" :caraForce="false" :rol="AREA_MA"></display></div>
                     </div>
                 </div>
             </div>
@@ -78,6 +77,8 @@
 
 import Vue from 'vue'
 import Buefy from 'buefy'
+import Vue2Dnd from 'vue2-dnd'
+
 import Pila from './components/pila.vue'
 import Carta from './components/carta.vue'
 import Display from './components/display.vue'
@@ -94,6 +95,7 @@ import QuestDeckFile from './assets/deck/Quest-006-A-Journey-to-Rhosgobel.o8d'
 import PlayerDeckFile from './assets/deck/carrock-solo-1.0.o8d'
 
 Vue.use(Buefy);
+Vue.use(Vue2Dnd);
 
 export default {
     name: 'app',
