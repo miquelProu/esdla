@@ -174,8 +174,9 @@ export default {
             let tipusArr = [];
             _.forEach(sections, function (section) {
                 let tipus = (isInit) ? section['$']['name'] : section['_name'];
-                console.log(tipus, tipus.length);
-                tipusArr.push(tipus);
+                if(Array.isArray(section.card)) {
+                    tipusArr.push(tipus);
+                }
                 _.forEach(section.card, function (carta) {
                     let card = {};
                     let qty = (isInit) ? carta['$']['qty'] : carta['_qty'];
@@ -202,10 +203,10 @@ export default {
                 mazo[index]['ID'] = self.setID;
                 self.setID++;
             });
-            let questTypeHero = (tipusArr.indexOf("HERO") > -1) ? types.PLAYER : types.QUEST;
-            console.log(questTypeHero);
+            let questTypeHero = (tipusArr.indexOf("Hero") > -1) ? types.PLAYER : types.QUEST;
+            console.log(tipusArr,questTypeHero);
             // this.allToDeck({deckType: questTypeHero, cards: deck});
-            this.allToDeck({deckType: types.PLAYER, cards: deck});
+            this.allToDeck({deckType: questTypeHero, cards: deck});
         },
         newNumber: function(val){
             console.log("NEW NUMBER");
@@ -227,6 +228,7 @@ export default {
                     // Convert XML 2 JSON
                     let x2js = new XmlToJson();
                     let json = x2js.xml2js(e.target.result);
+                    console.log(json);
                     self.loadDeck(json, false);
                 };
             })(f);
