@@ -43,7 +43,7 @@
                                 <div class="column is-one-third">
                                     <div class="has-text-centered">AMENAÇA</div>
                                     <div class="has-text-centered">{{getAmenasa}}</div>
-                                    <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload"/>
+                                    <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="load"/>
                                     <div class="desplegable" style="float:right;">
                                         <b-dropdown> <!--position="is-bottom-left"-->
                                             <button class="button is-primary" slot="trigger">
@@ -132,8 +132,8 @@ export default {
       }
     },
     mounted: function(){
-        this.loadDeck(QuestDeckFile, types.QUEST, true);
-        this.loadDeck(PlayerDeckFile, types.PLAYER, true);
+        // this.loadDeck(QuestDeckFile, true);
+        // this.loadDeck(PlayerDeckFile, true);
     },
     watch: {},
     computed: {
@@ -167,12 +167,15 @@ export default {
             addAmenasa: 'addAmenasa',
             subAmenasa: 'subAmenasa'
         }),
-        loadDeck: function(file, type, isInit) {
+        loadDeck: function(file, isInit) {
             let self = this;
             let sections = file.deck.section;
             let deck = [];
+            let tipusArr = [];
             _.forEach(sections, function (section) {
                 let tipus = (isInit) ? section['$']['name'] : section['_name'];
+                console.log(tipus, tipus.length);
+                tipusArr.push(tipus);
                 _.forEach(section.card, function (carta) {
                     let card = {};
                     let qty = (isInit) ? carta['$']['qty'] : carta['_qty'];
@@ -199,13 +202,16 @@ export default {
                 mazo[index]['ID'] = self.setID;
                 self.setID++;
             });
-            this.allToDeck({deckType: type, cards: deck});
+            let questTypeHero = (tipusArr.indexOf("HERO") > -1) ? types.PLAYER : types.QUEST;
+            console.log(questTypeHero);
+            // this.allToDeck({deckType: questTypeHero, cards: deck});
+            this.allToDeck({deckType: types.PLAYER, cards: deck});
         },
         newNumber: function(val){
             console.log("NEW NUMBER");
             this.toogleShowCartes();
         },
-        upload: function(e) {
+        load: function(e) {
             let self = this;
             e.preventDefault();
             // Get files from input
@@ -221,7 +227,7 @@ export default {
                     // Convert XML 2 JSON
                     let x2js = new XmlToJson();
                     let json = x2js.xml2js(e.target.result);
-                    self.loadDeck(json, types.QUEST, false);
+                    self.loadDeck(json, false);
                 };
             })(f);
 
