@@ -90,6 +90,7 @@ import * as groups from './store/mutation-groups'
 import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
 import ModalNCartes from './components/modalNCartes'
 import ModalShowCartes from './components/modalShowCartes'
+import XmlToJson from 'x2js'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -131,8 +132,8 @@ export default {
       }
     },
     mounted: function(){
-        this.loadDeck(QuestDeckFile, types.QUEST);
-        this.loadDeck(PlayerDeckFile, types.PLAYER);
+        this.loadDeck(QuestDeckFile, types.QUEST, true);
+        this.loadDeck(PlayerDeckFile, types.PLAYER, true);
     },
     watch: {},
     computed: {
@@ -166,17 +167,17 @@ export default {
             addAmenasa: 'addAmenasa',
             subAmenasa: 'subAmenasa'
         }),
-        loadDeck: function(file, type) {
+        loadDeck: function(file, type, isInit) {
             let self = this;
             let sections = file.deck.section;
             let deck = [];
             _.forEach(sections, function (section) {
-                let tipus = section['$']['name'];
+                let tipus = (isInit) ? section['$']['name'] : section['_name'];
                 _.forEach(section.card, function (carta) {
                     let card = {};
-                    let qty = carta['$']['qty'];
-                    card['id'] = carta['$']['id'];
-                    card['name'] = carta['_'];
+                    let qty = (isInit) ? carta['$']['qty'] : carta['_qty'];
+                    card['id'] = (isInit) ? carta['$']['id'] : carta['_id'];
+                    card['name'] = (isInit) ? carta['_'] : carta['__text'];
                     card['type'] = tipus;
                     card['ID'] = 0;
                     card['viatge'] = 0;
@@ -207,20 +208,20 @@ export default {
         upload: function(e) {
             let self = this;
             e.preventDefault();
+            // Get files from input
             var files = this.$refs.avatar.files;
-                //Retrieve the first (and only!) File from the FileList object
-                var f = files[0];
-                console.log(f);
+
+            //Retrieve the first (and only!) File from the FileList object
+            var f = files[0];
             var reader = new FileReader();
 
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
                 return function(e) {
-                    let JsonObj = JSON.parse(e.target.result);
-                    console.log(JsonObj);
-                    // let test = e.target.result;
-                    // console.log(test);
-                    // self.loadDeck(test, types.QUEST);
+                    // Convert XML 2 JSON
+                    let x2js = new XmlToJson();
+                    let json = x2js.xml2js(e.target.result);
+                    self.loadDeck(json, types.QUEST, false);
                 };
             })(f);
 
