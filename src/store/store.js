@@ -2,11 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import _move from 'lodash-move'
+import VuexPersistence from 'vuex-persist'
 
 import * as types from './mutation-types'
 import * as groups from './mutation-groups'
 import {translateAreaSetTo} from './mutation-types'
 import {array_move} from "./mutation-types";
+
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage,
+    key: 'lotr'
+});
 
 Vue.use(Vuex);
 
@@ -276,6 +282,13 @@ export default new Vuex.Store({
             let newDeck = _move(obj.deck, obj.pos, newPos);
             commit(translateAreaSetTo(obj.rol), newDeck);
         },
+        start: function({commit, state}, arr){
+            _.forEach(arr, function(area){
+                let action = area.name;
+                let deck = area.deck;
+                commit(translateAreaSetTo(action), deck);
+            });
+        },
         closeShow: function({commit, state}, isRemenar){
             let to = [];
             if (this.getters.rolShowCartes == types.AREA_PLAYER_DECK) {
@@ -379,5 +392,6 @@ export default new Vuex.Store({
                 a.esgotat = false;
             });
         }
-    }
+    },
+    plugins: [vuexLocal.plugin]
 })

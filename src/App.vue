@@ -53,9 +53,7 @@
                                             <b-dropdown-item v-on:click="subAmenasa">Treure 1 amenaça</b-dropdown-item>
                                             <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
-                                            <b-dropdown-item v-on:click="encapsulate">Save File</b-dropdown-item>
-                                            <b-dropdown-item v-on:click="encapsulate">Load File</b-dropdown-item>
-
+                                            <b-dropdown-item v-on:click="save">Save File</b-dropdown-item>
                                         </b-dropdown>
                                     </div>
                                 </div>
@@ -134,6 +132,9 @@ export default {
     mounted: function(){
         // this.loadDeck(QuestDeckFile, true);
         // this.loadDeck(PlayerDeckFile, true);
+        console.log("HOLA");
+        let store = this.encapsulate();
+        console.log(store);
     },
     watch: {},
     computed: {
@@ -171,6 +172,9 @@ export default {
             let self = this;
             let sections = file.deck.section;
             let deck = [];
+            // Aqui guardo els tipus que tenen cartes
+            // Despres savent quines tipus hi ha decideixo
+            // si es un deck de player o de quest
             let tipusArr = [];
             _.forEach(sections, function (section) {
                 let tipus = (isInit) ? section['$']['name'] : section['_name'];
@@ -204,8 +208,6 @@ export default {
                 self.setID++;
             });
             let questTypeHero = (tipusArr.indexOf("Hero") > -1) ? types.PLAYER : types.QUEST;
-            console.log(tipusArr,questTypeHero);
-            // this.allToDeck({deckType: questTypeHero, cards: deck});
             this.allToDeck({deckType: questTypeHero, cards: deck});
         },
         newNumber: function(val){
@@ -235,6 +237,10 @@ export default {
 
             // Read in the image file as a data URL.
             reader.readAsText(f);
+        },
+        save: function(){
+            let estat = this.encapsulate();
+            this.saveFile(estat);
         },
         encapsulate: function() {
             let lotr = new Array();
@@ -299,7 +305,7 @@ export default {
             };
             lotr.push(vi);
 
-            this.saveFile(lotr);
+            return lotr;
         },
         saveFileLocal: function(lotr){
             const data = JSON.stringify(lotr);
