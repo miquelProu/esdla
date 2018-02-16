@@ -43,9 +43,9 @@
                                 <div class="column is-one-third">
                                     <div class="has-text-centered">AMENAÇA</div>
                                     <div class="has-text-centered">{{getAmenasa}}</div>
-                                    <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="load"/>
+                                    <!--<input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="load"/>-->
                                     <div class="desplegable" style="float:right;">
-                                        <b-dropdown> <!--position="is-bottom-left"-->
+                                        <b-dropdown position="is-bottom-left">
                                             <button class="button is-primary" slot="trigger">
                                                 <b-icon icon="menu-down"></b-icon>
                                             </button>
@@ -54,6 +54,14 @@
                                             <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="save">Save File</b-dropdown-item>
+                                            <b-dropdown-item><div class="file">
+                                                <label class="file-label">
+                                                    <input ref="avatar" type="file" name="resume"  class="file-input" id="avatar" v-on:change="load"/>
+                                                    <span class="file-cta">
+                                                        <span class="file-label">Choose a file…</span>
+                                                    </span>
+                                                </label>
+                                            </div></b-dropdown-item>
                                         </b-dropdown>
                                     </div>
                                 </div>
