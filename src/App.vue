@@ -54,14 +54,37 @@
                                             <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="save">Save File</b-dropdown-item>
-                                            <b-dropdown-item><div class="file">
-                                                <label class="file-label">
-                                                    <input ref="avatar" type="file" name="resume"  class="file-input" id="avatar" v-on:change="load"/>
-                                                    <span class="file-cta">
-                                                        <span class="file-label">Choose a file…</span>
-                                                    </span>
-                                                </label>
-                                            </div></b-dropdown-item>
+                                            <b-dropdown-item>
+                                                <div class="file">
+                                                    <label class="file-label">
+                                                        <input ref="avatar" type="file" name="resume"  class="file-input" id="avatar" v-on:change="load"/>
+                                                        <span class="file-cta">
+                                                            <span class="file-label">Load Deck Quest</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </b-dropdown-item>
+                                            <b-dropdown-item>
+                                                <div class="file">
+                                                    <label class="file-label">
+                                                        <input ref="avatars" type="file" name="resumes"  class="file-input" id="avatars" v-on:change="loadPlayer"/>
+                                                        <span class="file-cta">
+                                                            <span class="file-label">Load Deck Player</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </b-dropdown-item>
+                                            <b-dropdown-item>
+                                                <div class="file">
+                                                    <label class="file-label">
+                                                        <input ref="loadGameRef" type="file" name="resume"  class="file-input" id="loadGame" v-on:change="loadGame"/>
+                                                        <span class="file-cta">
+                                                            <span class="file-label">Load Game</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </b-dropdown-item>
+                                            <b-dropdown-item v-on:click="reset">Reset</b-dropdown-item>
                                         </b-dropdown>
                                     </div>
                                 </div>
@@ -174,9 +197,11 @@ export default {
             finalitzar: 'finalitzar',
             addTorn: 'addTorn',
             addAmenasa: 'addAmenasa',
-            subAmenasa: 'subAmenasa'
+            subAmenasa: 'subAmenasa',
+            start: 'start',
+            reset: 'reset'
         }),
-        loadDeck: function(file, isInit) {
+        loadDeck: function(file, isInit, isQuest) {
             let self = this;
             let sections = file.deck.section;
             let deck = [];
@@ -215,7 +240,7 @@ export default {
                 mazo[index]['ID'] = self.setID;
                 self.setID++;
             });
-            let questTypeHero = (tipusArr.indexOf("Hero") > -1) ? types.PLAYER : types.QUEST;
+            let questTypeHero = (isQuest) ? types.QUEST : types.PLAYER;
             this.allToDeck({deckType: questTypeHero, cards: deck});
         },
         newNumber: function(val){
@@ -226,7 +251,55 @@ export default {
             let self = this;
             e.preventDefault();
             // Get files from input
-            var files = this.$refs.avatar.files;
+            let files = this.$refs.avatar.files;
+
+            //Retrieve the first (and only!) File from the FileList object
+            let f = files[0];
+            let reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    // Convert XML 2 JSON
+                    let x2js = new XmlToJson();
+                    let json = x2js.xml2js(e.target.result);
+                    console.log(json);
+                    self.loadDeck(json, false, true);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsText(f);
+        },
+        loadPlayer: function(e) {
+            let self = this;
+            e.preventDefault();
+            // Get files from input
+            let files = this.$refs.avatars.files;
+
+            //Retrieve the first (and only!) File from the FileList object
+            let f = files[0];
+            let reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    // Convert XML 2 JSON
+                    let x2js = new XmlToJson();
+                    let json = x2js.xml2js(e.target.result);
+                    console.log(json);
+                    self.loadDeck(json, false, false);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsText(f);
+        },
+        loadGame: function(e) {
+            let self = this;
+            e.preventDefault();
+            // Get files from input
+            var files = this.$refs.loadGameRef.files;
 
             //Retrieve the first (and only!) File from the FileList object
             var f = files[0];
@@ -236,10 +309,9 @@ export default {
             reader.onload = (function(theFile) {
                 return function(e) {
                     // Convert XML 2 JSON
-                    let x2js = new XmlToJson();
-                    let json = x2js.xml2js(e.target.result);
-                    console.log(json);
-                    self.loadDeck(json, false);
+                    let arr = JSON.parse(e.target.result);
+                    console.log(arr);
+                    self.start(arr);
                 };
             })(f);
 

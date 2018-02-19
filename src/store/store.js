@@ -208,19 +208,31 @@ export default new Vuex.Store({
         },
     },
     actions:{
-        allToDeck: function({commit}, payload){
+        allToDeck: function({commit,state}, payload){
             if (payload.deckType == types.QUEST) {
                 commit(types.SET_TO_ALL_DECK_QUEST, payload.cards);
                 let deckQuestFiltered = _.filter(payload.cards, function(c) {return c.type == 'Encounter'});
                 commit(types.SET_TO_QUEST_DECK, deckQuestFiltered);
                 let preparacio = _.filter(payload.cards, function(c) {return c.type == 'Setup'});
+                commit(types.SET_TO_PREPARACIO, preparacio);
                 let quest = _.filter(payload.cards, function(c){return c.type == 'Quest'});
                 commit(types.SET_TO_MISION_DECK, quest);
-                commit(types.SET_TO_PREPARACIO, preparacio);
+                console.log("HEROS");
+                console.log(payload.cards);
+
+                let hh = this.getters.hero;
+                let heros = _.filter(payload.cards, function(c){return (c.type == 'Hero') || (c.type == 'Attachment' || c.type == 'Event' || c.type == 'Ally') || c.type == 'Special'});
+                hh.push(...heros);
+                console.log("HEROS");
+                console.log(hh);
+                commit(types.SET_TO_HERO, hh);
             } else if (payload.deckType == types.PLAYER) {
                 commit(types.SET_TO_ALL_DECK_PLAYER, payload.cards);
+
+                let hh = this.getters.hero;
                 let deckPlayerFiltered = _.filter(payload.cards, function(c) {return c.type == 'Hero'});
-                commit(types.SET_TO_HERO, deckPlayerFiltered);
+                hh.push(...deckPlayerFiltered);
+                commit(types.SET_TO_HERO, hh);
                 deckPlayerFiltered = _.filter(payload.cards, function(c) {return c.type != 'Hero'});
                 let ma = deckPlayerFiltered.splice(0,6);
                 commit(types.SET_TO_PLAYER_DECK, deckPlayerFiltered);
@@ -287,6 +299,11 @@ export default new Vuex.Store({
                 let action = area.name;
                 let deck = area.deck;
                 commit(translateAreaSetTo(action), deck);
+            });
+        },
+        reset: function({commit, state}){
+            _.forEach(groups.PLAYING_DECK_LIST, function(area){
+                commit(translateAreaSetTo(area), []);
             });
         },
         closeShow: function({commit, state}, isRemenar){
