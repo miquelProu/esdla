@@ -54,22 +54,13 @@
                                             <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="save">Save File</b-dropdown-item>
+                                            <b-dropdown-item v-on:click="reset">Reset</b-dropdown-item>
                                             <b-dropdown-item>
                                                 <div class="file">
                                                     <label class="file-label">
                                                         <input ref="avatar" type="file" name="resume"  class="file-input" id="avatar" v-on:change="load"/>
                                                         <span class="file-cta">
                                                             <span class="file-label">Load Deck Quest</span>
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </b-dropdown-item>
-                                            <b-dropdown-item>
-                                                <div class="file">
-                                                    <label class="file-label">
-                                                        <input ref="avatars" type="file" name="resumes"  class="file-input" id="avatars" v-on:change="loadPlayer"/>
-                                                        <span class="file-cta">
-                                                            <span class="file-label">Load Deck Player</span>
                                                         </span>
                                                     </label>
                                                 </div>
@@ -84,7 +75,8 @@
                                                     </label>
                                                 </div>
                                             </b-dropdown-item>
-                                            <b-dropdown-item v-on:click="reset">Reset</b-dropdown-item>
+
+                                            <b-dropdown-item v-on:click="reparteix">Reparteix</b-dropdown-item>
                                         </b-dropdown>
                                     </div>
                                 </div>
@@ -163,9 +155,9 @@ export default {
     mounted: function(){
         // this.loadDeck(QuestDeckFile, true);
         // this.loadDeck(PlayerDeckFile, true);
-        console.log("HOLA");
-        let store = this.encapsulate();
-        console.log(store);
+        // console.log("HOLA");
+        // let store = this.encapsulate();
+        // console.log(store);
     },
     watch: {},
     computed: {
@@ -199,40 +191,42 @@ export default {
             addAmenasa: 'addAmenasa',
             subAmenasa: 'subAmenasa',
             start: 'start',
-            reset: 'reset'
+            reset: 'reset',
+            reparteix: 'reparteix'
         }),
-        loadDeck: function(file, isInit, isQuest) {
+        loadDeck: function(file, isInit) {
             let self = this;
             let sections = file.deck.section;
             let deck = [];
-            // Aqui guardo els tipus que tenen cartes
-            // Despres savent quines tipus hi ha decideixo
-            // si es un deck de player o de quest
-            let tipusArr = [];
+
             _.forEach(sections, function (section) {
-                let tipus = (isInit) ? section['$']['name'] : section['_name'];
-                if(Array.isArray(section.card)) {
-                    tipusArr.push(tipus);
-                }
-                _.forEach(section.card, function (carta) {
-                    let card = {};
-                    let qty = (isInit) ? carta['$']['qty'] : carta['_qty'];
-                    card['id'] = (isInit) ? carta['$']['id'] : carta['_id'];
-                    card['name'] = (isInit) ? carta['_'] : carta['__text'];
-                    card['type'] = tipus;
-                    card['ID'] = 0;
-                    card['viatge'] = 0;
-                    card['damage'] = 0;
-                    card['resource'] = 0;
-                    card['cara'] = null;
-                    card['esgotat'] = false;
-                    for (let x = 1; x <= qty; x++) {
-                        // Afegeixo un clone, així totes les cartes son diferents objs
-                        // sino les cartes repetides eran la mateixa instancia
-                        let clone = _.clone(card);
-                        deck.push(clone);
+                if ('card' in section) {
+                    let tipus = (isInit) ? section['$']['name'] : section['_name'];
+                    let cartes = section.card;
+                    if (!Array.isArray(section.card) && (section.card !== 'undefined')) {
+                        cartes = [];
+                        cartes.push(section.card)
                     }
-                });
+                    _.forEach(cartes, function (carta) {
+                        let card = {};
+                        let qty = (isInit) ? carta['$']['qty'] : carta['_qty'];
+                        card['id'] = (isInit) ? carta['$']['id'] : carta['_id'];
+                        card['name'] = (isInit) ? carta['_'] : carta['__text'];
+                        card['type'] = tipus;
+                        card['ID'] = 0;
+                        card['viatge'] = 0;
+                        card['damage'] = 0;
+                        card['resource'] = 0;
+                        card['cara'] = null;
+                        card['esgotat'] = false;
+                        for (let x = 1; x <= qty; x++) {
+                            // Afegeixo un clone, així totes les cartes son diferents objs
+                            // sino les cartes repetides eran la mateixa instancia
+                            let clone = _.clone(card);
+                            deck.push(clone);
+                        }
+                    });
+                }
             });
 
             // Afegeixo un index unic a cada carta
@@ -240,8 +234,7 @@ export default {
                 mazo[index]['ID'] = self.setID;
                 self.setID++;
             });
-            let questTypeHero = (isQuest) ? types.QUEST : types.PLAYER;
-            this.allToDeck({deckType: questTypeHero, cards: deck});
+            this.allToDeck({cards: deck});
         },
         newNumber: function(val){
             console.log("NEW NUMBER");
@@ -263,32 +256,8 @@ export default {
                     // Convert XML 2 JSON
                     let x2js = new XmlToJson();
                     let json = x2js.xml2js(e.target.result);
-                    console.log(json);
-                    self.loadDeck(json, false, true);
-                };
-            })(f);
-
-            // Read in the image file as a data URL.
-            reader.readAsText(f);
-        },
-        loadPlayer: function(e) {
-            let self = this;
-            e.preventDefault();
-            // Get files from input
-            let files = this.$refs.avatars.files;
-
-            //Retrieve the first (and only!) File from the FileList object
-            let f = files[0];
-            let reader = new FileReader();
-
-            // Closure to capture the file information.
-            reader.onload = (function(theFile) {
-                return function(e) {
-                    // Convert XML 2 JSON
-                    let x2js = new XmlToJson();
-                    let json = x2js.xml2js(e.target.result);
-                    console.log(json);
-                    self.loadDeck(json, false, false);
+                    // console.log(json);
+                    self.loadDeck(json, false);
                 };
             })(f);
 
@@ -310,7 +279,6 @@ export default {
                 return function(e) {
                     // Convert XML 2 JSON
                     let arr = JSON.parse(e.target.result);
-                    console.log(arr);
                     self.start(arr);
                 };
             })(f);

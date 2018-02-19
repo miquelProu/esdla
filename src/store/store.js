@@ -6,8 +6,8 @@ import VuexPersistence from 'vuex-persist'
 
 import * as types from './mutation-types'
 import * as groups from './mutation-groups'
-import {translateAreaSetTo} from './mutation-types'
-import {array_move} from "./mutation-types";
+import {translateAreaSetTo, translateSetToArea} from './mutation-types'
+// import {array_move} from "./mutation-types";
 
 const vuexLocal = new VuexPersistence({
     storage: window.localStorage,
@@ -18,8 +18,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state:{
-        allDeckQuest: [],       // TOT el Deck DOLENTS
-        allDeckPlayer: [],      // TOT el Deck BONS
+        // allDeckQuest: [],       // TOT el Deck DOLENTS
+        // allDeckPlayer: [],      // TOT el Deck BONS
 
         AREA_QUEST_DECK: [],
         AREA_QUEST_OUT_DECK: [],
@@ -124,9 +124,9 @@ export default new Vuex.Store({
 
     },
     mutations:{
-        [types.SET_TO_ALL_DECK_QUEST](state, payload){      // Mutation TOT el Deck DOLENTS
-            state.allDeckQuest = payload;
-        },
+        // [types.SET_TO_ALL_DECK_QUEST](state, payload){      // Mutation TOT el Deck DOLENTS
+        //     state.allDeckQuest = payload;
+        // },
         [types.SET_TO_QUEST_DECK](state, payload){          // Mutation AREA_QUEST_DECK
             state.AREA_QUEST_DECK = payload;
         },
@@ -143,9 +143,9 @@ export default new Vuex.Store({
             state.AREA_PREPARACIO = payload;
         },
 
-        [types.SET_TO_ALL_DECK_PLAYER](state, payload){     // Mutation TOT el Deck BONS
-            state.allDeckPlayer = payload;
-        },
+        // [types.SET_TO_ALL_DECK_PLAYER](state, payload){     // Mutation TOT el Deck BONS
+        //     state.allDeckPlayer = payload;
+        // },
         [types.SET_TO_PLAYER_DECK](state, payload) {        // Mutation AREA_PLAYER_DECK
             state.AREA_PLAYER_DECK = payload;
         },
@@ -208,36 +208,49 @@ export default new Vuex.Store({
         },
     },
     actions:{
+        addTo: function({commit,state}, payload){
+            console.log(payload);
+            let area = translateSetToArea(payload.set);
+            let temp = _.find(groups.AREA_TO_GET, function(g) {return g.area == types[area]});
+            let actual = (this.getters[temp.agafar]);
+            actual.push(...payload.cards);
+            console.log(payload.set, actual);
+            commit(payload.set, actual);
+        },
         allToDeck: function({commit,state}, payload){
-            if (payload.deckType == types.QUEST) {
-                commit(types.SET_TO_ALL_DECK_QUEST, payload.cards);
-                let deckQuestFiltered = _.filter(payload.cards, function(c) {return c.type == 'Encounter'});
-                commit(types.SET_TO_QUEST_DECK, deckQuestFiltered);
-                let preparacio = _.filter(payload.cards, function(c) {return c.type == 'Setup'});
-                commit(types.SET_TO_PREPARACIO, preparacio);
-                let quest = _.filter(payload.cards, function(c){return c.type == 'Quest'});
-                commit(types.SET_TO_MISION_DECK, quest);
-                console.log("HEROS");
-                console.log(payload.cards);
+            let hasQuest = false;
 
-                let hh = this.getters.hero;
-                let heros = _.filter(payload.cards, function(c){return (c.type == 'Hero') || (c.type == 'Attachment' || c.type == 'Event' || c.type == 'Ally') || c.type == 'Special'});
-                hh.push(...heros);
-                console.log("HEROS");
-                console.log(hh);
-                commit(types.SET_TO_HERO, hh);
-            } else if (payload.deckType == types.PLAYER) {
-                commit(types.SET_TO_ALL_DECK_PLAYER, payload.cards);
+            let deckQuestFiltered = [];
+            deckQuestFiltered['cards'] = _.filter(payload.cards, function(c) {return c.type == 'Encounter'});
+            deckQuestFiltered['set'] = types.SET_TO_QUEST_DECK;
+            this.dispatch('addTo', deckQuestFiltered);
 
-                let hh = this.getters.hero;
-                let deckPlayerFiltered = _.filter(payload.cards, function(c) {return c.type == 'Hero'});
-                hh.push(...deckPlayerFiltered);
-                commit(types.SET_TO_HERO, hh);
-                deckPlayerFiltered = _.filter(payload.cards, function(c) {return c.type != 'Hero'});
-                let ma = deckPlayerFiltered.splice(0,6);
-                commit(types.SET_TO_PLAYER_DECK, deckPlayerFiltered);
-                commit(types.SET_TO_MA, ma);
-            }
+            let preparacio = [];
+            preparacio['cards'] = _.filter(payload.cards, function(c) {return c.type == 'Setup'});
+            preparacio['set'] = types.SET_TO_PREPARACIO;
+            this.dispatch('addTo', preparacio);
+
+            let quest = [];
+            quest['cards'] = _.filter(payload.cards, function(c){return c.type == 'Quest'});
+            quest['set'] = types.SET_TO_MISION_DECK;
+            this.dispatch('addTo', quest);
+            hasQuest = (quest.cards.length > 0);
+
+            let hero = [];
+            hero['cards'] = _.filter(payload.cards, function(c) {return c.type == 'Hero'});
+            hero['set'] = types.SET_TO_HERO;
+            this.dispatch('addTo', hero);
+
+            let special = [];
+            special['cards'] = _.filter(payload.cards, function(c){return c.type == 'Special'});
+            special['set'] = types.SET_TO_ALIATS;
+            this.dispatch('addTo', special);
+
+            let player = [];
+            player['cards'] = _.filter(payload.cards, function(c) {return (c.type == 'Ally' || c.type == 'Attachment' || c.type == 'Event')});
+            player['set'] = (hasQuest) ? types.SET_TO_ALIATS : types.SET_TO_PLAYER_DECK;
+            this.dispatch('addTo', player);
+
         },
         //******************************/
         // obj.card -> La carta a moure
@@ -293,6 +306,17 @@ export default new Vuex.Store({
             newPos = (newPos - 1 > obj.deck.length) ? obj.deck.length - 1 : newPos;
             let newDeck = _move(obj.deck, obj.pos, newPos);
             commit(translateAreaSetTo(obj.rol), newDeck);
+        },
+        reparteix: function({commit, state}){
+            this.dispatch('remenar', 'Encounter');
+            this.dispatch('remenar', 'Aliats');
+
+            let deck = this.getters.playerDeck;
+            let ma = deck.splice(0,6);
+            commit(types.SET_TO_PLAYER_DECK, deck);
+            commit(types.SET_TO_MA, ma);
+
+            this.dispatch('addTorn');
         },
         start: function({commit, state}, arr){
             _.forEach(arr, function(area){

@@ -61,3 +61,8 @@ export function translateAreaSetTo(area){
     let nom = area.substring(5, area.length);
     return 'SET_TO_' + nom;
 };
+
+export function translateSetToArea(set){
+    let nom = set.substring(7, set.length);
+    return 'AREA_' + nom;
+}
