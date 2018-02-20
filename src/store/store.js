@@ -316,6 +316,11 @@ export default new Vuex.Store({
             let newDeck = _move(obj.deck, obj.pos, newPos);
             commit(translateAreaSetTo(obj.rol), newDeck);
         },
+        attach: function({commit, state}, obj){
+            obj.card.vinculada = true;
+            console.log(obj);
+            this.dispatch('move', obj);
+        },
         reparteix: function({commit, state}){
             this.dispatch('remenar', 'Encounter');
             this.dispatch('remenar', 'Aliats');

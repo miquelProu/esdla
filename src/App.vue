@@ -220,6 +220,7 @@ export default {
                         card['resource'] = 0;
                         card['cara'] = null;
                         card['esgotat'] = false;
+                        card['vinculada'] = false;
                         for (let x = 1; x <= qty; x++) {
                             // Afegeixo un clone, així totes les cartes son diferents objs
                             // sino les cartes repetides eran la mateixa instancia

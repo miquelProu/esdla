@@ -14,7 +14,7 @@
         <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="moure(AREA_ALIATS)">Baixar a taula</b-dropdown-item>
             <template v-if="card.type == 'Attachment'">
-                <b-dropdown-item v-on:click="moure(AREA_HERO)">Vincular</b-dropdown-item>
+                <b-dropdown-item v-on:click="vincular">Vincular</b-dropdown-item>
             </template>
         </template>
         <template v-if="rol == AREA_PREPARACIO">
@@ -118,7 +118,8 @@
                 toogleNCartes: 'toogleNCartes',
                 setRolModalNum: 'setRolModalNum',
                 moveOne: 'moveOne',
-                sombraIn: 'sombra'
+                sombraIn: 'sombra',
+                attach: 'attach'
             }),
             esborrar: function(){
                 let self = this;
@@ -170,6 +171,19 @@
                 let deck = this.getAtack;
                 let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
                 this.sombraIn(pos);
+            },
+            vincular: function(){
+                // this.moure(types.AREA_HERO);
+                let self = this;
+                let deck = this.getMa;
+                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
+                let obj = {
+                    card: this.card,
+                    pos: pos,
+                    from: types.AREA_MA,
+                    to: types.AREA_HERO
+                };
+                this.attach(obj);
             },
             addResource: function(){
                 let deck = this.getDeckByArea(this.rol);
