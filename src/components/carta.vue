@@ -5,12 +5,14 @@
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
         <down :rol="rol" :card="carta" @flip="flip" @esgotat="newEsgotat"></down>
+        <vinculada v-if="vinculadas.length > 0" :cartes="vinculadas"></vinculada>
     </div>
 </template>
 
 <script>
     import Down from './down'
     import Resource from './resources'
+    import Vinculada from './vinculadas'
     import * as types from '../store/mutation-types'
 
     import { mapActions } from 'vuex'
@@ -20,6 +22,7 @@ export default {
     components: {
         down: Down,
         resource: Resource,
+        vinculada: Vinculada
     },
     props: ['card', 'cara', 'caraForce', 'rol', 'isVertical', 'hasLupa'],
     data: function(){
@@ -36,7 +39,8 @@ export default {
             dragableObj: {
                 card: this.card,
                 rol: this.rol
-            }
+            },
+            vinculadas: []
         }
     },
     mounted: function(){
@@ -55,12 +59,15 @@ export default {
         } else {
             this.side = this.cara;
         }
+        this.vinculadas = this.card.vinculada;
 
     },
     watch: {
         card: function (newData, oldData) {
                 this.carta = newData;
                 this.dragableObj.card = newData;
+                this.vinculadas = newData.vinculada;
+                console.log(this.vinculadas);
             },
         cara: function(newData, oldData){
                 this.side = newData;

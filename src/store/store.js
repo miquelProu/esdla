@@ -457,6 +457,15 @@ export default new Vuex.Store({
         setAmenasa: function({commit, state}, amenasa){
             commit(types.SET_AMENASA, amenasa);
         },
+        addToVinculada: function({commit, state}, obj){
+            let from = state[obj.from];
+            from.splice(obj.pos, 1);
+
+            let hero = this.getters.hero;
+            let posDest = _.find(hero, function(c) {console.log(c.ID, obj.cardDest);return c.ID == obj.cardDest});
+            console.log(posDest);
+            posDest.vinculada.push(obj.card);
+        }
     },
     plugins: [vuexLocal.plugin]
 })

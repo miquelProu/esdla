@@ -119,7 +119,8 @@
                 setRolModalNum: 'setRolModalNum',
                 moveOne: 'moveOne',
                 sombraIn: 'sombra',
-                attach: 'attach'
+                attach: 'attach',
+                addToVinculada: 'addToVinculada'
             }),
             esborrar: function(){
                 let self = this;
@@ -154,6 +155,20 @@
                 };
                 this.move(obj);
             },
+            vincular: function(){
+                // this.moure(types.AREA_HERO);
+                let self = this;
+                let deck = this.getDeckByArea(this.rol);
+                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
+                let obj = {
+                    card: this.card,
+                    pos: pos,
+                    from: types.AREA_MA,
+                    to: types.AREA_HERO,
+                    cardDest: 55
+                };
+                this.addToVinculada(obj);
+            },
             moureOne: function(isLeft){
                 let self = this;
                 let deck = this.getDeckByArea(this.rol);
@@ -171,19 +186,6 @@
                 let deck = this.getAtack;
                 let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
                 this.sombraIn(pos);
-            },
-            vincular: function(){
-                // this.moure(types.AREA_HERO);
-                let self = this;
-                let deck = this.getMa;
-                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
-                let obj = {
-                    card: this.card,
-                    pos: pos,
-                    from: types.AREA_MA,
-                    to: types.AREA_HERO
-                };
-                this.attach(obj);
             },
             addResource: function(){
                 let deck = this.getDeckByArea(this.rol);
