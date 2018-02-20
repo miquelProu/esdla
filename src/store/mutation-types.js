@@ -34,7 +34,10 @@ export const QUEST = 'QUEST'
 
 export const ADD_AMENASA = 'ADD_AMENASA'
 export const SUB_AMENASA = 'SUB_AMENASA'
+export const SET_AMENASA = 'SET_AMENASA'
 export const ADD_TORN = 'ADD_TORN'
+export const SUB_TORN = 'SUB_TORN'
+export const SET_TORN = 'SET_TORN'
 
 export const TOGGLE_N_CARTES = 'TOGGLE_N_CARTES'
 export const TOGGLE_SHOW_CARTES = 'TOGGLE_SHOW_CARTES'

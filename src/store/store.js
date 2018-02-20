@@ -185,8 +185,17 @@ export default new Vuex.Store({
         [types.SUB_AMENASA](state){
             state.CONTADOR_PLAYER.amenasa --;
         },
+        [types.SET_AMENASA](state, amenasa){
+            state.CONTADOR_PLAYER.amenasa = amenasa;
+        },
         [types.ADD_TORN](state){
             state.CONTADOR_QUEST.torn ++;
+        },
+        [types.SUB_TORN](state){
+            state.CONTADOR_QUEST.torn --;
+        },
+        [types.SET_TORN](state, torn){
+            state.CONTADOR_QUEST.torn = torn;
         },
         [types.TOGGLE_N_CARTES](state){
             state.showDeck.isModalNum = !state.showDeck.isModalNum;
@@ -329,6 +338,7 @@ export default new Vuex.Store({
             _.forEach(groups.PLAYING_DECK_LIST, function(area){
                 commit(translateAreaSetTo(area), []);
             });
+            commit(types.SET_AMENASA, 0);
         },
         closeShow: function({commit, state}, isRemenar){
             let to = [];
@@ -369,6 +379,35 @@ export default new Vuex.Store({
             commit(types.SET_TO_ATACK, atack);
             commit(types.SET_TO_QUEST_DECK, quest);
         },
+        finalitzar: function({commit, state}){
+            let heros = this.getters.hero;
+            _.forEach(heros, function(hero){
+                hero.resource++;
+                // console.log(hero);
+            });
+            let deck = this.getters.playerDeck;
+            let card = deck[0];
+            let obj = {
+                card: card,
+                pos: 0,
+                from: 'AREA_PLAYER_DECK',
+                to: 'AREA_MA'
+            };
+            this.dispatch('move',obj);
+            this.dispatch('recuperar');
+            this.dispatch('addTorn');
+            this.dispatch('addAmenasa');
+        },
+        recuperar: function({commit, state}){
+            let heros = this.getters.hero;
+            let aliats = this.getters.aliats;
+            _.forEach(heros, function(hero){
+                hero.esgotat = false;
+            });
+            _.forEach(aliats, function(a){
+                a.esgotat = false;
+            });
+        },
         setLupaCard: function({commit, state}, carta){
             commit(types.SET_LUPA_CARD, carta);
         },
@@ -398,41 +437,21 @@ export default new Vuex.Store({
         addTorn: function({commit, state}){
             commit(types.ADD_TORN);
         },
+        subTorn: function({commit, state}){
+            commit(types.SUB_TORN);
+        },
+        setTorn: function({commit, state}, val){
+            commit(types.SET_TORN, val);
+        },
         addAmenasa: function({commit, state}){
             commit(types.ADD_AMENASA);
         },
         subAmenasa: function({commit, state}){
             commit(types.SUB_AMENASA);
         },
-        finalitzar: function({commit, state}){
-            let heros = this.getters.hero;
-            _.forEach(heros, function(hero){
-                hero.resource++;
-                // console.log(hero);
-            });
-            let deck = this.getters.playerDeck;
-            let card = deck[0];
-            let obj = {
-                card: card,
-                pos: 0,
-                from: 'AREA_PLAYER_DECK',
-                to: 'AREA_MA'
-            };
-            this.dispatch('move',obj);
-            this.dispatch('recuperar');
-            this.dispatch('addTorn');
-            this.dispatch('addAmenasa');
+        setAmenasa: function({commit, state}, amenasa){
+            commit(types.SET_AMENASA, amenasa);
         },
-        recuperar: function({commit, state}){
-            let heros = this.getters.hero;
-            let aliats = this.getters.aliats;
-            _.forEach(heros, function(hero){
-                hero.esgotat = false;
-            });
-            _.forEach(aliats, function(a){
-                a.esgotat = false;
-            });
-        }
     },
     plugins: [vuexLocal.plugin]
 })

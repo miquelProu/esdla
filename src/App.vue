@@ -20,8 +20,7 @@
                                 <div class="column is-one-third"><pila v-if="getQuestDeck" :cara="false" :caraForce="true" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-third"><pila v-if="getQuestOutDeck" :cara="true" :caraForce="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-third">
-                                    <div class="has-text-centered">TORNS</div>
-                                    <div class="has-text-centered">{{getTorn}}</div>
+                                    <contador type="torn"></contador>
                                 </div>
                             </div>
                         </div>
@@ -41,8 +40,7 @@
                                 <div class="column is-one-third"><pila v-if="getPlayerDeck" :deck="getPlayerDeck" :cara="false" :caraForce="true" :rol="AREA_PLAYER_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-third"><pila v-if="getPlayerOutDeck" :deck="getPlayerOutDeck" :cara="true" :caraForce="true" :rol="AREA_PLAYER_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-third">
-                                    <div class="has-text-centered">AMENAÇA</div>
-                                    <div class="has-text-centered">{{getAmenasa}}</div>
+                                    <contador type="amenasa"></contador>
                                     <!--<input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="load"/>-->
                                     <div class="desplegable" style="float:right;">
                                         <b-dropdown position="is-bottom-left">
@@ -101,6 +99,7 @@
 import Vue from 'vue'
 import Buefy from 'buefy'
 import Vue2Dnd from 'vue2-dnd'
+import XmlToJson from 'x2js'
 
 import Pila from './components/pila.vue'
 import Carta from './components/carta.vue'
@@ -111,7 +110,8 @@ import * as groups from './store/mutation-groups'
 import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
 import ModalNCartes from './components/modalNCartes'
 import ModalShowCartes from './components/modalShowCartes'
-import XmlToJson from 'x2js'
+import Contador from './components/contador'
+
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -131,7 +131,8 @@ export default {
         'lupa': Lupa,
         'b-dropdown-item': BDropdownItem,
         'modal-n-cartes' : ModalNCartes,
-        'modal-show-cartes' : ModalShowCartes
+        'modal-show-cartes' : ModalShowCartes,
+        'contador': Contador,
     },
     data: function() {
       return {

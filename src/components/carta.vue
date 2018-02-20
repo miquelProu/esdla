@@ -21,7 +21,7 @@ export default {
         down: Down,
         resource: Resource,
     },
-    props: ['card', 'cara', 'caraForce', 'rol', 'isVertical', 'hasLupa', ''],
+    props: ['card', 'cara', 'caraForce', 'rol', 'isVertical', 'hasLupa'],
     data: function(){
         let self = this;
         return {
@@ -30,7 +30,6 @@ export default {
             carta: {id:'51223bd0-ffd1-11df-a976-0801200c9001'},
             cardType: null,
             esgotat: false,
-            //girar: false,
             side: null,
             isCaraForce: null,
             [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
