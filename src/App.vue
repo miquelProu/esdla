@@ -47,9 +47,9 @@
                                             <button class="button is-primary" slot="trigger">
                                                 <b-icon icon="menu-down"></b-icon>
                                             </button>
-                                            <b-dropdown-item v-on:click="addAmenasa">Afegir 1 amenaça</b-dropdown-item>
-                                            <b-dropdown-item v-on:click="subAmenasa">Treure 1 amenaça</b-dropdown-item>
-                                            <b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>
+                                            <!--<b-dropdown-item v-on:click="addAmenasa">Afegir 1 amenaça</b-dropdown-item>-->
+                                            <!--<b-dropdown-item v-on:click="subAmenasa">Treure 1 amenaça</b-dropdown-item>-->
+                                            <!--<b-dropdown-item v-on:click="addTorn">Afegir 1 torn</b-dropdown-item>-->
                                             <b-dropdown-item v-on:click="finalitzar">Finalitzar torn</b-dropdown-item>
                                             <b-dropdown-item v-on:click="save">Save File</b-dropdown-item>
                                             <b-dropdown-item v-on:click="reset">Reset</b-dropdown-item>

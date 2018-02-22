@@ -1,7 +1,7 @@
 <template>
-    <div class="columns is-gapless" v-droppable.carta="send">
+    <div class="columns is-gapless" v-droppable.carta="send" ref="display">
         <div class="column" v-for="carta in one">
-            <carta :card="carta" :cara="cara" :caraForce="caraForce" :rol="rol" :isVertical="isVertical" :hasLupa="(rol == AREA_MISION_DECK || rol == AREA_PLAYER_OUT_DECK || rol == AREA_QUEST_OUT_DECK || rol == AREA_VIATGE)"></carta>
+            <carta :card="carta" :cara="cara" :caraForce="caraForce" :rol="rol" :isVertical="isVertical" :hasLupa="(rol == AREA_MISION_DECK || rol == AREA_PLAYER_OUT_DECK || rol == AREA_QUEST_OUT_DECK || rol == AREA_VIATGE)" @width="newWidth"></carta>
         </div>
     </div>
 </template>
@@ -22,7 +22,7 @@ export default {
             [types.AREA_MISION_DECK]: types.AREA_MISION_DECK,
             [types.AREA_PLAYER_OUT_DECK] : types.AREA_PLAYER_OUT_DECK,
             [types.AREA_QUEST_OUT_DECK]: types.AREA_QUEST_OUT_DECK,
-            [types.AREA_VIATGE] : types.AREA_VIATGE
+            [types.AREA_VIATGE] : types.AREA_VIATGE,
         }
     },
     mounted: function(){},
@@ -62,6 +62,13 @@ export default {
             this.move(obj);
             console.log("DROP PILA");
             console.log(obj);
+        },
+        newWidth: function(ample){
+            if (this.$refs.display.clientWidth !== 'undefined') {
+                let displayWidth = this.$refs.displayVinc.clientWidth;
+                let nCartes = displayWidth / Math.round(ample);
+                this.hasMax = !(this.cartes.length > nCartes);
+            }
         },
         getDeckByArea: function(area){
             switch (area){

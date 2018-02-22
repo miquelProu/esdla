@@ -5,14 +5,14 @@
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
         </figure>
         <down :rol="rol" :card="carta" @flip="flip" @esgotat="newEsgotat"></down>
-        <vinculada v-if="vinculadas.length > 0" :cartes="vinculadas"></vinculada>
+        <attach v-if="vinculadas.length > 0" :cartes="vinculadas"></attach>
     </div>
 </template>
 
 <script>
     import Down from './down'
     import Resource from './resources'
-    import Vinculada from './vinculadas'
+    import Attach from './attach'
     import * as types from '../store/mutation-types'
 
     import { mapActions } from 'vuex'
@@ -22,7 +22,7 @@ export default {
     components: {
         down: Down,
         resource: Resource,
-        vinculada: Vinculada
+        attach: Attach
     },
     props: ['card', 'cara', 'caraForce', 'rol', 'isVertical', 'hasLupa'],
     data: function(){

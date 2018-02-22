@@ -165,7 +165,7 @@
                     pos: pos,
                     from: types.AREA_MA,
                     to: types.AREA_HERO,
-                    cardDest: 55
+                    cardDest: 202
                 };
                 this.addToVinculada(obj);
             },
