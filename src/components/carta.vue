@@ -67,6 +67,9 @@ export default {
                 this.carta = newData;
                 this.dragableObj.card = newData;
                 this.vinculadas = newData.vinculada;
+
+            this.cartaWidth = this.$refs.carta.clientWidth;
+            this.cartaHeight = this.$refs.carta.clientHeight;
                 console.log(this.vinculadas);
             },
         cara: function(newData, oldData){
@@ -75,6 +78,7 @@ export default {
     },
     computed: {
         calculatedHeight: function(){
+            console.log(this.cartaWidth);
             let calcul = (this.cartaWidth * 141) / 100;
             return Math.round(calcul) + 'px';
         },

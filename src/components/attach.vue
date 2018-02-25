@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-gapless is-multiline is-mobile" ref="displayVinc" style="position:absolute;bottom:0;width:100%;" v-bind:style="{height: alcada + '%'}">
+    <div class="columns is-gapless is-multiline is-mobile attach" ref="displayVinc" style="position:absolute;bottom:0;width:100%;" v-bind:style="{height: alcada + '%'}">
         <div v-for="cartaUna in cartes" class="column is-one-third">
             <carta :cara="true" :caraForce="true" :card="cartaUna" :rol="'vinculada'" :isVertical="false" :hasLupa="true" @width="newWidth"></carta>
         </div>
@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         newWidth: function(ample){
-            if (this.$refs.displayVinc.clientWidth !== 'undefined') {
+            if (this.$refs.displayVinc !== 'undefined' && this.$refs.displayVinc.clientWidth !== 'undefined') {
                 let displayWidth = this.$refs.displayVinc.clientWidth;
                 let nCartes = displayWidth / Math.round(ample);
                 this.hasMax = !(this.cartes.length > nCartes);

@@ -2,23 +2,29 @@ var path = require('path')
 var webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const ASSET_PATH = process.env.ASSET_PATH || '/esdla/dist';
+
 module.exports = {
   entry: './src/main.js',
-    plugins: [
-        // new CleanWebpackPlugin(['dist']),
-        new CopyWebpackPlugin([
-            {from:'src/assets/cartas', to:'cartas'}
-        ]),
-        // new ExtractTextPlugin({
-        //     filename: 'css/style.css',
-        //     allChunks: true,
-        //     // disable: false,
-        //     ignoreOrder: true
-        // }),
-    ],
+  plugins: [
+      // new CleanWebpackPlugin(['dist']),
+      new CopyWebpackPlugin([
+          {from:'src/assets/cartas', to:'cartas'}
+      ]),
+      new webpack.DefinePlugin({
+          'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+      }),
+      // new ExtractTextPlugin({
+      //     filename: 'css/style.css',
+      //     allChunks: true,
+      //     // disable: false,
+      //     ignoreOrder: true
+      // }),
+  ],
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+     publicPath: '/dist/',
+    //publicPath: ASSET_PATH,
     filename: 'build.js'
   },
   module: {

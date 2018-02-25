@@ -65,7 +65,7 @@ export default {
         },
         newWidth: function(ample){
             if (this.$refs.display.clientWidth !== 'undefined') {
-                let displayWidth = this.$refs.displayVinc.clientWidth;
+                let displayWidth = this.$refs.display.clientWidth;
                 let nCartes = displayWidth / Math.round(ample);
                 this.hasMax = !(this.cartes.length > nCartes);
             }
