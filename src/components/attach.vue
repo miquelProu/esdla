@@ -1,7 +1,9 @@
 <template>
-    <div class="columns is-gapless is-multiline is-mobile attach" ref="displayVinc" style="position:absolute;bottom:0;width:100%;" v-bind:style="{height: alcada + '%'}">
-        <div v-for="cartaUna in attachCartes" class="column is-one-third">
-            <carta :cara="true" :caraForce="true" :card="cartaUna" :rol="'vinculada'" :isVertical="false" :hasLupa="true" @width="newWidth"></carta>
+    <div class="attach">
+        <div class="columns is-gapless" style="position:absolute;width:100%;height:33%;margin-bottom:0.5rem;" v-for="(fila, index) in attachCartes" v-bind:style="{bottom: (index == 0) ? '33%' : '0'}">
+            <div v-for="cartaUna in fila" class="column is-one-third">
+                <carta :cara="true" :caraForce="true" :card="cartaUna" :rol="AREA_ATTACH" :isVertical="false" :hasLupa="true"></carta>
+            </div>
         </div>
     </div>
 </template>
@@ -9,47 +11,29 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
     import Carta from './carta.vue'
+    import _ from 'lodash'
+    import * as types from '../store/mutation-types'
 
 export default {
     name: 'attach',
-    components: {
-        'carta': Carta
-    },
+    components: {},
     props:  ['cartes'],
     data: function(){
         return {
-            hasMax: false,
-            attachCartes: []
+            attachCartes: _.chunk(this.cartes, 3),
+            [types.AREA_ATTACH]: types.AREA_ATTACH
         }
     },
-    mounted: function(){
-        console.log("VINCULADAs");
-        console.log(this.cartes);
-        this.attachCartes = this.cartes;
-    },
+    mounted: function(){},
     watch: {
-        cartes: function(newData, oldData){
-            this.attachCartes = newData;
-        }
-    },
-    computed: {
-        alcada: function(){
-            if (this.cartes.length < 4){
-                return 33;
-            } else {
-                return 66;
+        cartes: {
+            handler: function(newData, oldData){
+                this.attachCartes = _.chunk(newData, 3);
             }
         }
     },
-    methods: {
-        newWidth: function(ample){
-            if (this.$refs.displayVinc !== 'undefined' && this.$refs.displayVinc.clientWidth !== 'undefined') {
-                let displayWidth = this.$refs.displayVinc.clientWidth;
-                let nCartes = displayWidth / Math.round(ample);
-                this.hasMax = !(this.cartes.length > nCartes);
-            }
-        },
-    }
+    computed: {},
+    methods: {}
 }
 </script>
 

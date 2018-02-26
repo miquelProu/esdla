@@ -61,6 +61,7 @@ export const AREA_PLAYER_DECK = 'AREA_PLAYER_DECK'
 export const AREA_PLAYER_OUT_DECK = 'AREA_PLAYER_OUT_DECK'
 export const AREA_VIATGE = 'AREA_VIATGE'
 export const AREA_SHOW = 'AREA_SHOW'
+export const AREA_ATTACH = 'AREA_ATTACH'
 
 export function translateAreaSetTo(area){
     let nom = area.substring(5, area.length);

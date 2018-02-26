@@ -55,10 +55,16 @@
             <b-dropdown-item v-on:click="moure(AREA_PREPARACIO)">A preparació</b-dropdown-item>
             <b-dropdown-item v-on:click="moure(AREA_MA)">A la ma</b-dropdown-item>
         </template>
+        <template v-if="rol == AREA_ATTACH">
+            <b-dropdown-item v-on:click="esgotat(true)">Esgotar</b-dropdown-item>
+            <b-dropdown-item v-on:click="esgotat(false)">Recuperar</b-dropdown-item>
+        </template>
         <hr class="dropdown-divider">
         <b-dropdown-item v-on:click="esborrar()">Eliminar</b-dropdown-item>
-        <b-dropdown-item v-on:click="moureOne(true)">Moure Esq</b-dropdown-item>
-        <b-dropdown-item v-on:click="moureOne(false)">Moure Drt</b-dropdown-item>
+        <template v-if="rol != AREA_ATTACH">
+            <b-dropdown-item v-on:click="moureOne(true)">Moure Esq</b-dropdown-item>
+            <b-dropdown-item v-on:click="moureOne(false)">Moure Drt</b-dropdown-item>
+        </template>
     </b-dropdown>
 </template>
 
@@ -88,6 +94,7 @@
                 [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
                 [types.AREA_VIATGE]: types.AREA_VIATGE,
                 [types.AREA_SHOW]: types.AREA_SHOW,
+                [types.AREA_ATTACH]: types.AREA_ATTACH
             }
         },
         mounted: function(){
@@ -165,7 +172,7 @@
                     pos: pos,
                     from: types.AREA_MA,
                     to: types.AREA_HERO,
-                    cardDest: 55
+                    cardDest: 202
                 };
                 this.addToVinculada(obj);
             },

@@ -13,9 +13,7 @@
 
 export default {
     name: 'display',
-    components: {
-        'carta':  Carta,
-    },
+    components: {},
     props: ['deck', 'cara', 'rol', 'caraForce'],
     data: function(){
         return {
@@ -59,7 +57,8 @@ export default {
             move: 'move',
         }),
         newWidth: function(ample){
-            if (this.$refs.display.clientWidth !== 'undefined') {
+            if (typeof(this.$refs.display) !== 'undefined' &&
+                typeof(this.$refs.display.clientWidth) !== 'undefined') {
                 let displayWidth = this.$refs.display.clientWidth;
                 let nCartes = displayWidth / Math.round(ample);
                 this.hasMax = !(this.deck.length > nCartes);

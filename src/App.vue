@@ -121,6 +121,8 @@ import PlayerDeckFile from './assets/deck/carrock-solo-1.0.o8d'
 Vue.use(Buefy);
 Vue.use(Vue2Dnd);
 
+Vue.component('carta', Carta);
+
 export default {
     name: 'app',
     components: {

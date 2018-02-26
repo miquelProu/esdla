@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-gapless" v-droppable.carta="send" ref="display">
+    <div class="columns is-gapless" v-droppable.carta="send" ref="pila">
         <div class="column" v-for="carta in one">
             <carta :card="carta" :cara="cara" :caraForce="caraForce" :rol="rol" :isVertical="isVertical" :hasLupa="(rol == AREA_MISION_DECK || rol == AREA_PLAYER_OUT_DECK || rol == AREA_QUEST_OUT_DECK || rol == AREA_VIATGE)" @width="newWidth"></carta>
         </div>
@@ -13,9 +13,7 @@
 
 export default {
     name: 'pila',
-    components: {
-        'carta': Carta
-    },
+    components: {},
     props: ['deck', 'cara', 'rol', 'isVertical', 'caraForce'],
     data: function(){
         return {
@@ -64,10 +62,13 @@ export default {
             console.log(obj);
         },
         newWidth: function(ample){
-            if (this.$refs.display.clientWidth !== 'undefined') {
-                let displayWidth = this.$refs.display.clientWidth;
+            console.log("PIIIILA");
+            console.log(this.$refs.pila);
+            if (typeof (this.$refs.pila) !== 'undefined' &&
+                typeof(this.$refs.pila.clientWidth) !== 'undefined') {
+                let displayWidth = this.$refs.pila.clientWidth;
                 let nCartes = displayWidth / Math.round(ample);
-                this.hasMax = !(this.cartes.length > nCartes);
+                this.hasMax = !(this.deck.length > nCartes);
             }
         },
         getDeckByArea: function(area){

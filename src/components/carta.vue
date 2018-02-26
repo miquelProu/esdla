@@ -18,7 +18,7 @@
     import { mapActions } from 'vuex'
 
 export default {
-    name: 'carta',
+    // name: 'carta',
     components: {
         down: Down,
         resource: Resource,
@@ -68,9 +68,11 @@ export default {
                 this.dragableObj.card = newData;
                 this.vinculadas = newData.vinculada;
 
-            this.cartaWidth = this.$refs.carta.clientWidth;
-            this.cartaHeight = this.$refs.carta.clientHeight;
-                console.log(this.vinculadas);
+                // if (typeof(this.$refs.carta) !== 'undefined') {
+                    this.cartaWidth = this.$refs.carta.clientWidth;
+                    this.cartaHeight = this.$refs.carta.clientHeight;
+                // }
+
             },
         cara: function(newData, oldData){
                 this.side = newData;
@@ -83,10 +85,10 @@ export default {
             return Math.round(calcul) + 'px';
         },
         calculateWidth: function(){
-            console.log(this.cartaHeight);
+            console.log("CARTA HEIGHT: "+this.cartaHeight);
             if (!this.isVertical) {
                 let calcul = (this.cartaHeight * 70.5) / 100;
-                this.$emit('width', calcul);
+                // this.$emit('width', calcul);
                 return Math.round(calcul) + 'px';
 
             } else {

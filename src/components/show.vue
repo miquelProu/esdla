@@ -13,9 +13,7 @@
 
 export default {
     name: 'show',
-    components: {
-        'carta':  Carta,
-    },
+    components: {},
     props: ['deck'],
     data: function(){
         return {
