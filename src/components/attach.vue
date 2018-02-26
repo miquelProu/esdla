@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-gapless is-multiline is-mobile attach" ref="displayVinc" style="position:absolute;bottom:0;width:100%;" v-bind:style="{height: alcada + '%'}">
-        <div v-for="cartaUna in cartes" class="column is-one-third">
+        <div v-for="cartaUna in attachCartes" class="column is-one-third">
             <carta :cara="true" :caraForce="true" :card="cartaUna" :rol="'vinculada'" :isVertical="false" :hasLupa="true" @width="newWidth"></carta>
         </div>
     </div>
@@ -18,14 +18,20 @@ export default {
     props:  ['cartes'],
     data: function(){
         return {
-            hasMax: false
+            hasMax: false,
+            attachCartes: []
         }
     },
     mounted: function(){
-        console.log("VINCULADA");
+        console.log("VINCULADAs");
         console.log(this.cartes);
+        this.attachCartes = this.cartes;
     },
-    watch: {},
+    watch: {
+        cartes: function(newData, oldData){
+            this.attachCartes = newData;
+        }
+    },
     computed: {
         alcada: function(){
             if (this.cartes.length < 4){
