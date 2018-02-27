@@ -14,7 +14,15 @@
         <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="moure(AREA_ALIATS)">Baixar a taula</b-dropdown-item>
             <template v-if="card.type == 'Attachment'">
-                <b-dropdown-item v-on:click="vincular">Vincular</b-dropdown-item>
+                <b-dropdown-item>
+                    <h3>Vincular</h3>
+                    <div class="field has-addons">
+                        <p class="control" v-for="(hero, index) in getHero">
+                            <a class="button is-small" v-on:click="vincular(hero.ID)" style="font-size: 0.6em;">{{hero.name}}</a>
+                        </p>
+                    </div>
+
+                </b-dropdown-item>
             </template>
         </template>
         <template v-if="rol == AREA_PREPARACIO">
@@ -127,28 +135,34 @@
                 moveOne: 'moveOne',
                 sombraIn: 'sombra',
                 attach: 'attach',
-                addToVinculada: 'addToVinculada'
+                addToVinculada: 'addToVinculada',
+                deleteAttach: 'deleteAttach'
             }),
             esborrar: function(){
                 let self = this;
-                let deck = this.getDeckByArea(this.rol);
-                let dest;
-                if (groups.PLAYING_ALIES_DECK_LIST.indexOf(this.rol) > -1) {
-                    dest = types.AREA_PLAYER_OUT_DECK;
-                } else if(groups.PLAYING_QUEST_DECK_LIST.indexOf(this.rol) > -1) {
-                    dest = types.AREA_QUEST_OUT_DECK;
+                if (this.card.type != 'Attachment') {
+                    let deck = this.getDeckByArea(this.rol);
+                    let dest;
+                    if (groups.PLAYING_ALIES_DECK_LIST.indexOf(this.rol) > -1) {
+                        dest = types.AREA_PLAYER_OUT_DECK;
+                    } else if (groups.PLAYING_QUEST_DECK_LIST.indexOf(this.rol) > -1) {
+                        dest = types.AREA_QUEST_OUT_DECK;
+                    } else {
+                        dest = types.AREA_MISION_OUT_DECK;
+                    }
+                    let pos = _.findIndex(deck, function (c) {
+                        return c.ID == self.card.ID
+                    });
+                    let obj = {
+                        card: this.card,
+                        pos: pos,
+                        from: this.rol,
+                        to: dest
+                    };
+                    this.move(obj);
                 } else {
-                    dest = types.AREA_MISION_OUT_DECK;
+                    this.deleteAttach(this.card);
                 }
-                let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
-                let obj = {
-                    card: this.card,
-                    pos: pos,
-                    from: this.rol,
-                    to: dest
-                };
-                this.move(obj);
-
             },
             moure: function(dest){
                 let self = this;
@@ -162,8 +176,7 @@
                 };
                 this.move(obj);
             },
-            vincular: function(){
-                // this.moure(types.AREA_HERO);
+            vincular: function(id){
                 let self = this;
                 let deck = this.getDeckByArea(this.rol);
                 let pos = _.findIndex(deck, function(c) {return c.ID == self.card.ID});
@@ -172,7 +185,7 @@
                     pos: pos,
                     from: types.AREA_MA,
                     to: types.AREA_HERO,
-                    cardDest: 202
+                    cardDest: id
                 };
                 this.addToVinculada(obj);
             },

@@ -7,6 +7,7 @@ import VuexPersistence from 'vuex-persist'
 import * as types from './mutation-types'
 import * as groups from './mutation-groups'
 import {translateAreaSetTo, translateSetToArea} from './mutation-types'
+import {AREA_PLAYER_OUT_DECK} from "./mutation-types";
 // import {array_move} from "./mutation-types";
 
 const vuexLocal = new VuexPersistence({
@@ -316,10 +317,25 @@ export default new Vuex.Store({
             let newDeck = _move(obj.deck, obj.pos, newPos);
             commit(translateAreaSetTo(obj.rol), newDeck);
         },
-        attach: function({commit, state}, obj){
-            obj.card.vinculada = true;
-            console.log(obj);
-            this.dispatch('move', obj);
+        deleteAttach: function({commit, state}, carta){
+            // Afegim la carta a la pila de descarte
+            let to = state[AREA_PLAYER_OUT_DECK];
+            to.unshift(carta);
+            commit(types.SET_TO_PLAYER_OUT_DECK, to);
+
+            // Busquem la carta entre els herois
+            // i quan trobem l'heroi eliminem la carta
+            _.each(state.AREA_HERO, function(hero){
+                let vincle = -1;
+                if (hero.vinculada.length > 0) {
+                    vincle = _.findIndex(hero.vinculada, function(vinc){
+                        return vinc.ID == carta.ID;
+                    });
+                }
+                if (vincle > -1) {
+                    hero.vinculada.splice(vincle, 1);
+                }
+            });
         },
         reparteix: function({commit, state}){
             this.dispatch('remenar', 'Encounter');
@@ -462,8 +478,7 @@ export default new Vuex.Store({
             from.splice(obj.pos, 1);
 
             let hero = this.getters.hero;
-            let posDest = _.find(hero, function(c) {console.log(c.ID, obj.cardDest);return c.ID == obj.cardDest});
-            console.log(posDest);
+            let posDest = _.find(hero, function(c) {return c.ID == obj.cardDest});
             posDest.vinculada.push(obj.card);
         }
     },

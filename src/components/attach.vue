@@ -1,6 +1,6 @@
 <template>
     <div class="attach">
-        <div class="columns is-gapless" style="position:absolute;width:100%;height:33%;margin-bottom:0.5rem;" v-for="(fila, index) in attachCartes" v-bind:style="{bottom: (index == 0) ? '33%' : '0'}">
+        <div class="columns is-gapless" style="position:absolute;width:100%;height:33%;margin-bottom:0.5rem;" v-for="(fila, index) in attachCartes" v-bind:style="{bottom: (index*33) + '%'}">
             <div v-for="cartaUna in fila" class="column is-one-third">
                 <carta :cara="true" :caraForce="true" :card="cartaUna" :rol="AREA_ATTACH" :isVertical="false" :hasLupa="true"></carta>
             </div>
