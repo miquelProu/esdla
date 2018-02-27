@@ -324,7 +324,8 @@ export default new Vuex.Store({
             commit(types.SET_TO_PLAYER_OUT_DECK, to);
 
             // Busquem la carta entre els herois
-            // i quan trobem l'heroi eliminem la carta
+            // i quan trobem l'heroi on es l'attach
+            // eliminem la carta
             _.each(state.AREA_HERO, function(hero){
                 let vincle = -1;
                 if (hero.vinculada.length > 0) {
