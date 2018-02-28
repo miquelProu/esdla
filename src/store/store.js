@@ -52,8 +52,7 @@ export default new Vuex.Store({
             isModalShow: false,
             num: 0,
             rol: null
-        },
-        nVinculada: 0,
+        }
     },
     getters:{
         questDeck(state){                    // Get AREA_QUEST_DECK
@@ -451,10 +450,6 @@ export default new Vuex.Store({
         },
         setRolModalNum: function({commit, state}, rol){
             commit(types.ROL_N_CARTES, rol);
-        },
-        setNVinculada: function({commit, state}, nVinculada){
-            console.log("VINCULADA: "+nVinculada);
-            commit(types.SET_N_VINCULADA, nVinculada);
         },
         addTorn: function({commit, state}){
             commit(types.ADD_TORN);

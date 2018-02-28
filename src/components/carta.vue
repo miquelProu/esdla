@@ -1,5 +1,5 @@
 <template>
-    <div class="carta" v-draggable.carta="dragableObj" ref="carta" v-bind:class="{'esgotat': card.esgotat}" v-bind:style="{maxWidth: calculateWidth}">
+    <div class="carta" v-draggable.carta="dragableObj" v-on:dragstart="start" ref="carta" v-bind:class="{'esgotat': card.esgotat}" v-bind:style="{maxWidth: calculateWidth}">
         <figure class="imgCarta">
             <resource :resource="card.resource" :damage="card.damage" :viatge="card.viatge"></resource>
             <img v-on:mouseover="isLupa" v-on:mouseout="setLupaCard(null)" v-bind:src="srcImage()" />
@@ -117,6 +117,9 @@ export default {
                 }
 
             }
+        },
+        start: function(ev){
+            this.setLupaCard(null);
         },
         isLupa: function(event) {
             if (this.hasLupa) {

@@ -1,5 +1,5 @@
 <template>
-    <div ref="display" v-droppable.carta="send" v-dragenter.carta="enter" class="columns is-gapless">
+    <div ref="display" v-droppable.carta="send" v-dragenter.carta="enter" v-dragleave.carta="out" class="columns is-gapless" v-bind:class="[{'overOK': isOverOK}, {'overBAD': isOverBAD}]">
         <div class="column" v-bind:class="[{'is-narrow': hasMax}, {'heroi': rol == AREA_HERO}]" v-for="carta in deck">
             <carta :cara="cara" :caraForce="caraForce" :card="carta" :rol="rol" :isVertical="false" @width="newWidth" :hasLupa="true" :class=""></carta>
         </div>
@@ -8,8 +8,8 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
-    import Carta from './carta.vue'
     import * as types from '../store/mutation-types'
+    import * as groups from '../store/mutation-groups'
 
 export default {
     name: 'display',
@@ -19,6 +19,8 @@ export default {
         return {
             hasMax: true,
             [types.AREA_HERO]: types.AREA_HERO,
+            isOverOK: false,
+            isOverBAD: false,
         }
     },
     mounted: function(){},
@@ -32,7 +34,6 @@ export default {
                         cont++;
                     }
                 });
-                this.setNVinculada(cont);
             }
         }
     },
@@ -49,11 +50,10 @@ export default {
             getAliats: 'aliats',
             getAtack: 'atack',
             getViatge: 'viatge'
-        }),
+        })
     },
     methods:{
         ...mapActions({
-            setNVinculada: 'setNVinculada',
             move: 'move',
         }),
         newWidth: function(ample){
@@ -75,13 +75,34 @@ export default {
                 to: this.rol
             };
             this.move(obj);
-            console.log("DROP");
-            console.log(obj);
-            console.log(ev);
+            this.isOverOK = false;
+
+            console.log(eve);
         },
         enter:function(ev){
-            console.log("NETER");
-            console.log(ev);
+            let eve = JSON.parse(ev);
+            if (eve.card.type == 'Hero' && this.rol != types.AREA_HERO){
+                this.isOverBAD = true;
+            } else {
+                this.isOverOK = true;
+            }
+            if ( ((groups.PLAYING_ALIES_DECK_LIST.indexOf(eve.rol) > -1) &&
+                (groups.PLAYING_ALIES_DECK_LIST.indexOf(this.rol) > -1))
+                ||
+                ((groups.PLAYING_QUEST_DECK_LIST.indexOf(eve.rol) > -1) &&
+                (groups.PLAYING_QUEST_DECK_LIST.indexOf(this.rol) > -1)) ) {
+                this.isOverOK = true;
+            } else {
+                this.isOverBAD = true;
+            }
+        },
+        out: function(ev){
+            if (this.isOverOK) {
+                this.isOverOK = false;
+            }
+            if (this.isOverBAD) {
+                this.isOverBAD = false;
+            }
         },
         getDeckByArea: function(area){
             switch (area){
@@ -145,6 +166,13 @@ export default {
                     }
                 }
             }
+        }
+
+        &.overOK {
+            background-color: darkgreen;
+        }
+        &.overBAD {
+            background-color: red;
         }
     }
 </style>

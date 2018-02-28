@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-gapless" v-droppable.carta="send" ref="pila">
+    <div class="columns is-gapless" v-droppable.carta="send" ref="pila" v-bind:class="[{'overOK': isOverOK}, {'overBAD': isOverBAD}]" v-dragenter.carta="enter" v-dragleave.carta="out">
         <div class="column" v-for="carta in one">
             <carta :card="carta" :cara="cara" :caraForce="caraForce" :rol="rol" :isVertical="isVertical" :hasLupa="(rol == AREA_MISION_DECK || rol == AREA_PLAYER_OUT_DECK || rol == AREA_QUEST_OUT_DECK || rol == AREA_VIATGE)" @width="newWidth"></carta>
         </div>
@@ -8,8 +8,8 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
-    import Carta from './carta.vue'
     import * as types from '../store/mutation-types'
+    import * as groups from '../store/mutation-groups'
 
 export default {
     name: 'pila',
@@ -21,6 +21,8 @@ export default {
             [types.AREA_PLAYER_OUT_DECK] : types.AREA_PLAYER_OUT_DECK,
             [types.AREA_QUEST_OUT_DECK]: types.AREA_QUEST_OUT_DECK,
             [types.AREA_VIATGE] : types.AREA_VIATGE,
+            isOverOK: false,
+            isOverBAD: false,
         }
     },
     mounted: function(){},
@@ -60,6 +62,27 @@ export default {
             this.move(obj);
             console.log("DROP PILA");
             console.log(obj);
+        },
+        enter:function(ev){
+            let eve = JSON.parse(ev);
+            if ( ((groups.PLAYING_ALIES_DECK_LIST.indexOf(eve.rol) > -1) &&
+                    (groups.PLAYING_ALIES_DECK_LIST.indexOf(this.rol) > -1))
+                ||
+                ((groups.PLAYING_QUEST_DECK_LIST.indexOf(eve.rol) > -1) &&
+                    (groups.PLAYING_QUEST_DECK_LIST.indexOf(this.rol) > -1)) ) {
+                this.isOverOK = true;
+            } else {
+                this.isOverBAD = true;
+            }
+
+        },
+        out: function(ev){
+            if (this.isOverOK) {
+                this.isOverOK = false;
+            }
+            if (this.isOverBAD) {
+                this.isOverBAD = false;
+            }
         },
         newWidth: function(ample){
             console.log("PIIIILA");
