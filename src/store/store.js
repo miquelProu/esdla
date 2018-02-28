@@ -377,6 +377,8 @@ export default new Vuex.Store({
             let concat = from.concat(to);
             let setTo = translateAreaSetTo(this.getters.rolShowCartes);
             commit(setTo, (isRemenar) ? _.shuffle(concat) : concat);
+            console.log("COMMIT ZERO SHOW");
+            commit(types.AREA_SHOW, []);
 
         },
         remenar: function({commit, state}, deck){

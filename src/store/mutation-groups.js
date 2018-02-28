@@ -14,6 +14,7 @@ export const PLAYING_DECK_LIST = [
     types.AREA_PLAYER_DECK,
     types.AREA_PLAYER_OUT_DECK,
     types.AREA_VIATGE,
+    types.AREA_SHOW
 ];
 
 export const PLAYING_ALIES_DECK_LIST = [

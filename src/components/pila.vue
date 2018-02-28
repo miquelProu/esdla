@@ -60,8 +60,9 @@ export default {
                 to: this.rol
             };
             this.move(obj);
-            console.log("DROP PILA");
-            console.log(obj);
+
+            this.isOverOK = false;
+            this.isOverBAD = false;
         },
         enter:function(ev){
             let eve = JSON.parse(ev);

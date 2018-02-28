@@ -1,3 +1,4 @@
+<script src="store/store.js"></script>
 <template xmlns="http://www.w3.org/1999/html">
     <div id="app" class="body">
         <div class="tile is-ancestor">
@@ -195,7 +196,8 @@ export default {
             subAmenasa: 'subAmenasa',
             start: 'start',
             reset: 'reset',
-            reparteix: 'reparteix'
+            reparteix: 'reparteix',
+            closeShow: 'closeShow'
         }),
         loadDeck: function(file, isInit) {
             let self = this;
@@ -389,6 +391,9 @@ export default {
         },
         hasModalShowCartes:function (val) {
             console.log("HAS MODAL"+val);
+            if (!val){
+                this.closeShow(false);
+            }
             this.setShowCartes(val);
         }
     }
