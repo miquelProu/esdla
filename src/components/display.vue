@@ -59,6 +59,7 @@ export default {
         newWidth: function(ample){
             if (typeof(this.$refs.display) !== 'undefined' &&
                 typeof(this.$refs.display.clientWidth) !== 'undefined') {
+
                 let displayWidth = this.$refs.display.clientWidth;
                 let nCartes = displayWidth / Math.round(ample);
                 this.hasMax = !(this.deck.length > nCartes);

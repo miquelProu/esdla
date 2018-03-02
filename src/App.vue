@@ -16,13 +16,18 @@
             <div class="tile is-4 is-parent taulellEsq">
                 <div class="tile is-ancestor is-child">
                     <div class="tile is-vertical is-parent">
-                        <div class="tile is-child stackQuest" style="margin-bottom:2% !important;">
-                            <div class="columns">
+                        <div class="tile is-child is-parent is-vertical stackQuest">
+                            <div class="tile is-child" style="height: 65%;margin-bottom: 0.5rem !important;">
+                                <div class="columns">
                                 <div class="column is-one-third"><pila v-if="getQuestDeck" :cara="false" :caraForce="true" :deck="getQuestDeck" :rol="AREA_QUEST_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-third"><pila v-if="getQuestOutDeck" :cara="true" :caraForce="true" :deck="getQuestOutDeck" :rol="AREA_QUEST_OUT_DECK" :isVertical="false"></pila></div>
                                 <div class="column is-one-third">
                                     <contador type="torn"></contador>
                                 </div>
+                            </div>
+                            </div>
+                            <div class="tile is-child" style="height: 35%">
+                                <display :deck="getPreparacio" :cara="true" :caraForce="false" :rol="AREA_PREPARACIO"></display>
                             </div>
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
@@ -163,7 +168,6 @@ export default {
         // let store = this.encapsulate();
         // console.log(store);
     },
-    watch: {},
     computed: {
         ...mapGetters({
             getQuestDeck: 'questDeck',
@@ -274,11 +278,11 @@ export default {
             let self = this;
             e.preventDefault();
             // Get files from input
-            var files = this.$refs.loadGameRef.files;
+            let files = this.$refs.loadGameRef.files;
 
             //Retrieve the first (and only!) File from the FileList object
-            var f = files[0];
-            var reader = new FileReader();
+            let f = files[0];
+            let reader = new FileReader();
 
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
