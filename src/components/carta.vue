@@ -106,7 +106,7 @@ export default {
             if (this.side) {
                 return "/dist/cartas/" + this.carta.id + ".png";
             } else {
-                if (this.rol == types.AREA_MISION_DECK){
+                if (this.carta.type == "Quest"){
                     return "/dist/cartas/" + this.carta.id + ".B.png";
                 } else {
                     if (this.carta.type == 'Encounter' || this.carta.type == 'Setup') {
@@ -128,7 +128,7 @@ export default {
                 } else {
                     this.setLupaPosition('left');
                 }
-                if (this.rol == types.AREA_MISION_DECK || this.side) {
+                if (this.carta.type == "Quest" || this.side) {
                     let temp = _.clone(this.carta);
                      if (!this.side) {
                          temp.id = temp.id + ".B";

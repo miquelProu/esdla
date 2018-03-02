@@ -35,6 +35,7 @@ export default new Vuex.Store({
         AREA_ATACK: [],
         AREA_VIATGE: [],
         AREA_SHOW: [],
+        AREA_WAIT: [],
         lupa: {
             carta: null,
             position: 'right'
@@ -121,6 +122,9 @@ export default new Vuex.Store({
         nVinculada(state){
             return state.nVinculada;
         },
+        wait(state){
+            return state.AREA_WAIT;
+        }
 
     },
     mutations:{
@@ -172,6 +176,9 @@ export default new Vuex.Store({
         },
         [types.SET_TO_VIATGE](state, payload){
             state.AREA_VIATGE = payload;
+        },
+        [types.SET_TO_WAIT](state, payload){
+            state.AREA_WAIT =payload;
         },
         [types.SET_LUPA_CARD](state, carta){
             state.lupa.carta = carta;

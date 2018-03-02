@@ -27,7 +27,7 @@
                             </div>
                             </div>
                             <div class="tile is-child" style="height: 35%">
-                                <display :deck="getPreparacio" :cara="true" :caraForce="false" :rol="AREA_PREPARACIO"></display>
+                                <display :deck="getWait" :cara="true" :caraForce="false" :rol="AREA_WAIT"></display>
                             </div>
                         </div>
                         <div class="tile is-child stackMision" style="margin-bottom:2% !important;">
@@ -49,7 +49,7 @@
                                     <contador type="amenasa"></contador>
                                     <!--<input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="load"/>-->
                                     <div class="desplegable" style="float:right;">
-                                        <b-dropdown position="is-bottom-left">
+                                        <b-dropdown position="is-top-left">
                                             <button class="button is-primary" slot="trigger">
                                                 <b-icon icon="menu-down"></b-icon>
                                             </button>
@@ -156,6 +156,7 @@ export default {
           [types.AREA_PLAYER_OUT_DECK]: types.AREA_PLAYER_OUT_DECK,
           [types.AREA_ATACK]: types.AREA_ATACK,
           [types.AREA_VIATGE]: types.AREA_VIATGE,
+          [types.AREA_WAIT]: types.AREA_WAIT,
           setID: 0,
           hasModalNCartes : false,
           hasModalShowCartes: false
@@ -187,6 +188,7 @@ export default {
             getTorn: 'torn',
             getModalNcartes: 'modalNcartes',
             getModalShowCartes: 'modalShowCartes',
+            getWait: 'wait'
         }),
     },
     methods:{
@@ -506,4 +508,8 @@ a {
 .dropdown.is-mobile-modal .dropdown-menu .dropdown-item, .dropdown.is-mobile-modal .dropdown-menu .has-link a{
     padding: 0.3rem 1.5rem;
 }
+
+    .dropdown-menu{
+        z-index: 500;
+    }
 </style>

@@ -87,11 +87,22 @@ export default {
             } else {
                 this.isOverOK = true;
             }
-            if ( ((groups.PLAYING_ALIES_DECK_LIST.indexOf(eve.rol) > -1) &&
-                (groups.PLAYING_ALIES_DECK_LIST.indexOf(this.rol) > -1))
-                ||
-                ((groups.PLAYING_QUEST_DECK_LIST.indexOf(eve.rol) > -1) &&
-                (groups.PLAYING_QUEST_DECK_LIST.indexOf(this.rol) > -1)) ) {
+            if (
+                (
+                    (groups.PLAYING_ALIES_DECK_LIST.indexOf(eve.rol) > -1) &&
+                    (
+                        (groups.PLAYING_ALIES_DECK_LIST.indexOf(this.rol) > -1) ||
+                        (groups.PLAYING_OTHERS_DECK_LIST.indexOf(this.rol) > -1)
+                    )
+                ) ||
+                (
+                    (groups.PLAYING_QUEST_DECK_LIST.indexOf(eve.rol) > -1) &&
+                    (
+                        (groups.PLAYING_QUEST_DECK_LIST.indexOf(this.rol) > -1) ||
+                        (groups.PLAYING_OTHERS_DECK_LIST.indexOf(this.rol) > -1 )
+                    )
+                )
+            ) {
                 this.isOverOK = true;
             } else {
                 this.isOverBAD = true;
@@ -157,23 +168,16 @@ export default {
         &.is-gapless > {
             .column {
                 &.heroi {
-                    z-index: 9;
                     margin-right:10px;
-
-                    &.vinculada {
-                        margin-left: -12%;
-                        //transform: translate(-50%, 0);
-                        z-index: 0;
-                    }
                 }
             }
         }
 
         &.overOK {
-            background-color: darkgreen;
+            background-color: #daffd1;
         }
         &.overBAD {
-            background-color: red;
+            background-color: #ffbabc;
         }
     }
 </style>

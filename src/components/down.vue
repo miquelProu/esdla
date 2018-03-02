@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown> <!--:position="(rol == AREA_MA) ? 'is-top-left' : ''"-->
+    <b-dropdown v-bind:position="(rol == AREA_MA) ? 'is-top-left' : 'is-bottom-right'">
         <button class="button is-primary" slot="trigger">
             <b-icon icon="menu-down"></b-icon>
         </button>

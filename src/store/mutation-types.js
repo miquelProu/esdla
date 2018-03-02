@@ -17,6 +17,7 @@ export const SET_TO_VIATGE = 'SET_TO_VIATGE'
 export const SET_TO_SHOW = 'SET_TO_SHOW'
 export const SET_TO_ATTACH = 'SET_TO_ATTACH'
 export const SET_N_VINCULADA = 'SET_N_VINCULADA'
+export const SET_TO_WAIT = 'SET_TO_WAIT'
 
 export const ADD_TO_VINCULADA = 'ADD_TO_VINCULADA'
 
@@ -63,6 +64,7 @@ export const AREA_PLAYER_OUT_DECK = 'AREA_PLAYER_OUT_DECK'
 export const AREA_VIATGE = 'AREA_VIATGE'
 export const AREA_SHOW = 'AREA_SHOW'
 export const AREA_ATTACH = 'AREA_ATTACH'
+export const AREA_WAIT = 'AREA_WAIT'
 
 export function translateAreaSetTo(area){
     let nom = area.substring(5, area.length);
