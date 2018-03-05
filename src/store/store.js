@@ -348,6 +348,11 @@ export default new Vuex.Store({
             this.dispatch('remenar', 'Encounter');
             this.dispatch('remenar', 'Aliats');
 
+            let heros = this.getters.hero;
+            _.forEach(heros, function(hero){
+                hero.resource++;
+            });
+
             let deck = this.getters.playerDeck;
             let ma = deck.splice(0,6);
             commit(types.SET_TO_PLAYER_DECK, deck);
@@ -367,6 +372,7 @@ export default new Vuex.Store({
                 commit(translateAreaSetTo(area), []);
             });
             commit(types.SET_AMENASA, 0);
+            commit(types.SET_TORN, 0);
         },
         closeShow: function({commit, state}, isRemenar){
             let to = [];

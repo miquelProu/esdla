@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown v-bind:position="(rol == AREA_MA) ? 'is-top-left' : 'is-bottom-right'">
+    <b-dropdown v-bind:position="posicio">
         <button class="button is-primary" slot="trigger">
             <b-icon icon="menu-down"></b-icon>
         </button>
@@ -13,7 +13,7 @@
         </template>
         <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="moure(AREA_ALIATS)">Baixar a taula</b-dropdown-item>
-            <template v-if="card.type == 'Attachment'">
+            <template v-if="card.type == 'Attachment' || card.type == 'Setup'">
                 <b-dropdown-item>
                     <h3>Vincular</h3>
                     <div class="field has-addons">
@@ -124,7 +124,20 @@
                 getViatge: 'viatge',
                 getLupaCard: 'getLupaCard',
                 getShow: 'show'
-            })
+            }),
+            posicio: function(){
+                console.log("HOLA OSICIO");
+                if (this.rol == types.AREA_MA) {
+                    console.log("AREA MA");
+                    return 'is-top-left';
+                } else if (this.rol == types.AREA_MISION_OUT_DECK || this.rol == types.AREA_MISION_DECK) {
+                    console.log("AREA VIATGE");
+                    return 'is-bottom-left';
+                } else {
+                    console.log("AREA ALTRES");
+                    return 'is-bottom-right';
+                }
+            },
         },
         methods:{
             ...mapActions({
