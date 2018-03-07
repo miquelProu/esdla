@@ -13,17 +13,9 @@
         </template>
         <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="moure(AREA_ALIATS)">Baixar a taula</b-dropdown-item>
-            <template v-if="card.type == 'Attachment' || card.type == 'Setup'">
-                <b-dropdown-item>
-                    <h3>Vincular</h3>
-                    <div class="field has-addons">
-                        <p class="control" v-for="(hero, index) in getHero">
-                            <a class="button is-small" v-on:click="vincular(hero.ID)" style="font-size: 0.6em;">{{hero.name}}</a>
-                        </p>
-                    </div>
-
-                </b-dropdown-item>
-            </template>
+        </template>
+        <template v-if="card.type == 'Attachment' || card.type == 'Setup' || card.type == 'Encounter'">
+            <down-vincular :rol="rol" :card="card" :side="downVincularSide"></down-vincular>
         </template>
         <template v-if="rol == AREA_PREPARACIO">
             <b-dropdown-item v-on:click="moure(AREA_ATACK)">Baixar a enfrontament</b-dropdown-item>
@@ -81,11 +73,16 @@
     import * as types from '../store/mutation-types'
     import * as groups from '../store/mutation-groups'
     import BDropdownItem from "buefy/src/components/dropdown/DropdownItem";
+    import DownVincular from './downVincular'
     import _ from 'lodash'
 
     export default {
         name: 'down',
-        components: {BDropdownItem},
+        components: {
+            BDropdownItem,
+            'down-vincular': DownVincular,
+            'b-dropdown-item': BDropdownItem
+        },
         props: ['card', 'rol'],
         data: function(){
             return {
@@ -126,18 +123,35 @@
                 getShow: 'show'
             }),
             posicio: function(){
-                console.log("HOLA OSICIO");
+                let self = this;
+                let deck = this.getDeckByArea(this.rol);
+                let pos = _.findIndex(deck, function (c) {
+                    return c.ID == self.card.ID
+                });
+
+                let direccio = (pos/deck.length > 0.5) ? 'left' : 'right';
+
                 if (this.rol == types.AREA_MA) {
-                    console.log("AREA MA");
-                    return 'is-top-left';
+
+                    return 'is-top-' + direccio;
                 } else if (this.rol == types.AREA_MISION_OUT_DECK || this.rol == types.AREA_MISION_DECK) {
-                    console.log("AREA VIATGE");
                     return 'is-bottom-left';
+                } else if (this.rol == types.AREA_PREPARACIO || this.rol == types.AREA_ATACK) {
+                    return 'is-bottom-' + direccio;
                 } else {
-                    console.log("AREA ALTRES");
                     return 'is-bottom-right';
                 }
             },
+            downVincularSide: function(){
+                let self = this;
+                let deck = this.getDeckByArea(this.rol);
+                let pos = _.findIndex(deck, function (c) {
+                    return c.ID == self.card.ID
+                });
+
+                return (pos/deck.length > 0.5) ? 'left' : 'right';
+                // return 'left';
+            }
         },
         methods:{
             ...mapActions({
