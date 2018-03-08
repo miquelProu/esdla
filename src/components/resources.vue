@@ -62,7 +62,6 @@
         },
         methods:{
             evaluate: function(){
-                console.log("EVALUATE RESOURCE");
                 if (this.damage > 0 && this.viatge > 0 ){
                     this.isTop = true;
                     this.isDos = false;

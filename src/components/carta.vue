@@ -80,12 +80,10 @@ export default {
     },
     computed: {
         calculatedHeight: function(){
-            console.log(this.cartaWidth);
             let calcul = (this.cartaWidth * 141) / 100;
             return Math.round(calcul) + 'px';
         },
         calculateWidth: function(){
-            console.log("CARTA HEIGHT: "+this.cartaHeight);
             if (!this.isVertical) {
                 let calcul = (this.cartaHeight * 70.5) / 100;
                 this.$emit('width', calcul);

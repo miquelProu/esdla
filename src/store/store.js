@@ -225,12 +225,10 @@ export default new Vuex.Store({
     },
     actions:{
         addTo: function({commit,state}, payload){
-            console.log(payload);
             let area = translateSetToArea(payload.set);
             let temp = _.find(groups.AREA_TO_GET, function(g) {return g.area == types[area]});
             let actual = (this.getters[temp.agafar]);
             actual.push(...payload.cards);
-            console.log(payload.set, actual);
             commit(payload.set, actual);
         },
         allToDeck: function({commit,state}, payload){
@@ -293,7 +291,7 @@ export default new Vuex.Store({
             let setFrom = translateAreaSetTo(obj.from);
             let setTo = translateAreaSetTo(obj.to);
 
-            console.log(obj, setFrom, setTo, from, to);
+            //console.log(obj, setFrom, setTo, from, to);
 
             // Envio a l'state les dues baralles modificades
             commit(setFrom, from);
@@ -390,8 +388,7 @@ export default new Vuex.Store({
             let concat = from.concat(to);
             let setTo = translateAreaSetTo(this.getters.rolShowCartes);
             commit(setTo, (isRemenar) ? _.shuffle(concat) : concat);
-            console.log("COMMIT ZERO SHOW");
-            commit(types.AREA_SHOW, []);
+            commit(types.SET_TO_SHOW, []);
 
         },
         remenar: function({commit, state}, deck){
@@ -419,7 +416,6 @@ export default new Vuex.Store({
             let heros = this.getters.hero;
             _.forEach(heros, function(hero){
                 hero.resource++;
-                // console.log(hero);
             });
             let deck = this.getters.playerDeck;
             let card = deck[0];
@@ -454,7 +450,6 @@ export default new Vuex.Store({
             commit(types.TOGGLE_N_CARTES);
         },
         toogleShowCartes: function({commit, state}){
-            console.log("STORE TOOGLE");
             commit(types.TOGGLE_SHOW_CARTES);
         },
         setShowCartes: function({commit, state}, val){

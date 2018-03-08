@@ -41,7 +41,8 @@ export default {
             if (this.side == 'right'){
                 return {left: '100%'};
             } else {
-                return {left: 'calc(-100% - 28px)'};
+                return {right: '100%'};
+                // return {left: '100%'};
             }
         },
         vinculables: function(){

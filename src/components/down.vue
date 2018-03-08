@@ -14,7 +14,7 @@
         <template v-if="rol == AREA_MA">
             <b-dropdown-item v-on:click="moure(AREA_ALIATS)">Baixar a taula</b-dropdown-item>
         </template>
-        <template v-if="card.type == 'Attachment' || card.type == 'Setup' || card.type == 'Encounter'">
+        <template v-if="rol != AREA_ATTACH && (card.type == 'Attachment' || ( (card.type == 'Setup' || card.type == 'Encounter') && (rol == AREA_PREPARACIO || rol == AREA_ATACK || rol == AREA_ALIATS) ) )">
             <down-vincular :rol="rol" :card="card" :side="downVincularSide"></down-vincular>
         </template>
         <template v-if="rol == AREA_PREPARACIO">
@@ -102,9 +102,7 @@
                 [types.AREA_ATTACH]: types.AREA_ATTACH
             }
         },
-        mounted: function(){
-
-        },
+        mounted: function(){},
         watch: {},
         computed: {
             ...mapGetters({
@@ -124,33 +122,39 @@
             }),
             posicio: function(){
                 let self = this;
-                let deck = this.getDeckByArea(this.rol);
-                let pos = _.findIndex(deck, function (c) {
-                    return c.ID == self.card.ID
-                });
+                if (this.rol != types.AREA_ATTACH) {
+                    let deck = this.getDeckByArea(this.rol);
+                    let pos = _.findIndex(deck, function (c) {
+                        return c.ID == self.card.ID
+                    });
 
-                let direccio = (pos/deck.length > 0.5) ? 'left' : 'right';
+                    let direccio = (pos / deck.length > 0.5) ? 'left' : 'right';
 
-                if (this.rol == types.AREA_MA) {
-
-                    return 'is-top-' + direccio;
-                } else if (this.rol == types.AREA_MISION_OUT_DECK || this.rol == types.AREA_MISION_DECK) {
-                    return 'is-bottom-left';
-                } else if (this.rol == types.AREA_PREPARACIO || this.rol == types.AREA_ATACK) {
-                    return 'is-bottom-' + direccio;
+                    if (this.rol == types.AREA_MA) {
+                        return 'is-top-' + direccio;
+                    } else if (this.rol == types.AREA_MISION_OUT_DECK || this.rol == types.AREA_MISION_DECK) {
+                        return 'is-bottom-left';
+                    } else if (this.rol == types.AREA_PREPARACIO || this.rol == types.AREA_ATACK) {
+                        return 'is-bottom-' + direccio;
+                    } else {
+                        return 'is-bottom-right';
+                    }
                 } else {
                     return 'is-bottom-right';
                 }
             },
             downVincularSide: function(){
-                let self = this;
-                let deck = this.getDeckByArea(this.rol);
-                let pos = _.findIndex(deck, function (c) {
-                    return c.ID == self.card.ID
-                });
+                if (this.rol != types.AREA_ATTACH) {
+                    let self = this;
+                    let deck = this.getDeckByArea(this.rol);
+                    let pos = _.findIndex(deck, function (c) {
+                        return c.ID == self.card.ID
+                    });
 
-                return (pos/deck.length > 0.5) ? 'left' : 'right';
-                // return 'left';
+                    return (pos/deck.length > 0.5) ? 'left' : 'right';
+                } else {
+                    return 'left';
+                }
             }
         },
         methods:{
@@ -272,7 +276,6 @@
             },
             addViatge: function(){
                 let deck = this.getDeckByArea(this.rol);
-                console.log(deck, this.rol);
                 let self = this;
                 _.each(deck, function(carta){
                     if (carta.ID == self.card.ID) {

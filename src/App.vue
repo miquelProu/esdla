@@ -164,9 +164,7 @@ export default {
     mounted: function(){
         // this.loadDeck(QuestDeckFile, true);
         // this.loadDeck(PlayerDeckFile, true);
-        // console.log("HOLA");
         // let store = this.encapsulate();
-        // console.log(store);
     },
     computed: {
         ...mapGetters({
@@ -248,7 +246,6 @@ export default {
             this.allToDeck({cards: deck});
         },
         newNumber: function(val){
-            console.log("NEW NUMBER");
             this.toogleShowCartes();
         },
         load: function(e) {
@@ -267,7 +264,6 @@ export default {
                     // Convert XML 2 JSON
                     let x2js = new XmlToJson();
                     let json = x2js.xml2js(e.target.result);
-                    // console.log(json);
                     self.loadDeck(json, false);
                 };
             })(f);
@@ -369,7 +365,6 @@ export default {
         saveFileLocal: function(lotr){
             const data = JSON.stringify(lotr);
             window.localStorage.setItem('lotr', data);
-            console.log(JSON.parse(window.localStorage.getItem('lotr')))
         },
         saveFile: function(arr) {
             const data = JSON.stringify(arr);
@@ -395,7 +390,6 @@ export default {
             }
         },
         hasModalShowCartes:function (val) {
-            console.log("HAS MODAL"+val);
             if (!val){
                 this.closeShow(false);
             }
@@ -508,7 +502,7 @@ a {
     padding: 0.3rem 1.5rem;
 }
 
-    .dropdown-menu{
-        z-index: 500;
-    }
+    /*.dropdown-menu{*/
+        /*z-index: 500;*/
+    /*}*/
 </style>

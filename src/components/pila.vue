@@ -52,7 +52,7 @@ export default {
         send: function(ev) {
             let eve = JSON.parse(ev);
             let deck = this.getDeckByArea(eve.rol);
-            let pos = _.findIndex(deck, function(c) {console.log(c.ID, eve.card.ID);return c.ID == eve.card.ID});
+            let pos = _.findIndex(deck, function(c) {return c.ID == eve.card.ID});
             let obj = {
                 card: eve.card,
                 pos: pos,
@@ -86,8 +86,6 @@ export default {
             }
         },
         newWidth: function(ample){
-            console.log("PIIIILA");
-            console.log(this.$refs.pila);
             if (typeof (this.$refs.pila) !== 'undefined' &&
                 typeof(this.$refs.pila.clientWidth) !== 'undefined') {
                 let displayWidth = this.$refs.pila.clientWidth;

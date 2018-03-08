@@ -9,7 +9,6 @@
                     <b-input
                             type="text"
                             v-model="nCartes"
-                            placeholder="1"
                             required>
                     </b-input>
                 </b-field>
@@ -24,7 +23,8 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import * as types from '../store/mutation-types'
 
 export default {
     name: 'modalNCartes',
@@ -32,19 +32,38 @@ export default {
     // props: [],
     data: function(){
         return{
-            nCartes: null
+            nCartes: null,
         }
     },
-    // mounted: function(){},
+    mounted: function(){
+        let deck = this.getDeckByArea(this.getRol);
+        this.nCartes = deck.length;
+    },
     // watch: {},
-    // computed: {},
+     computed: {
+         ...mapGetters({
+             getRol: 'rolShowCartes',
+             getQuestDeck: 'questDeck',
+             getQuestOutDeck: 'questOutDeck',
+             getPlayerDeck: 'playerDeck',
+             getPlayerOutDeck: 'playerOutDeck',
+             getHero: 'hero',
+             getMa: 'ma',
+             getPreparacio: 'preparacio',
+             getMissionDeck: 'missionDeck',
+             getAliats: 'aliats',
+             getAtack: 'atack',
+             getViatge: 'viatge',
+             getLupaCard: 'getLupaCard',
+             getShow: 'show'
+         }),
+     },
     methods: {
         ...mapActions({
             toogleNCartes: 'toogleNCartes',
             setModalNum: 'setModalNum'
         }),
         sendNumber: function(){
-            console.log(this.nCartes);
             this.$emit('hasNumber', true);
             this.setModalNum(this.nCartes * 1);
             this.sendClose();
@@ -52,6 +71,46 @@ export default {
         sendClose: function(){
             this.toogleNCartes();
             this.$parent.close();
+        },
+        getDeckByArea: function(area){
+            switch (area){
+                case types.AREA_PREPARACIO:
+                    return this.getPreparacio;
+                    break;
+                case types.AREA_ATACK:
+                    return this.getAtack;
+                    break;
+                case types.AREA_HERO:
+                    return this.getHero;
+                    break;
+                case types.AREA_ALIATS:
+                    return this.getAliats;
+                    break;
+                case types.AREA_MA:
+                    return this.getMa;
+                    break;
+                case types.AREA_QUEST_DECK:
+                    return this.getQuestDeck;
+                    break;
+                case types.AREA_QUEST_OUT_DECK:
+                    return this.getQuestOutDeck;
+                    break;
+                case types.AREA_MISION_DECK:
+                    return this.getMissionDeck;
+                    break;
+                case types.AREA_PLAYER_DECK:
+                    return this.getPlayerDeck;
+                    break;
+                case types.AREA_PLAYER_OUT_DECK:
+                    return this.getPlayerOutDeck;
+                    break;
+                case types.AREA_VIATGE:
+                    return this.getViatge;
+                    break;
+                case types.AREA_SHOW:
+                    return this.getShow;
+                    break;
+            }
         }
     },
     // filters: {}

@@ -22,9 +22,7 @@ export default {
             [types.AREA_SHOW]: types.AREA_SHOW,
         }
     },
-    mounted: function(){
-        console.log(this.deck);
-    },
+    mounted: function(){},
     watch: {},
     computed: {},
     methods:{
